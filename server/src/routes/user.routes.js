@@ -1,8 +1,12 @@
 import {
     register,
     login,
-    getAllStudents,
-    getAllAlumni,
+    logout,
+    refreshAccessToken,
+    changeCurrentPassword,
+    getCurrentUser,
+    updateProfilePic,
+    getUserProfile,
 } from "../controllers/user.controller.js";
 import { Router } from "express";
 import { upload } from "../middlewares/multer.middleware.js";
@@ -23,7 +27,15 @@ router.route("/register").post(
 );
 router.route("/login").post(login);
 
-router.route("/students").get(getAllStudents); // have to delete this route
-router.route("/alumni").get(getAllAlumni); // have to delete this route
+router.route("/:userId").get(getUserProfile);
+
+// secure routes
+router.route("/logout").post(logout);
+router.route("/refresh-token").post(refreshAccessToken);
+router.route("/change-password").post(changeCurrentPassword);
+router.route("/me").get(getCurrentUser);
+router
+    .route("/update-profile-pic")
+    .post(upload.single("profilePic"), updateProfilePic);
 
 export default router;
