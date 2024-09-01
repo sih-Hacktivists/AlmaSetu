@@ -141,7 +141,7 @@ userSchema.methods.generateAccessToken = function () {
             enrollment: this.enrollment,
             contact: this.contact,
             role: this.role,
-            university: this.university,
+            college: this.college,
             isVerified: this.isVerified,
         },
         process.env.ACCESS_TOKEN_SECRET,
