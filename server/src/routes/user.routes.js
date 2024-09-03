@@ -9,6 +9,7 @@ import {
     updateProfilePic,
     getUserProfile,
     allUsers,
+    giveRecomendation,
 } from "../controllers/user.controller.js";
 import { Router } from "express";
 import { upload } from "../middlewares/multer.middleware.js";
@@ -43,5 +44,9 @@ router
     .post(verifyJWT, upload.single("profilePic"), updateProfilePic);
 
 router.route("/").get(verifyJWT, allUsers);
+
+router
+    .route("/get-recommendations/:studentId")
+    .get(verifyJWT, giveRecomendation);
 
 export default router;

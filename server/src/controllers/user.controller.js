@@ -2,7 +2,7 @@ import { asyncHandler } from "../utils/asyncHandler.js";
 import { ApiError } from "../utils/ApiError.js";
 import { ApiResponse } from "../utils/ApiResponse.js";
 import jwt from "jsonwebtoken";
-import mongoose from "mongoose";
+import axios from "axios";
 import {
     deleteFromCloudinary,
     uploadOnCloudinary,
@@ -186,31 +186,31 @@ const login = asyncHandler(async (req, res) => {
         throw new ApiError(401, "Invalid user Credentials");
     }
 
-    if (!user.isVerified) {
-        let token = await Token.findOne({ userId: user._id });
+    // if (!user.isVerified) {
+    //     let token = await Token.findOne({ userId: user._id });
 
-        if (!token) {
-            token = await Token.create({
-                userId: user._id,
-                token: jwt.sign(
-                    { _id: user._id },
-                    process.env.VERIFY_EMAIL_TOKEN_SECRET,
-                    {
-                        expiresIn: "1d",
-                    }
-                ),
-            });
-        }
+    //     if (!token) {
+    //         token = await Token.create({
+    //             userId: user._id,
+    //             token: jwt.sign(
+    //                 { _id: user._id },
+    //                 process.env.VERIFY_EMAIL_TOKEN_SECRET,
+    //                 {
+    //                     expiresIn: "1d",
+    //                 }
+    //             ),
+    //         });
+    //     }
 
-        const url = `${process.env.BASE_URL}/users/${user._id}/verify-email/${token.token}`;
-        await sendEmail(user.email, "Verify Email", url);
+    //     const url = `${process.env.BASE_URL}/users/${user._id}/verify-email/${token.token}`;
+    //     await sendEmail(user.email, "Verify Email", url);
 
-        return res
-            .status(401)
-            .json(
-                new ApiResponse(401, {}, "Please verify your email to login")
-            );
-    }
+    //     return res
+    //         .status(401)
+    //         .json(
+    //             new ApiResponse(401, {}, "Please verify your email to login")
+    //         );
+    // }
 
     const { accessToken, refreshToken } = await generateAccessAndRefreshTokens(
         user._id
@@ -400,6 +400,30 @@ const allUsers = asyncHandler(async (req, res) => {
     res.send(users);
 });
 
+const giveRecomendation = asyncHandler(async (req, res) => {
+    const studentId = req.params.studentId;
+
+    try {
+        const response = await axios.get(
+            `${process.env.FLASK_API_URL}/recommend/${studentId}`
+        );
+
+        return res
+            .status(200)
+            .json(
+                new ApiResponse(
+                    200,
+                    response.data,
+                    "Recommendations fetched successfully"
+                )
+            );
+    } catch (error) {
+        console.error("Error calling Flask API:", error.message);
+
+        throw new ApiError(500, "Failed to get recommendations");
+    }
+});
+
 export {
     allUsers,
     register,
@@ -411,4 +435,5 @@ export {
     getCurrentUser,
     updateProfilePic,
     getUserProfile,
+    giveRecomendation,
 };
