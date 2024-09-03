@@ -6,6 +6,8 @@ import { Community } from "../models/community.model.js";
 import { uploadOnCloudinary } from "../utils/cloudinary.js";
 import { User } from "../models/user.model.js";
 
+// write controller for admin to add admin
+
 // for alumni
 const createCommunity = asyncHandler(async (req, res) => {
     if (req.user.role !== "alumni") {
@@ -114,47 +116,6 @@ const joinCommunity = asyncHandler(async (req, res) => {
         );
 });
 
-// create post in community
-const createCommunityPost = asyncHandler(async (req, res) => {
-    const { communityId } = req.params;
-    const owner = req.user._id;
-
-    const { title, content } = req.body;
-
-    if (!title || !content) {
-        throw new ApiError(400, "Title and content is required");
-    }
-
-    let imageLocalPath;
-    if (req.file) {
-        imageLocalPath = req.file.path;
-    }
-
-    const image = await uploadOnCloudinary(imageLocalPath);
-
-    let post;
-    if (image) {
-        post = await Post.create({
-            title,
-            content,
-            owner,
-            image: image.url,
-            community: communityId,
-        });
-    } else {
-        post = await Post.create({
-            title,
-            content,
-            owner,
-            community: communityId,
-        });
-    }
-
-    return res
-        .status(201)
-        .json(new ApiResponse(201, post, "Post created successfully"));
-});
-
 // get community members
 const getCommunityMembers = asyncHandler(async (req, res) => {
     const { communityId } = req.params;
@@ -224,16 +185,129 @@ const getNotJoinedCommunities = asyncHandler(async (req, res) => {
         );
 });
 
-// write controller for admin to add admin
+// create community post
+const createCommunityPost = asyncHandler(async (req, res) => {
+    const { communityId } = req.params;
+    const owner = req.user._id;
+
+    const { title, content } = req.body;
+
+    if (!title || !content) {
+        throw new ApiError(400, "Title and content is required");
+    }
+
+    let imageLocalPath;
+    if (req.file) {
+        imageLocalPath = req.file.path;
+    }
+
+    const image = await uploadOnCloudinary(imageLocalPath);
+
+    let post;
+    if (image) {
+        post = await Post.create({
+            title,
+            content,
+            owner,
+            image: image.url,
+            community: communityId,
+        });
+    } else {
+        post = await Post.create({
+            title,
+            content,
+            owner,
+            community: communityId,
+        });
+    }
+
+    return res
+        .status(201)
+        .json(new ApiResponse(201, post, "Post created successfully"));
+});
+
+// like community post
+const likeCommunityPost = asyncHandler(async (req, res) => {
+    const { communityId, postId } = req.params;
+
+    const community = await Community.findById(communityId);
+
+    if (!community) {
+        throw new ApiError(404, "Community not found");
+    }
+
+    const post = await Post.findById(postId);
+
+    if (!post) {
+        throw new ApiError(404, "Post not found");
+    }
+
+    if (post.likes.includes(req.user._id)) {
+        throw new ApiError(400, "You already liked this post");
+    }
+
+    post.likes.push(req.user._id);
+    await post.save({ validateBeforeSave: false });
+
+    await User.findByIdAndUpdate(
+        req.user._id,
+        {
+            $push: { likedPosts: postId },
+        },
+        { new: true }
+    );
+
+    return res
+        .status(200)
+        .json(new ApiResponse(200, {}, "Post liked successfully"));
+});
+
+// unlike community post
+const unlikeCommunityPost = asyncHandler(async (req, res) => {
+    const { communityId, postId } = req.params;
+
+    const community = await Community.findById(communityId);
+
+    if (!community) {
+        throw new ApiError(404, "Community not found");
+    }
+
+    const post = await Post.findById(postId);
+
+    if (!post) {
+        throw new ApiError(404, "Post not found");
+    }
+
+    if (!post.likes.includes(req.user._id)) {
+        throw new ApiError(400, "You have not liked this post");
+    }
+
+    post.likes.pull(req.user._id);
+    await post.save({ validateBeforeSave: false });
+
+    await User.findByIdAndUpdate(
+        req.user._id,
+        {
+            $pull: { likedPosts: postId },
+        },
+        { new: true }
+    );
+
+    return res
+        .status(200)
+        .json(new ApiResponse(200, {}, "Post unliked successfully"));
+});
 
 export {
     createCommunity,
     removeMemberFromCommunity,
     joinCommunity,
-    createCommunityPost,
     getCommunityMembers,
     getCommunityAdmins,
     getCommunity,
     getJoinedCommunities,
     getNotJoinedCommunities,
+    createCommunityPost,
+    likeCommunityPost,
+    unlikeCommunityPost,
 };

@@ -26,14 +26,16 @@ import communityRouter from "./routes/community.routes.js";
 import eventRouter from "./routes/event.routes.js";
 import chatRouter from "./routes/chat.routes.js";
 import messageRouter from "./routes/messages.routes.js";
+import postRouter from "./routes/post.routes.js";
 
 // Routes declaration
 app.use("/api/v1/users/", userRouter);
 app.use("/api/v1/topics/", topicRouter);
 app.use("/api/v1/communities/", communityRouter);
 app.use("/api/v1/events/", eventRouter);
-app.use("/api/v1/chats", chatRouter);
-app.use("/api/v1/messages", messageRouter);
+app.use("/api/v1/chats/", chatRouter);
+app.use("/api/v1/messages/", messageRouter);
+app.use("/api/v1/posts/", postRouter);
 
 // Initialize Socket.IO with the HTTP server
 const io = new SocketIOServer(server, {
