@@ -298,6 +298,26 @@ const unlikeCommunityPost = asyncHandler(async (req, res) => {
         .json(new ApiResponse(200, {}, "Post unliked successfully"));
 });
 
+// create comment on community post
+const createCommunityComment = asyncHandler(async (req, res) => {
+    const { postId } = req.params;
+    const { content } = req.body;
+
+    if (!content) {
+        throw new ApiError(400, "Content is required");
+    }
+
+    const comment = await Comment.create({
+        content,
+        owner: req.user._id,
+        post: postId,
+    });
+
+    return res
+        .status(201)
+        .json(new ApiResponse(201, comment, "Comment created successfully"));
+});
+
 export {
     createCommunity,
     removeMemberFromCommunity,
@@ -310,4 +330,5 @@ export {
     createCommunityPost,
     likeCommunityPost,
     unlikeCommunityPost,
+    createCommunityComment,
 };

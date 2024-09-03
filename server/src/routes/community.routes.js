@@ -10,6 +10,7 @@ import {
     createCommunityPost,
     likeCommunityPost,
     unlikeCommunityPost,
+    createCommunityComment,
 } from "../controllers/community.controller.js";
 import { verifyJWT } from "../middlewares/auth.middleware.js";
 import { Router } from "express";
@@ -30,5 +31,8 @@ router.route("/not-joined").get(getNotJoinedCommunities);
 router.route("/:communityId/create-post").post(createCommunityPost);
 router.route("/:communityId/:postId/like-post").post(likeCommunityPost);
 router.route("/:communityId/:postId/unlike-post").post(unlikeCommunityPost);
+router
+    .route("/:communityId/:postId/create-comment")
+    .post(createCommunityComment);
 
 export default router;
