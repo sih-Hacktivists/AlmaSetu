@@ -48,6 +48,7 @@ const createCommunity = asyncHandler(async (req, res) => {
         );
 });
 
+// remove member from community
 const removeMemberFromCommunity = asyncHandler(async (req, res) => {
     if (req.user.role !== "alumni") {
         throw new ApiError(403, "You are not authorized to remove a member");
@@ -113,6 +114,7 @@ const joinCommunity = asyncHandler(async (req, res) => {
         );
 });
 
+// create post in community
 const createCommunityPost = asyncHandler(async (req, res) => {
     const { communityId } = req.params;
     const owner = req.user._id;
@@ -153,6 +155,7 @@ const createCommunityPost = asyncHandler(async (req, res) => {
         .json(new ApiResponse(201, post, "Post created successfully"));
 });
 
+// get community members
 const getCommunityMembers = asyncHandler(async (req, res) => {
     const { communityId } = req.params;
 
@@ -165,6 +168,7 @@ const getCommunityMembers = asyncHandler(async (req, res) => {
         );
 });
 
+// get community admins
 const getCommunityAdmins = asyncHandler(async (req, res) => {
     const { communityId } = req.params;
 
@@ -177,6 +181,7 @@ const getCommunityAdmins = asyncHandler(async (req, res) => {
         );
 });
 
+// get community details
 const getCommunity = asyncHandler(async (req, res) => {
     const { communityId } = req.params;
 
@@ -187,6 +192,7 @@ const getCommunity = asyncHandler(async (req, res) => {
         .json(new ApiResponse(200, community, "Community details fetched"));
 });
 
+// get joined communities for a user
 const getJoinedCommunities = asyncHandler(async (req, res) => {
     const user = await User.findById(req.user._id).populate("communities");
 
@@ -197,6 +203,7 @@ const getJoinedCommunities = asyncHandler(async (req, res) => {
         );
 });
 
+// get not joined communities for a user
 const getNotJoinedCommunities = asyncHandler(async (req, res) => {
     const user = await User.findById(req.user._id).populate("communities");
 

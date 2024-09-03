@@ -49,6 +49,7 @@ const createEvent = asyncHandler(async (req, res) => {
         .json(new ApiResponse(201, "Event created successfully", event));
 });
 
+// get the registered members of an event
 const getRegisteredMembers = asyncHandler(async (req, res) => {
     if (req.user.role !== "alumni") {
         throw new ApiError(
@@ -72,6 +73,7 @@ const getRegisteredMembers = asyncHandler(async (req, res) => {
         );
 });
 
+// remove a member from an event
 const removeMember = asyncHandler(async (req, res) => {
     if (req.user.role !== "alumni") {
         throw new ApiError(403, "You are not authorized to remove a member");
@@ -104,17 +106,18 @@ const removeMember = asyncHandler(async (req, res) => {
 
 // for all
 const joinEvent = asyncHandler(async (req, res) => {
-    // ask deep if alumni can join event
-    if (req.user.role !== "student") {
-        throw new ApiError(403, "You are not authorized to join an event");
-    }
-
     const { eventId } = req.params;
 
     const event = await Event.findById(eventId);
 
     if (!event) {
         throw new ApiError(404, "Event not found");
+    }
+
+    if (req.user.role === "alumni") {
+        if (event.owner.toString() === req.user._id.toString()) {
+            throw new ApiError(400, "You are the owner of this event");
+        }
     }
 
     if (event.isCompleted) {
@@ -142,6 +145,7 @@ const joinEvent = asyncHandler(async (req, res) => {
         .json(new ApiResponse(200, {}, "You have registered successfully"));
 });
 
+// get the details of an event
 const getEvent = asyncHandler(async (req, res) => {
     const { eventId } = req.params;
 
@@ -152,6 +156,7 @@ const getEvent = asyncHandler(async (req, res) => {
         .json(new ApiResponse(200, event, "Event details fetched"));
 });
 
+// get the registered events of a user
 const getRegisteredEvents = asyncHandler(async (req, res) => {
     const user = await User.findById(req.user._id).populate("events");
 
@@ -166,6 +171,7 @@ const getRegisteredEvents = asyncHandler(async (req, res) => {
         );
 });
 
+// get the unregistered events of a user
 const getUnregisteredEvents = asyncHandler(async (req, res) => {
     const user = await User.findById(req.user._id).populate("events");
 
