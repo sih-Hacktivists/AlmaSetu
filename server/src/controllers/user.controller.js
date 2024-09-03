@@ -8,6 +8,8 @@ import {
     uploadOnCloudinary,
 } from "../utils/cloudinary.js";
 import { User } from "../models/user.model.js";
+import { Token } from "../models/token.model.js";
+import { nodemailerTransport as sendEmail } from "../utils/Nodemailer.js";
 
 const generateAccessAndRefreshTokens = async (userId) => {
     try {
@@ -117,9 +119,57 @@ const register = asyncHandler(async (req, res) => {
         throw new ApiError(500, "Something went wrong while creating user");
     }
 
+    const token = await Token.create({
+        userId: createdUser._id,
+        token: jwt.sign(
+            { _id: createdUser._id },
+            process.env.VERIFY_EMAIL_TOKEN_SECRET,
+            {
+                expiresIn: "1d",
+            }
+        ),
+    });
+
+    const url = `${process.env.BASE_URL}/api/v1/users/${createdUser._id}/verify-email/${token.token}`;
+
+    try {
+        await sendEmail(createdUser.email, "Verify Email", url);
+
+        return res
+            .status(201)
+            .json(
+                new ApiResponse(
+                    200,
+                    createdUser,
+                    "An email has been sent to your account please verify your email"
+                )
+            );
+    } catch (error) {
+        throw new ApiError(500, "Something went wrong while sending email");
+    }
+});
+
+const verifyEmail = asyncHandler(async (req, res) => {
+    const { userId, token } = req.params;
+
+    const user = await User.findById(userId);
+
+    if (!user) {
+        throw new ApiError(404, "User not found");
+    }
+
+    const hasToken = await Token.findOne({ userId, token });
+
+    if (!hasToken) {
+        throw new ApiError(404, "Invalid link");
+    }
+
+    await User.findByIdAndUpdate(userId, { isVerified: true });
+    await Token.findOneAndDelete({ userId, token });
+
     return res
-        .status(201)
-        .json(new ApiResponse(200, createdUser, "User created successfully"));
+        .status(200)
+        .json(new ApiResponse(200, {}, "Email verified successfully"));
 });
 
 const login = asyncHandler(async (req, res) => {
@@ -315,8 +365,24 @@ const getUserProfile = asyncHandler(async (req, res) => {
         .json(new ApiResponse(200, user, "User fetched successfully"));
 });
 
+const allUsers = asyncHandler(async (req, res) => {
+    const keyword = req.query.search
+        ? {
+              $or: [
+                  { name: { $regex: req.query.search, $options: "i" } },
+                  { email: { $regex: req.query.search, $options: "i" } },
+              ],
+          }
+        : {};
+
+    const users = await User.find(keyword).find({ _id: { $ne: req.user._id } });
+    res.send(users);
+});
+
 export {
+    allUsers,
     register,
+    verifyEmail,
     login,
     logout,
     refreshAccessToken,
