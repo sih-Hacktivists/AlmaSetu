@@ -1,16 +1,14 @@
 import React, { useState, useEffect, useRef } from "react";
 
 const universities = [
-  "Harvard University",
-  "Stanford University",
-  "University of California, Berkeley",
-  "Massachusetts Institute of Technology",
-  "California Institute of Technology",
+  "Sh. Gokul Verma Govt. Polytechnic College",
+  "Rajesh Pilot Govt. Polytechnic College",
+  "Ch. Maloo Ram Bhambhu Govt. Poly. College"
 ];
 
 const getCurrentYear = () => new Date().getFullYear();
 
-const StepThree = ({ formData, handleChange }) => {
+const StepThree = ({ formData, handleChange, errors }) => {
   const [filteredUniversities, setFilteredUniversities] = useState([]);
   const [inputValue, setInputValue] = useState(formData.university);
   const [highlightedIndex, setHighlightedIndex] = useState(-1);
@@ -72,13 +70,12 @@ const StepThree = ({ formData, handleChange }) => {
 
   return (
     <>
-     
       <div>
         <label
           htmlFor="university"
           className="block mb-2 text-sm font-medium text-gray-900"
         >
-          University
+          College
         </label>
         <input
           type="text"
@@ -87,10 +84,15 @@ const StepThree = ({ formData, handleChange }) => {
           onKeyDown={handleKeyDown}
           value={inputValue}
           id="university"
-          className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+          className={`bg-gray-50 border ${
+            errors.university ? "border-red-500" : "border-gray-300"
+          } text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5`}
           placeholder="Type to search..."
           required
         />
+        {errors.university && (
+          <p className="text-red-500 text-sm">{errors.university}</p>
+        )}
         {inputValue && filteredUniversities.length > 0 && (
           <ul className="mt-2 border border-gray-300 rounded-lg bg-white absolute z-10">
             {filteredUniversities.map((uni, index) => (
@@ -120,7 +122,9 @@ const StepThree = ({ formData, handleChange }) => {
           onChange={handleChange}
           value={formData.branch}
           id="branch"
-          className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+          className={`bg-gray-50 border ${
+            errors.branch ? "border-red-500" : "border-gray-300"
+          } text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5`}
           required
         >
           <option value="" disabled>
@@ -131,6 +135,7 @@ const StepThree = ({ formData, handleChange }) => {
           <option value="ME">ME</option>
           <option value="Biotech">Biotech</option>
         </select>
+        {errors.branch && <p className="text-red-500 text-sm">{errors.branch}</p>}
       </div>
       <div>
         <label
@@ -144,7 +149,9 @@ const StepThree = ({ formData, handleChange }) => {
           onChange={handleChange}
           value={formData.specialization}
           id="specialization"
-          className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+          className={`bg-gray-50 border ${
+            errors.specialization ? "border-red-500" : "border-gray-300"
+          } text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5`}
           required
         >
           <option value="" disabled>
@@ -156,6 +163,9 @@ const StepThree = ({ formData, handleChange }) => {
           <option value="Cyber Security">Cyber Security</option>
           <option value="Biomedical Engineering">Biomedical Engineering</option>
         </select>
+        {errors.specialization && (
+          <p className="text-red-500 text-sm">{errors.specialization}</p>
+        )}
       </div>
       <div>
         <label
@@ -169,7 +179,9 @@ const StepThree = ({ formData, handleChange }) => {
           onChange={handleChange}
           value={formData.yearOfGraduation}
           id="yearOfGraduation"
-          className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+          className={`bg-gray-50 border ${
+            errors.yearOfGraduation ? "border-red-500" : "border-gray-300"
+          } text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5`}
           required
         >
           <option value="" disabled>
@@ -184,6 +196,9 @@ const StepThree = ({ formData, handleChange }) => {
             </option>
           ))}
         </select>
+        {errors.yearOfGraduation && (
+          <p className="text-red-500 text-sm">{errors.yearOfGraduation}</p>
+        )}
       </div>
     </>
   );

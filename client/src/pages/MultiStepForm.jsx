@@ -56,18 +56,24 @@ export const MultiStepForm = () => {
         if (!formData.name) stepErrors.name = "Name is required.";
         if (!formData.email) stepErrors.email = "Email is required.";
         if (!formData.password) stepErrors.password = "Password is required.";
+        if (!formData.phone) stepErrors.phone = "Phone nummber is required.";
+        
         break;
       case 2:
         if (!formData.role) stepErrors.role = "Role is required.";
-        if (!formData.university) stepErrors.university = "University is required.";
-        break;
-      case 3:
         if (!formData.city) stepErrors.city = "City is required.";
         if (!formData.bio) stepErrors.bio = "Bio is required.";
         break;
-      case 4:
-        if (!formData.profilePic) stepErrors.profilePic = "Profile picture is required.";
+        case 3:
+        if (!formData.university) stepErrors.university = "University is required.";
+        if (!formData.branch) stepErrors.university = "Selecr your Branch";
         if (!formData.yearOfGraduation) stepErrors.yearOfGraduation = "Year of graduation is required.";
+        if (!formData.specialization) stepErrors.university = "University is required.";
+        break;
+      case 4:
+        if (!formData.enrollmentNumber) stepErrors.enrollmentNumber = "Enrollment Number is required.";
+
+        if (!formData.profilePic) stepErrors.profilePic = "Profile picture is required.";
         break;
       case 5:
         if (!formData.skills.length) stepErrors.skills = "At least one skill is required.";
