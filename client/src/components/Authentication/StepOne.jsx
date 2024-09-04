@@ -1,6 +1,6 @@
 import React from "react";
 
-const StepOne = ({ formData, handleChange, handleCheckboxChange }) => {
+const StepOne = ({ formData, handleChange, handleCheckboxChange, errors }) => {
   return (
     <>
       <div>
@@ -16,11 +16,15 @@ const StepOne = ({ formData, handleChange, handleCheckboxChange }) => {
           onChange={handleChange}
           value={formData.name}
           id="name"
-          className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+          className={`bg-gray-50 border ${
+            errors.name ? "border-red-500" : "border-gray-300"
+          } text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5`}
           placeholder="John"
           required
         />
+        {errors.name && <p className="text-red-500 text-sm">{errors.name}</p>}
       </div>
+
       <div>
         <label
           htmlFor="email"
@@ -34,16 +38,19 @@ const StepOne = ({ formData, handleChange, handleCheckboxChange }) => {
           onChange={handleChange}
           value={formData.email}
           id="email"
-          className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+          className={`bg-gray-50 border ${
+            errors.email ? "border-red-500" : "border-gray-300"
+          } text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5`}
           placeholder="name@x.edu.in"
           required
           pattern="^[a-zA-Z0-9._%+-]+@[\w-]+\.edu\.in$"
           title="Please enter a valid college email ending with @x.edu.in"
         />
+        {errors.email && <p className="text-red-500 text-sm">{errors.email}</p>}
         <div className="flex gap-2 items-center mt-2">
           <input
             type="checkbox"
-            value={formData.isCollegeEmail}
+            checked={formData.isCollegeEmail}
             id="college-email"
             className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500"
             onChange={handleCheckboxChange}
@@ -53,6 +60,7 @@ const StepOne = ({ formData, handleChange, handleCheckboxChange }) => {
           </label>
         </div>
       </div>
+
       <div>
         <label
           htmlFor="password"
@@ -67,10 +75,16 @@ const StepOne = ({ formData, handleChange, handleCheckboxChange }) => {
           value={formData.password}
           id="password"
           placeholder="••••••••"
-          className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+          className={`bg-gray-50 border ${
+            errors.password ? "border-red-500" : "border-gray-300"
+          } text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5`}
           required
         />
+        {errors.password && (
+          <p className="text-red-500 text-sm">{errors.password}</p>
+        )}
       </div>
+
       <div>
         <label
           htmlFor="phone"
@@ -84,9 +98,12 @@ const StepOne = ({ formData, handleChange, handleCheckboxChange }) => {
           onChange={handleChange}
           value={formData.phone}
           id="phone"
-          className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+          className={`bg-gray-50 border ${
+            errors.phone ? "border-red-500" : "border-gray-300"
+          } text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5`}
           required
         />
+        {errors.phone && <p className="text-red-500 text-sm">{errors.phone}</p>}
       </div>
     </>
   );

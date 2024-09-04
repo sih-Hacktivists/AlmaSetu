@@ -23,27 +23,67 @@ export const MultiStepForm = () => {
     branch: "",
     specialization: "",
     yearOfGraduation: "",
-    skills:[],
-    interests:[],
+    skills: [],
+    interests: [],
     enrollmentNumber: "",
     profilePic: null,
     collegeDocument: null,
   });
+  
+  const [errors, setErrors] = useState({});
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
+    // Clear error for the specific field
+    setErrors({ ...errors, [name]: "" });
   };
+
   const handleFileChange = (e) => {
     const { name, files } = e.target;
     setFormData({ ...formData, [name]: files[0] });
+    setErrors({ ...errors, [name]: "" });
   };
+
   const handleCheckboxChange = (e) => {
     setFormData({ ...formData, isCollegeEmail: e.target.checked });
   };
 
+  const validateStep = () => {
+    const stepErrors = {};
+    switch (currentStep) {
+      case 1:
+        if (!formData.name) stepErrors.name = "Name is required.";
+        if (!formData.email) stepErrors.email = "Email is required.";
+        if (!formData.password) stepErrors.password = "Password is required.";
+        break;
+      case 2:
+        if (!formData.role) stepErrors.role = "Role is required.";
+        if (!formData.university) stepErrors.university = "University is required.";
+        break;
+      case 3:
+        if (!formData.city) stepErrors.city = "City is required.";
+        if (!formData.bio) stepErrors.bio = "Bio is required.";
+        break;
+      case 4:
+        if (!formData.profilePic) stepErrors.profilePic = "Profile picture is required.";
+        if (!formData.yearOfGraduation) stepErrors.yearOfGraduation = "Year of graduation is required.";
+        break;
+      case 5:
+        if (!formData.skills.length) stepErrors.skills = "At least one skill is required.";
+        if (!formData.interests.length) stepErrors.interests = "At least one interest is required.";
+        break;
+      default:
+        break;
+    }
+    setErrors(stepErrors);
+    return Object.keys(stepErrors).length === 0;
+  };
+
   const nextStep = () => {
-    setCurrentStep((prev) => Math.min(prev + 1, 7));
+    if (validateStep()) {
+      setCurrentStep((prev) => Math.min(prev + 1, 7));
+    }
   };
 
   const prevStep = () => {
@@ -52,7 +92,9 @@ export const MultiStepForm = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("Form Data Submitted: ", formData);
+    if (validateStep()) {
+      console.log("Form Data Submitted: ", formData);
+    }
   };
 
   const renderStep = () => {
@@ -63,41 +105,43 @@ export const MultiStepForm = () => {
             formData={formData}
             handleChange={handleChange}
             handleCheckboxChange={handleCheckboxChange}
+            errors={errors}
           />
         );
       case 2:
-        return <StepTwo formData={formData} handleChange={handleChange} />;
+        return <StepTwo formData={formData} handleChange={handleChange} errors={errors} />;
       case 3:
-        return <StepThree formData={formData} handleChange={handleChange} />;
+        return <StepThree formData={formData} handleChange={handleChange} errors={errors} />;
       case 4:
         return (
           <StepFour
             formData={formData}
             handleChange={handleChange}
             handleFileChange={handleFileChange}
+            errors={errors}
           />
         );
-
       case 5:
         return (
-          <SkillsAndInterests formData={formData} handleChange={handleChange} />
+          <SkillsAndInterests formData={formData} handleChange={handleChange} errors={errors} />
         );
-
       case 6:
         return (
           <StepFive
             formData={formData}
             prevStep={prevStep}
             handleSubmit={handleSubmit}
+            errors={errors}
           />
         );
       case 7:
         return formData.isCollegeEmail ? (
-          <VerifyCollegeEmail formData={formData} />
+          <VerifyCollegeEmail formData={formData} errors={errors} />
         ) : (
           <UploadCollegeDocument
             formData={formData}
             handleFileChange={handleFileChange}
+            errors={errors}
           />
         );
       default:
@@ -107,7 +151,7 @@ export const MultiStepForm = () => {
 
   return (
     <section className="bg-gray-50">
-      <div className="relative   flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
+      <div className="relative flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
         <a
           href="#"
           className="flex items-center mb-6 text-2xl font-semibold text-gray-900"
@@ -140,7 +184,7 @@ export const MultiStepForm = () => {
                   </button>
                 )}
 
-                {currentStep < 5 && (
+                {currentStep < 6 && (
                   <button
                     type="button"
                     onClick={nextStep}
@@ -150,15 +194,6 @@ export const MultiStepForm = () => {
                   </button>
                 )}
 
-                {currentStep === 5 && (
-                    <button
-                    type="button"
-                    onClick={nextStep}
-                    className="text-white bg-slate-500 hover:bg-slate-600 focus:ring-4 focus:outline-none focus:ring-blue-500 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
-                  >
-                    Next
-                  </button>
-                )}
                 {currentStep === 6 && (
                   <button
                     type="button"
@@ -168,7 +203,6 @@ export const MultiStepForm = () => {
                     Next
                   </button>
                 )}
-
 
                 {currentStep === 7 && (
                   <button
