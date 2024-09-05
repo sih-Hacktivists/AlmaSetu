@@ -10,6 +10,7 @@
 
   export const MultiStepForm = () => {
     const [currentStep, setCurrentStep] = useState(1);
+    const [sentEmail,setSentEmail]=useState(false);
     const [formData, setFormData] = useState({
       name: "",
       email: "",
@@ -119,6 +120,7 @@
 
     const handleSubmit = (e) => {
       e.preventDefault();
+      setSentEmail(!sentEmail);
       if (validateStep()) { 
         console.log("Form Data Submitted: ", formData);
       }
@@ -163,7 +165,7 @@
           );
         case 7:
           return formData.isCollegeEmail ? (
-            <VerifyCollegeEmail formData={formData} errors={errors} />
+            <VerifyCollegeEmail formData={formData} errors={errors} sentEmail={sentEmail}/>
           ) : (
             <UploadCollegeDocument
               formData={formData}
@@ -235,9 +237,9 @@
                     <button
                       type="button"
                       onClick={handleSubmit}
-                      className="w-full px-5 py-2.5 text-white bg-blue-500 rounded-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-400 text-sm font-medium"
+                      className= {` w-full px-5 py-2.5 text-white bg-blue-500 rounded-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-400 text-sm font-medium `}
                     >
-                      Verify and Submit
+                      {sentEmail ? "Email sent✅" :"Verify and Submit"}
                     </button>
                   )}
                 </div>
