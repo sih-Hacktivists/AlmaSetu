@@ -12,7 +12,6 @@ import { API } from "../utils/api";
 
 export const MultiStepForm = () => {
   const [currentStep, setCurrentStep] = useState(1);
-  // const [sentEmail, setSentEmail] = useState(false);
   const [message, setMessage] = useState("");
   const [formData, setFormData] = useState({
     name: "",
@@ -139,7 +138,6 @@ export const MultiStepForm = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    // setSentEmail(!sentEmail);
     if (validateStep()) {
       console.log("Form Data Submitted: ", formData);
       try {
@@ -213,11 +211,7 @@ export const MultiStepForm = () => {
         );
       case 7:
         return formData.isCollegeEmail ? (
-          <VerifyCollegeEmail
-            formData={formData}
-            errors={errors}
-            // sentEmail={sentEmail}
-          />
+          <VerifyCollegeEmail formData={formData} errors={errors} />
         ) : (
           <UploadCollegeDocument
             formData={formData}
