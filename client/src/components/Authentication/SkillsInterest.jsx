@@ -74,13 +74,19 @@ const SkillsAndInterests = ({ formData, handleChange }) => {
           placeholder="Search..."
         />
       </div>
+      {/* Skills section */}
       <div className="mt-4">
         <h2 className="text-lg font-semibold text-gray-900 mb-2">Skills</h2>
         <div className="flex flex-wrap gap-2">
           {filteredSkills.map((skill) => (
             <button
               key={skill}
-              onClick={() => handleSkillClick(skill)}
+              // type="button"
+
+              onClick={(e) => {
+                e.preventDefault();
+                handleSkillClick(skill);
+              }}
               className={`px-3 py-1 text-sm rounded-full border ${
                 formData.skills.includes(skill)
                   ? "bg-blue-500 text-white"
@@ -92,13 +98,18 @@ const SkillsAndInterests = ({ formData, handleChange }) => {
           ))}
         </div>
       </div>
+      {/* interest Section */}
       <div className="mt-4">
         <h2 className="text-lg font-semibold text-gray-900 mb-2">Interests</h2>
         <div className="flex flex-wrap gap-2">
           {filteredInterests.map((interest) => (
             <button
               key={interest}
-              onClick={() => handleInterestClick(interest)}
+              // type="button"
+              onClick={(e) => {
+                e.preventDefault();
+                handleInterestClick(interest);
+              }}
               className={`px-3 py-1 text-sm rounded-full border ${
                 formData.interests.includes(interest)
                   ? "bg-green-500 text-white"

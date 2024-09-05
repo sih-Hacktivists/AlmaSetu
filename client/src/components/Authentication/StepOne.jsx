@@ -1,6 +1,12 @@
-import React from "react";
+import React, { useState } from "react";
+import ShowButton from "../../assets/eyeButton.svg"
+import HideButton from "../../assets/hideEyeButton.svg"
 
 const StepOne = ({ formData, handleChange, handleCheckboxChange, errors }) => {
+  const [show,setShow] = useState(false);
+  function handleClick(){
+    setShow(!show)
+  }
   return (
     <>
       <div>
@@ -41,10 +47,10 @@ const StepOne = ({ formData, handleChange, handleCheckboxChange, errors }) => {
           className={`bg-gray-50 border ${
             errors.email ? "border-red-500" : "border-gray-300"
           } text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5`}
-          placeholder="name@x.edu.in"
+          placeholder={`${formData.isCollegeEmail?"....@x.edu.in" :"....@gmail.com"} `}
           required
           pattern="^[a-zA-Z0-9._%+-]+@[\w-]+\.edu\.in$"
-          title="Please enter a valid college email ending with @x.edu.in"
+         
         />
         {errors.email && <p className="text-red-500 text-sm">{errors.email}</p>}
         <div className="flex gap-2 items-center mt-2">
@@ -61,7 +67,7 @@ const StepOne = ({ formData, handleChange, handleCheckboxChange, errors }) => {
         </div>
       </div>
 
-      <div>
+      <div className="relative">
         <label
           htmlFor="password"
           className="block mb-2 text-sm font-medium text-gray-900"
@@ -69,17 +75,18 @@ const StepOne = ({ formData, handleChange, handleCheckboxChange, errors }) => {
           Password
         </label>
         <input
-          type="password"
           name="password"
+          type={`${show ? "text" : "password"}`}
           onChange={handleChange}
           value={formData.password}
           id="password"
           placeholder="••••••••"
-          className={`bg-gray-50 border ${
+          className={`bg-gray-50  border ${
             errors.password ? "border-red-500" : "border-gray-300"
           } text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5`}
           required
-        />
+          />
+          <div onClick={handleClick} className="cursor-pointer absolute right-2 top-10">{show ? <img width={20} height={20} src={HideButton}/> : <img width={20} height={20} src={ShowButton}/>}</div>
         {errors.password && (
           <p className="text-red-500 text-sm">{errors.password}</p>
         )}
@@ -92,12 +99,15 @@ const StepOne = ({ formData, handleChange, handleCheckboxChange, errors }) => {
         >
           Phone Number
         </label>
+        
         <input
-          type="text"
+          type="tel"
           name="phone"
           onChange={handleChange}
           value={formData.phone}
+          pattern="[0-9]{3}-[0-9]{2}-[0-9]{3}"
           id="phone"
+          placeholder="+91-123-456-7890"
           className={`bg-gray-50 border ${
             errors.phone ? "border-red-500" : "border-gray-300"
           } text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5`}
@@ -108,5 +118,7 @@ const StepOne = ({ formData, handleChange, handleCheckboxChange, errors }) => {
     </>
   );
 };
+
+
 
 export default StepOne;
