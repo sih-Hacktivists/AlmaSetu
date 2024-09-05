@@ -49,7 +49,6 @@ const StepOne = ({ formData, handleChange, handleCheckboxChange, errors }) => {
           } text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5`}
           placeholder={`${formData.isCollegeEmail?"....@x.edu.in" :"....@gmail.com"} `}
           required
-          pattern="^[a-zA-Z0-9._%+-]+@[\w-]+\.edu\.in$"
          
         />
         {errors.email && <p className="text-red-500 text-sm">{errors.email}</p>}

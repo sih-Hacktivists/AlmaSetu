@@ -48,42 +48,65 @@
     const handleCheckboxChange = (e) => {
       setFormData({ ...formData, isCollegeEmail: e.target.checked });
     };
+    
+    const collegeEmailPattern = /^[\w-.]+@[a-zA-Z0-9.-]+\.edu\.in$/;
+    const normalEmailPattern=/^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/;
 
     const validateStep = () => {
       const stepErrors = {};
+    
       switch (currentStep) {
         case 1:
           if (!formData.name) stepErrors.name = "Name is required.";
-          if (!formData.email) stepErrors.email = `Email is required.`;
-          if (!formData.password) stepErrors.password = "Password is required.";
-          if (!formData.phone) stepErrors.phone = "Phone nummber is required.";
+    
+          if (!formData.email) {
+            stepErrors.email = "Email is required.";
+          } else if (!normalEmailPattern.test(formData.email)) {
+            stepErrors.email = "Invalid email format.";
+          } else if (formData.isCollegeEmail && !collegeEmailPattern.test(formData.email)) {
+            stepErrors.email = "Email must be a college email (e.g., name@university.edu.in).";
+          } else if (collegeEmailPattern.test(formData.email) && !formData.isCollegeEmail) {
+            stepErrors.email = "This is a college email type. Please tick the checkbox below.";
+          }
+    
+          if (!formData.password || formData.password.length < 6) {
+            stepErrors.password = formData.password ? "Password must be at least six characters." : "Password is required.";
+          }
+    
+          if (!formData.phone) stepErrors.phone = "Phone number is required.";
           break;
+    
         case 2:
           if (!formData.role) stepErrors.role = "Role is required.";
           if (!formData.city) stepErrors.city = "City is required.";
           if (!formData.bio) stepErrors.bio = "Bio is required.";
           break;
-          case 3:
-          if (!formData.university) stepErrors.university = "College is required.";
-          if (!formData.branch) stepErrors.university = "Selecr your Branch";
+    
+        case 3:
+          if (!formData.university) stepErrors.university = "University is required.";
+          if (!formData.branch) stepErrors.branch = "Branch is required.";
           if (!formData.yearOfGraduation) stepErrors.yearOfGraduation = "Year of graduation is required.";
-          if (!formData.specialization) stepErrors.university = "University is required.";
+          if (!formData.specialization) stepErrors.specialization = "Specialization is required.";
           break;
+    
         case 4:
-          if (!formData.enrollmentNumber) stepErrors.enrollmentNumber = "Enrollment Number is required.";
+          if (!formData.enrollmentNumber) stepErrors.enrollmentNumber = "Enrollment number is required.";
           if (!formData.profilePic) stepErrors.profilePic = "Profile picture is required.";
           break;
+    
         case 5:
           if (!formData.skills.length) stepErrors.skills = "At least one skill is required.";
           if (!formData.interests.length) stepErrors.interests = "At least one interest is required.";
           break;
+    
         default:
           break;
       }
+    
       setErrors(stepErrors);
       return Object.keys(stepErrors).length === 0;
     };
-
+    
     const nextStep = () => {
       if (validateStep()) {
         setCurrentStep((prev) => Math.min(prev + 1, 7));

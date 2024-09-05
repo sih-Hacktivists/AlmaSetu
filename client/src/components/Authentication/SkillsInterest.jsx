@@ -34,17 +34,27 @@ const SkillsAndInterests = ({ formData, handleChange }) => {
   };
 
   const handleSkillClick = (skill) => {
-    const updatedSkills = formData.skills.includes(skill)
-      ? formData.skills.filter((s) => s !== skill)
-      : [...formData.skills, skill];
-    handleChange({ target: { name: "skills", value: updatedSkills } });
+    if (formData.skills.includes(skill)) {
+      // Remove skill
+      const updatedSkills = formData.skills.filter((s) => s !== skill);
+      handleChange({ target: { name: "skills", value: updatedSkills } });
+    } else if (formData.skills.length < 3) {
+      // Add skill if less than 3 are selected
+      const updatedSkills = [...formData.skills, skill];
+      handleChange({ target: { name: "skills", value: updatedSkills } });
+    }
   };
 
   const handleInterestClick = (interest) => {
-    const updatedInterests = formData.interests.includes(interest)
-      ? formData.interests.filter((i) => i !== interest)
-      : [...formData.interests, interest];
-    handleChange({ target: { name: "interests", value: updatedInterests } });
+    if (formData.interests.includes(interest)) {
+      // Remove interest
+      const updatedInterests = formData.interests.filter((i) => i !== interest);
+      handleChange({ target: { name: "interests", value: updatedInterests } });
+    } else if (formData.interests.length < 3) {
+      // Add interest if less than 3 are selected
+      const updatedInterests = [...formData.interests, interest];
+      handleChange({ target: { name: "interests", value: updatedInterests } });
+    }
   };
 
   const filteredSkills = skillsList.filter((skill) =>
@@ -76,13 +86,13 @@ const SkillsAndInterests = ({ formData, handleChange }) => {
       </div>
       {/* Skills section */}
       <div className="mt-4">
-        <h2 className="text-lg font-semibold text-gray-900 mb-2">Skills</h2>
+        <h2 className="text-lg font-semibold text-gray-900 mb-2">
+          Skills ({formData.skills.length}/3)
+        </h2>
         <div className="flex flex-wrap gap-2">
           {filteredSkills.map((skill) => (
             <button
               key={skill}
-              // type="button"
-
               onClick={(e) => {
                 e.preventDefault();
                 handleSkillClick(skill);
@@ -98,14 +108,15 @@ const SkillsAndInterests = ({ formData, handleChange }) => {
           ))}
         </div>
       </div>
-      {/* interest Section */}
+      {/* Interests section */}
       <div className="mt-4">
-        <h2 className="text-lg font-semibold text-gray-900 mb-2">Interests</h2>
+        <h2 className="text-lg font-semibold text-gray-900 mb-2">
+          Interests ({formData.interests.length}/3)
+        </h2>
         <div className="flex flex-wrap gap-2">
           {filteredInterests.map((interest) => (
             <button
               key={interest}
-              // type="button"
               onClick={(e) => {
                 e.preventDefault();
                 handleInterestClick(interest);
