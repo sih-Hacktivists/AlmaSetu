@@ -195,13 +195,13 @@ const login = asyncHandler(async (req, res) => {
     const user = await User.findOne({ email });
 
     if (!user) {
-        throw new ApiError(404, "User does not exists");
+        return res.status(400).json({ message: "User not found" });
     }
 
     const isPasswordValid = await user.isPasswordCorrect(password);
 
     if (!isPasswordValid) {
-        throw new ApiError(401, "Invalid user Credentials");
+        return res.status(400).json({ message: "Invalid Password" });
     }
 
     if (user.isCollegeEmail && !user.isVerified) {
@@ -223,15 +223,16 @@ const login = asyncHandler(async (req, res) => {
         const url = `${process.env.BASE_URL}/users/${user._id}/verify-email/${token.token}`;
         await sendEmail(user.email, "Verify Email", url);
 
+        return res.status(400).json({
+            message:
+                "Please verify your email to login. Also check spam folder if you don't see it in inbox",
+        });
+    }
+
+    if (!user.isVerified) {
         return res
-            .status(401)
-            .json(
-                new ApiResponse(
-                    401,
-                    {},
-                    "Please verify your email to login. Also check spam folder if you don't see it in inbox"
-                )
-            );
+            .status(400)
+            .json({ message: "Please wait for your approval from admin" });
     }
 
     const { accessToken, refreshToken } = await generateAccessAndRefreshTokens(

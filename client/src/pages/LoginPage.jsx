@@ -1,11 +1,16 @@
 import React, { useState } from "react";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
+import { API } from "../utils/api";
 
 const LoginPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [message, setMessage] = useState("");
+  const navigate = useNavigate();
   const [errors, setErrors] = useState({});
-  
-  const handleSubmit = (e) => {
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
     // Simple validation
     const errors = {};
@@ -14,6 +19,21 @@ const LoginPage = () => {
     setErrors(errors);
     if (Object.keys(errors).length === 0) {
       console.log("Logged in with:", { email, password });
+
+      try {
+        setMessage("Please wait...");
+        const response = await axios.post(`${API}/users/login`, {
+          email,
+          password,
+        });
+
+        setMessage("");
+        console.log(response.data.message);
+        navigate("/home");
+      } catch (error) {
+        setMessage(error.response.data.message);
+        console.log(error);
+      }
       // Handle login here
     }
   };
@@ -41,7 +61,10 @@ const LoginPage = () => {
 
             <form onSubmit={handleSubmit} className="space-y-4 md:space-y-6">
               <div>
-                <label htmlFor="email" className="block text-sm font-medium text-gray-900">
+                <label
+                  htmlFor="email"
+                  className="block text-sm font-medium text-gray-900"
+                >
                   Email
                 </label>
                 <input
@@ -50,13 +73,20 @@ const LoginPage = () => {
                   name="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  className={`mt-1 block w-full px-3 py-2 border rounded-lg shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm ${errors.email ? 'border-red-500' : ''}`}
+                  className={`mt-1 block w-full px-3 py-2 border rounded-lg shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm ${
+                    errors.email ? "border-red-500" : ""
+                  }`}
                 />
-                {errors.email && <p className="mt-2 text-sm text-red-600">{errors.email}</p>}
+                {errors.email && (
+                  <p className="mt-2 text-sm text-red-600">{errors.email}</p>
+                )}
               </div>
 
               <div>
-                <label htmlFor="password" className="block text-sm font-medium text-gray-900">
+                <label
+                  htmlFor="password"
+                  className="block text-sm font-medium text-gray-900"
+                >
                   Password
                 </label>
                 <input
@@ -65,10 +95,16 @@ const LoginPage = () => {
                   name="password"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  className={`mt-1 block w-full px-3 py-2 border rounded-lg shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm ${errors.password ? 'border-red-500' : ''}`}
+                  className={`mt-1 block w-full px-3 py-2 border rounded-lg shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm ${
+                    errors.password ? "border-red-500" : ""
+                  }`}
                 />
-                {errors.password && <p className="mt-2 text-sm text-red-600">{errors.password}</p>}
+                {errors.password && (
+                  <p className="mt-2 text-sm text-red-600">{errors.password}</p>
+                )}
               </div>
+
+              {message && <p className="text-red-500 text-center">{message}</p>}
 
               <button
                 type="submit"
@@ -78,7 +114,10 @@ const LoginPage = () => {
               </button>
 
               <div className="text-sm font-medium text-gray-900">
-                <a href="/forgot-pass" className="text-blue-500 hover:underline">
+                <a
+                  href="/forgot-pass"
+                  className="text-blue-500 hover:underline"
+                >
                   Forgot your password?
                 </a>
               </div>
