@@ -33,11 +33,12 @@ const register = asyncHandler(async (req, res) => {
     const {
         name,
         email,
-        enrollment,
-        contact,
+        enrollmentNumber,
+        phone,
         role,
         city,
         college,
+        isCollegeEmail,
         bio,
         branch,
         yearOfGraduation,
@@ -50,8 +51,8 @@ const register = asyncHandler(async (req, res) => {
     if (
         !name ||
         !email ||
-        !enrollment ||
-        !contact ||
+        !enrollmentNumber ||
+        !phone ||
         !role ||
         !city ||
         !college ||
@@ -67,7 +68,7 @@ const register = asyncHandler(async (req, res) => {
     }
 
     const existingUser = await User.findOne({
-        $or: [{ email }, { enrollment }, { contact }],
+        $or: [{ email }, { enrollmentNumber }, { phone }],
     });
 
     if (existingUser) {
@@ -81,8 +82,10 @@ const register = asyncHandler(async (req, res) => {
 
     const profilePic = await uploadOnCloudinary(profilePicLocalPath);
 
+    console.log(profilePicLocalPath);
+
     if (!profilePic) {
-        throw new ApiError(500, "Profile pic file is required");
+        throw new ApiError(500, "Profile pic is required");
     }
 
     let documentLocalPath;
@@ -90,16 +93,19 @@ const register = asyncHandler(async (req, res) => {
         documentLocalPath = req.files.document[0].path;
     }
 
+    console.log(documentLocalPath);
+
     const document = await uploadOnCloudinary(documentLocalPath);
 
     const user = await User.create({
         name,
         email,
-        enrollment,
-        contact,
-        role,
+        enrollmentNumber,
+        phone,
+        role: role.toLowerCase(),
         city,
         college,
+        isCollegeEmail,
         bio,
         branch,
         yearOfGraduation,
@@ -108,7 +114,7 @@ const register = asyncHandler(async (req, res) => {
         skills,
         password,
         profilePic: profilePic.url,
-        document: document.url || "",
+        document: document?.url || "",
     });
 
     const createdUser = await User.findById(user._id).select(
@@ -119,27 +125,39 @@ const register = asyncHandler(async (req, res) => {
         throw new ApiError(500, "Something went wrong while creating user");
     }
 
-    const token = await Token.create({
-        userId: createdUser._id,
-        token: jwt.sign(
-            { _id: createdUser._id },
-            process.env.VERIFY_EMAIL_TOKEN_SECRET,
-            {
-                expiresIn: "1d",
-            }
-        ),
-    });
+    if (createdUser.isCollegeEmail) {
+        const token = await Token.create({
+            userId: createdUser._id,
+            token: jwt.sign(
+                { _id: createdUser._id },
+                process.env.VERIFY_EMAIL_TOKEN_SECRET,
+                {
+                    expiresIn: "1d",
+                }
+            ),
+        });
 
-    const url = `${process.env.BASE_URL}/users/${createdUser._id}/verify-email/${token.token}`;
-    await sendEmail(createdUser.email, "Verify Email", url);
+        const url = `${process.env.BASE_URL}/users/${createdUser._id}/verify-email/${token.token}`;
+        await sendEmail(createdUser.email, "Verify Email", url);
+
+        return res
+            .status(201)
+            .json(
+                new ApiResponse(
+                    200,
+                    createdUser,
+                    "An email has been sent please verify your email. Also check spam folder if you don't see it in inbox"
+                )
+            );
+    }
 
     return res
-        .status(201)
+        .status(200)
         .json(
             new ApiResponse(
                 200,
                 createdUser,
-                "An email has been sent to your account please verify your email"
+                "Your details have been submitted successfully"
             )
         );
 });
@@ -186,31 +204,35 @@ const login = asyncHandler(async (req, res) => {
         throw new ApiError(401, "Invalid user Credentials");
     }
 
-    // if (!user.isVerified) {
-    //     let token = await Token.findOne({ userId: user._id });
+    if (user.isCollegeEmail && !user.isVerified) {
+        let token = await Token.findOne({ userId: user._id });
 
-    //     if (!token) {
-    //         token = await Token.create({
-    //             userId: user._id,
-    //             token: jwt.sign(
-    //                 { _id: user._id },
-    //                 process.env.VERIFY_EMAIL_TOKEN_SECRET,
-    //                 {
-    //                     expiresIn: "1d",
-    //                 }
-    //             ),
-    //         });
-    //     }
+        if (!token) {
+            token = await Token.create({
+                userId: user._id,
+                token: jwt.sign(
+                    { _id: user._id },
+                    process.env.VERIFY_EMAIL_TOKEN_SECRET,
+                    {
+                        expiresIn: "1d",
+                    }
+                ),
+            });
+        }
 
-    //     const url = `${process.env.BASE_URL}/users/${user._id}/verify-email/${token.token}`;
-    //     await sendEmail(user.email, "Verify Email", url);
+        const url = `${process.env.BASE_URL}/users/${user._id}/verify-email/${token.token}`;
+        await sendEmail(user.email, "Verify Email", url);
 
-    //     return res
-    //         .status(401)
-    //         .json(
-    //             new ApiResponse(401, {}, "Please verify your email to login")
-    //         );
-    // }
+        return res
+            .status(401)
+            .json(
+                new ApiResponse(
+                    401,
+                    {},
+                    "Please verify your email to login. Also check spam folder if you don't see it in inbox"
+                )
+            );
+    }
 
     const { accessToken, refreshToken } = await generateAccessAndRefreshTokens(
         user._id

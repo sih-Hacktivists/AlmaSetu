@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-const UploadCollegeDocument = ({ handleFileChange,formData }) => {
+const UploadCollegeDocument = ({ handleFileChange, formData }) => {
   return (
     <div className="flex items-center justify-center bg-gray-50">
       <div className="w-full max-w-md bg-white p-8 rounded-lg shadow-md border space-y-6">
@@ -18,8 +18,7 @@ const UploadCollegeDocument = ({ handleFileChange,formData }) => {
         <div className="bg-gray-50 border border-gray-300 rounded-lg p-2.5 mt-2">
           <input
             type="file"
-            name="collegeDocument"
-            
+            name="document"
             checked={formData.isCollegeEmail}
             accept=".pdf,.jpg,.jpeg,.png"
             onChange={handleFileChange}

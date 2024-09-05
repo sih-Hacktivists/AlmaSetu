@@ -7,10 +7,13 @@ import SkillsAndInterests from "../components/Authentication/SkillsInterest";
 import StepFive from "../components/Authentication/StepFive";
 import VerifyCollegeEmail from "../components/Authentication/VerifyEmailPage";
 import UploadCollegeDocument from "../components/Authentication/UploadDocument";
+import axios from "axios";
+import { API } from "../utils/api";
 
 export const MultiStepForm = () => {
   const [currentStep, setCurrentStep] = useState(1);
-  const [sentEmail, setSentEmail] = useState(false);
+  // const [sentEmail, setSentEmail] = useState(false);
+  const [message, setMessage] = useState("");
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -28,7 +31,7 @@ export const MultiStepForm = () => {
     interests: [],
     enrollmentNumber: "",
     profilePic: null,
-    collegeDocument: null,
+    document: null,
   });
 
   const [errors, setErrors] = useState({});
@@ -134,11 +137,24 @@ export const MultiStepForm = () => {
     setCurrentStep((prev) => Math.max(prev - 1, 1));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    setSentEmail(!sentEmail);
+    // setSentEmail(!sentEmail);
     if (validateStep()) {
       console.log("Form Data Submitted: ", formData);
+      try {
+        setMessage("Please wait...");
+        const response = await axios.post(`${API}/users/register`, formData, {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        });
+
+        setMessage(response.data.message);
+        console.log(response.data.message);
+      } catch (error) {
+        console.log(error);
+      }
     }
   };
 
@@ -200,7 +216,7 @@ export const MultiStepForm = () => {
           <VerifyCollegeEmail
             formData={formData}
             errors={errors}
-            sentEmail={sentEmail}
+            // sentEmail={sentEmail}
           />
         ) : (
           <UploadCollegeDocument
@@ -237,7 +253,9 @@ export const MultiStepForm = () => {
 
             <form onSubmit={handleSubmit} className="space-y-4 md:space-y-6">
               {renderStep()}
-
+              {message && (
+                <p className="text-blue-500 text-center">{message}</p>
+              )}
               <div className="flex justify-between mt-4">
                 {currentStep > 1 && currentStep !== 7 && (
                   <button
@@ -275,7 +293,7 @@ export const MultiStepForm = () => {
                     onClick={handleSubmit}
                     className={` w-full px-5 py-2.5 text-white bg-blue-500 rounded-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-400 text-sm font-medium `}
                   >
-                    {sentEmail ? "Email sent✅" : "Verify and Submit"}
+                    Verify and Submit
                   </button>
                 )}
               </div>

@@ -15,12 +15,17 @@ const userSchema = new Schema(
             required: true,
             trim: true,
         },
-        enrollment: {
+        isCollegeEmail: {
+            type: Boolean,
+            required: true,
+            default: false,
+        },
+        enrollmentNumber: {
             type: String,
             required: true,
             trim: true,
         },
-        contact: {
+        phone: {
             type: String,
             required: true,
             trim: true,
@@ -138,10 +143,11 @@ userSchema.methods.generateAccessToken = function () {
             _id: this._id,
             name: this.name,
             email: this.email,
-            enrollment: this.enrollment,
-            contact: this.contact,
+            enrollmentNumber: this.enrollmentNumber,
+            phone: this.phone,
             role: this.role,
             college: this.college,
+            isCollegeEmail: this.isCollegeEmail,
             isVerified: this.isVerified,
         },
         process.env.ACCESS_TOKEN_SECRET,
