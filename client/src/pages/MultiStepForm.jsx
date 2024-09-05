@@ -151,6 +151,7 @@ export const MultiStepForm = () => {
         setMessage(response.data.message);
         console.log(response.data.message);
       } catch (error) {
+        setMessage(error.response.data.message);
         console.log(error);
       }
     }

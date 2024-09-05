@@ -1,35 +1,52 @@
 import React, { useState } from "react";
- const generateRandomCode = () => {
-    const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-    let result = '';
-    const charactersLength = characters.length;
-    for (let i = 0; i < 4; i++) {
-      result += characters.charAt(Math.floor(Math.random() * charactersLength));
-    }
-    return result;
-  };
+import axios from "axios";
+import { API } from "../utils/api";
+import { Link, useNavigate } from "react-router-dom";
+const generateRandomCode = () => {
+  const characters =
+    "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+  let result = "";
+  const charactersLength = characters.length;
+  for (let i = 0; i < 4; i++) {
+    result += characters.charAt(Math.floor(Math.random() * charactersLength));
+  }
+  return result;
+};
 
 const CAPTCHA_CODE = generateRandomCode(); // Simulated CAPTCHA code for demonstration
 
 const ForgotPasswordPage = () => {
   const [email, setEmail] = useState("");
   const [captchaInput, setCaptchaInput] = useState("");
+  const [message, setMessage] = useState("");
   const [captchaValid, setCaptchaValid] = useState(true);
   const [errors, setErrors] = useState({});
-  const [success, setSuccess] = useState("");
+  const navigate = useNavigate();
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const errors = {};
     if (!email) errors.email = "Email is required.";
     if (captchaInput !== CAPTCHA_CODE) errors.captcha = "Invalid CAPTCHA code.";
     setErrors(errors);
-    
+
     if (Object.keys(errors).length === 0) {
       // Handle password reset request here
-      setSuccess("Password reset link sent to your email.");
-      setEmail("");
-      setCaptchaInput("");
+      try {
+        setMessage("Please wait...");
+        const response = await axios.post(
+          `${API}/users/send-password-reset-email`,
+          { email }
+        );
+        setEmail("");
+        setCaptchaInput("");
+        setMessage(response.data.message);
+        console.log(response.data.message);
+        navigate("/login");
+      } catch (error) {
+        setMessage(error.response.data.message);
+        console.log(error);
+      }
     }
   };
 
@@ -56,7 +73,10 @@ const ForgotPasswordPage = () => {
 
             <form onSubmit={handleSubmit} className="space-y-4 md:space-y-6">
               <div>
-                <label htmlFor="email" className="block text-sm font-medium text-gray-900">
+                <label
+                  htmlFor="email"
+                  className="block text-sm font-medium text-gray-900"
+                >
                   Email
                 </label>
                 <input
@@ -65,29 +85,46 @@ const ForgotPasswordPage = () => {
                   name="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  className={`mt-1 block w-full px-3 py-2 border rounded-lg shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm ${errors.email ? 'border-red-500' : ''}`}
+                  className={`mt-1 block w-full px-3 py-2 border rounded-lg shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm ${
+                    errors.email ? "border-red-500" : ""
+                  }`}
                 />
-                {errors.email && <p className="mt-2 text-sm text-red-600">{errors.email}</p>}
+                {errors.email && (
+                  <p className="mt-2 text-sm text-red-600">{errors.email}</p>
+                )}
               </div>
 
               <div>
-                <label htmlFor="captcha" className="block text-sm font-medium text-gray-900">
+                <label
+                  htmlFor="captcha"
+                  className="block text-sm font-medium text-gray-900"
+                >
                   CAPTCHA
                 </label>
                 <div className="flex items-center space-x-2">
-                  <div className="bg-gray-200 p-2 rounded-lg">{CAPTCHA_CODE}</div>
+                  <div className="bg-gray-200 p-2 rounded-lg">
+                    {CAPTCHA_CODE}
+                  </div>
                   <input
                     type="text"
                     id="captcha"
                     name="captcha"
                     value={captchaInput}
                     onChange={(e) => setCaptchaInput(e.target.value)}
-                    className={`mt-1 block w-full px-3 py-2 border rounded-lg shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm ${errors.captcha ? 'border-red-500' : ''}`}
+                    className={`mt-1 block w-full px-3 py-2 border rounded-lg shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm ${
+                      errors.captcha ? "border-red-500" : ""
+                    }`}
                     placeholder="Enter CAPTCHA"
                   />
                 </div>
-                {errors.captcha && <p className="mt-2 text-sm text-red-600">{errors.captcha}</p>}
+                {errors.captcha && (
+                  <p className="mt-2 text-sm text-red-600">{errors.captcha}</p>
+                )}
               </div>
+
+              {message && (
+                <p className="text-blue-500 text-center">{message}</p>
+              )}
 
               <button
                 type="submit"
@@ -96,7 +133,11 @@ const ForgotPasswordPage = () => {
                 Send Password Reset Link
               </button>
 
-              {success && <p className="mt-4 text-sm text-green-600">{success}</p>}
+              <div className="text-sm font-medium text-gray-900">
+                <Link to="/login" className="text-blue-500 hover:underline">
+                  Login
+                </Link>
+              </div>
             </form>
           </div>
         </div>

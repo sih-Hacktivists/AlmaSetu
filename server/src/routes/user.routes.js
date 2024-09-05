@@ -10,6 +10,8 @@ import {
     getUserProfile,
     allUsers,
     giveRecomendation,
+    sendPasswordResetEmail,
+    resetPassword,
 } from "../controllers/user.controller.js";
 import { Router } from "express";
 import { upload } from "../middlewares/multer.middleware.js";
@@ -48,5 +50,8 @@ router.route("/").get(verifyJWT, allUsers);
 router
     .route("/get-recommendations/:studentId")
     .get(verifyJWT, giveRecomendation);
+
+router.route("/send-password-reset-email").post(sendPasswordResetEmail);
+router.route("/:userId/reset-password/:token").post(resetPassword);
 
 export default router;

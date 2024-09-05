@@ -457,6 +457,60 @@ const giveRecomendation = asyncHandler(async (req, res) => {
     }
 });
 
+const sendPasswordResetEmail = asyncHandler(async (req, res) => {
+    const { email } = req.body;
+
+    const user = await User.findOne({ email });
+
+    if (!user) {
+        return res.status(404).json({ message: "User not found" });
+    }
+
+    const token = await Token.create({
+        userId: user._id,
+        token: jwt.sign({ _id: user._id }, process.env.RESET_PASSWORD_SECRET, {
+            expiresIn: "1d",
+        }),
+    });
+
+    const url = `${process.env.BASE_URL}/users/${user._id}/reset-password/${token.token}`;
+
+    await sendEmail(user.email, "Password Reset Link", url);
+
+    return res
+        .status(200)
+        .json(
+            new ApiResponse(200, {}, "Password reset link sent successfully")
+        );
+});
+
+const resetPassword = asyncHandler(async (req, res) => {
+    const { userId } = req.params;
+    const { password } = req.body;
+
+    const user = await User.findById(userId);
+
+    if (!user) {
+        return res.status(404).json({ message: "User not found" });
+    }
+
+    user.password = password;
+    await user.save({ validateBeforeSave: false });
+
+    await Token.findOneAndDelete({ userId });
+
+    const options = {
+        httpOnly: true,
+        secure: true,
+    };
+
+    return res
+        .status(200)
+        .clearCookie("accessToken", options)
+        .clearCookie("refreshToken", options)
+        .json({ message: "Password reset successfully" });
+});
+
 export {
     allUsers,
     register,
@@ -469,4 +523,6 @@ export {
     updateProfilePic,
     getUserProfile,
     giveRecomendation,
+    sendPasswordResetEmail,
+    resetPassword,
 };

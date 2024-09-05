@@ -12,7 +12,7 @@ function App() {
       <Route path="/register" element={<MultiStepForm />} />
       <Route path="/home" element={<Home />} />
       <Route path="/login" element={<LoginPage />} />
-      <Route path="/forgot-pass" element={<ForgotPasswordPage />} />
+      <Route path="/forgot-password" element={<ForgotPasswordPage />} />
     </Routes>
   );
 }
