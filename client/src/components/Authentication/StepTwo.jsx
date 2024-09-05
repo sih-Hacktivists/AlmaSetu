@@ -1,4 +1,17 @@
 import React from "react";
+const cities = [
+  "Sriganganagar",
+  "Tonk",
+  "Udaipur",
+  "Ajmer",
+  "Bharatpur",
+  "Alwar",
+  "Balotra",
+  "Churu",
+  "Jhunjhunu",
+  "Bundi"
+];
+
 
 const StepTwo = ({ formData, handleChange, errors }) => {
   return (

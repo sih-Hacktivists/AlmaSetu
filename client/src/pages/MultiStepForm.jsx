@@ -64,7 +64,7 @@
           } else if (!normalEmailPattern.test(formData.email)) {
             stepErrors.email = "Invalid email format.";
           } else if (formData.isCollegeEmail && !collegeEmailPattern.test(formData.email)) {
-            stepErrors.email = "Email must be a college email (e.g., name@university.edu.in).";
+            stepErrors.email = "Email must be a college email (e.g., name@college.edu.in).";
           } else if (collegeEmailPattern.test(formData.email) && !formData.isCollegeEmail) {
             stepErrors.email = "This is a college email type. Please tick the checkbox below.";
           }
@@ -83,7 +83,7 @@
           break;
     
         case 3:
-          if (!formData.university) stepErrors.university = "University is required.";
+          if (!formData.university) stepErrors.university = "College is required.";
           if (!formData.branch) stepErrors.branch = "Branch is required.";
           if (!formData.yearOfGraduation) stepErrors.yearOfGraduation = "Year of graduation is required.";
           if (!formData.specialization) stepErrors.specialization = "Specialization is required.";
@@ -139,8 +139,8 @@
           return <StepTwo formData={formData} handleChange={handleChange} errors={errors} />;
         case 3:
           return <StepThree formData={formData} handleChange={handleChange} errors={errors} />;
-        case 4:
-          return (
+        case 4: 
+          return (  
             <StepFour
               formData={formData}
               handleChange={handleChange}

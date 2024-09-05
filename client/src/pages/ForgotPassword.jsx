@@ -1,20 +1,35 @@
 import React, { useState } from "react";
+ const generateRandomCode = () => {
+    const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    let result = '';
+    const charactersLength = characters.length;
+    for (let i = 0; i < 4; i++) {
+      result += characters.charAt(Math.floor(Math.random() * charactersLength));
+    }
+    return result;
+  };
 
-const LoginPage = () => {
+const CAPTCHA_CODE = generateRandomCode(); // Simulated CAPTCHA code for demonstration
+
+const ForgotPasswordPage = () => {
   const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [captchaInput, setCaptchaInput] = useState("");
+  const [captchaValid, setCaptchaValid] = useState(true);
   const [errors, setErrors] = useState({});
-  
+  const [success, setSuccess] = useState("");
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Simple validation
     const errors = {};
     if (!email) errors.email = "Email is required.";
-    if (!password) errors.password = "Password is required.";
+    if (captchaInput !== CAPTCHA_CODE) errors.captcha = "Invalid CAPTCHA code.";
     setErrors(errors);
+    
     if (Object.keys(errors).length === 0) {
-      console.log("Logged in with:", { email, password });
-      // Handle login here
+      // Handle password reset request here
+      setSuccess("Password reset link sent to your email.");
+      setEmail("");
+      setCaptchaInput("");
     }
   };
 
@@ -36,7 +51,7 @@ const LoginPage = () => {
         <div className="w-full rounded-lg shadow md:mt-0 sm:max-w-md xl:p-0 border">
           <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
             <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl">
-              Sign in to your account
+              Forgot Password
             </h1>
 
             <form onSubmit={handleSubmit} className="space-y-4 md:space-y-6">
@@ -56,32 +71,32 @@ const LoginPage = () => {
               </div>
 
               <div>
-                <label htmlFor="password" className="block text-sm font-medium text-gray-900">
-                  Password
+                <label htmlFor="captcha" className="block text-sm font-medium text-gray-900">
+                  CAPTCHA
                 </label>
-                <input
-                  type="password"
-                  id="password"
-                  name="password"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  className={`mt-1 block w-full px-3 py-2 border rounded-lg shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm ${errors.password ? 'border-red-500' : ''}`}
-                />
-                {errors.password && <p className="mt-2 text-sm text-red-600">{errors.password}</p>}
+                <div className="flex items-center space-x-2">
+                  <div className="bg-gray-200 p-2 rounded-lg">{CAPTCHA_CODE}</div>
+                  <input
+                    type="text"
+                    id="captcha"
+                    name="captcha"
+                    value={captchaInput}
+                    onChange={(e) => setCaptchaInput(e.target.value)}
+                    className={`mt-1 block w-full px-3 py-2 border rounded-lg shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm ${errors.captcha ? 'border-red-500' : ''}`}
+                    placeholder="Enter CAPTCHA"
+                  />
+                </div>
+                {errors.captcha && <p className="mt-2 text-sm text-red-600">{errors.captcha}</p>}
               </div>
 
               <button
                 type="submit"
                 className="w-full px-5 py-2.5 text-white bg-blue-500 rounded-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-400 text-sm font-medium"
               >
-                Sign In
+                Send Password Reset Link
               </button>
 
-              <div className="text-sm font-medium text-gray-900">
-                <a href="/forgot-pass" className="text-blue-500 hover:underline">
-                  Forgot your password?
-                </a>
-              </div>
+              {success && <p className="mt-4 text-sm text-green-600">{success}</p>}
             </form>
           </div>
         </div>
@@ -90,4 +105,4 @@ const LoginPage = () => {
   );
 };
 
-export default LoginPage;
+export default ForgotPasswordPage;

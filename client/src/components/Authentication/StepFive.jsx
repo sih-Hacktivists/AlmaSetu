@@ -19,7 +19,7 @@ const StepFive = ({ formData }) => {
         <h3 className="text-lg font-medium text-gray-900 mb-2">Academic Information</h3>
         <p><strong>Role:</strong> {formData.role}</p>
         <p><strong>City:</strong> {formData.city}</p>
-        <p><strong>University:</strong> {formData.university}</p>
+        <p><strong>College:</strong> {formData.university}</p>
         <p><strong>Enrollment Number:</strong> {formData.enrollmentNumber}</p>
         <p><strong> Year of Graduation:</strong> {formData.yearOfGraduation}</p>
         <p><strong>Branch:</strong> {formData.branch}</p>

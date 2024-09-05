@@ -3,6 +3,7 @@ import { MultiStepForm } from "./pages/MultiStepForm"
 import { Home } from "./pages/Home"
 import "./App.css"
 import LoginPage from "./pages/LoginPage"
+import ForgotPasswordPage from "./pages/ForgotPassword"
 
 function App() {
 
@@ -13,9 +14,11 @@ function App() {
         <Route path="/register" element={<MultiStepForm/>}/>
         <Route path="/" element={<Home/>}/>
         <Route path="/login" element={<LoginPage/>}/>
+        <Route path="/forgot-pass" element={<ForgotPasswordPage/>}/>
+
       </Routes>
       
   )
 }
-
+  
 export default App

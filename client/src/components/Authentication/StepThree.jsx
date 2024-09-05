@@ -1,12 +1,19 @@
 import React, { useState, useEffect, useRef } from "react";
 
 const universities = [
-  "Sh. Gokul Verma Govt. Polytechnic College",
-  "Rajesh Pilot Govt. Polytechnic College",
-  "Ch. Maloo Ram Bhambhu Govt. Poly. College"
+ "Ch. Maloo Ram Bhambhu Govt. Poly. College",
+  "Govt. Polytechnic College",
+  "Govt. Polytechnic College",
+  "Govt. Women Polytechnic College",
+  "Govt. Women Polytechnic College",
+  "Laxmidhar Polytechnic College",
+  "Indraprastha Institute of Polytechnic",
+  "Shree Shyochand Memorial Institute of Engineering and Technology",
+  "Yaduvanshi Polytechnic",
+  "Govt. Polytechnic College"
 ];
 
-const getCurrentYear = () => new Date().getFullYear();
+const getCurrentYear = () => new Date().getFullYear()+4;
 
 const StepThree = ({ formData, handleChange, errors }) => {
   const [filteredUniversities, setFilteredUniversities] = useState([]);
