@@ -1,5 +1,4 @@
 import { asyncHandler } from "../utils/asyncHandler.js";
-import { ApiError } from "../utils/ApiError.js";
 import { ApiResponse } from "../utils/ApiResponse.js";
 import { User } from "../models/user.model.js";
 import { uploadOnCloudinary } from "../utils/cloudinary.js";
@@ -7,13 +6,15 @@ import { uploadOnCloudinary } from "../utils/cloudinary.js";
 // for alumni(event owner)
 const createEvent = asyncHandler(async (req, res) => {
     if (req.user.role !== "alumni") {
-        throw new ApiError(403, "You are not authorized to create an event");
+        return res
+            .status(403)
+            .json({ message: "You are not authorized to create an event" });
     }
 
     const { title, description, startDate, endDate, startTime } = req.body;
 
     if (!title || !description || startDate || endDate || startTime) {
-        throw new ApiError(400, "All fields are required");
+        return res.status(400).json({ message: "All fields are required" });
     }
 
     const college = req.user.college;
@@ -26,7 +27,7 @@ const createEvent = asyncHandler(async (req, res) => {
     const image = await uploadOnCloudinary(imageLocalPath);
 
     if (!image) {
-        throw new ApiError(500, "Image file is required");
+        return res.status(500).json({ message: "Image is required" });
     }
 
     const event = await Event.create({
@@ -52,10 +53,9 @@ const createEvent = asyncHandler(async (req, res) => {
 // get the registered members of an event
 const getRegisteredMembers = asyncHandler(async (req, res) => {
     if (req.user.role !== "alumni") {
-        throw new ApiError(
-            403,
-            "You are not authorized to perform this action"
-        );
+        return res
+            .status(403)
+            .json({ message: "You are not authorized to perform this action" });
     }
 
     const { eventId } = req.params;
@@ -76,7 +76,9 @@ const getRegisteredMembers = asyncHandler(async (req, res) => {
 // remove a member from an event
 const removeMember = asyncHandler(async (req, res) => {
     if (req.user.role !== "alumni") {
-        throw new ApiError(403, "You are not authorized to remove a member");
+        return res
+            .status(403)
+            .json({ message: "You are not authorized to remove a member" });
     }
 
     const { eventId, memberId } = req.params;
@@ -84,11 +86,13 @@ const removeMember = asyncHandler(async (req, res) => {
     const event = await Event.findById(eventId);
 
     if (!event) {
-        throw new ApiError(404, "Event not found");
+        return res.status(404).json({ message: "Event not found" });
     }
 
     if (event.owner.toString() !== req.user._id.toString()) {
-        throw new ApiError(403, "You are not authorized to remove a member");
+        return res
+            .status(403)
+            .json({ message: "You are not authorized to remove a member" });
     }
 
     await Event.findByIdAndUpdate(eventId, {
@@ -111,25 +115,31 @@ const joinEvent = asyncHandler(async (req, res) => {
     const event = await Event.findById(eventId);
 
     if (!event) {
-        throw new ApiError(404, "Event not found");
+        return res.status(404).json({ message: "Event not found" });
     }
 
     if (req.user.role === "alumni") {
         if (event.owner.toString() === req.user._id.toString()) {
-            throw new ApiError(400, "You are the owner of this event");
+            return res
+                .status(400)
+                .json({ message: "You are the owner of this event" });
         }
     }
 
     if (event.isCompleted) {
-        throw new ApiError(400, "Event is already completed");
+        return res.status(400).json({ message: "Event is already completed" });
     }
 
     if (event.college !== req.user.college) {
-        throw new ApiError(400, "You are not allowed to join this event");
+        return res
+            .status(400)
+            .json({ message: "You are not allowed to join this event" });
     }
 
     if (event.registeredMembers.includes(req.user._id)) {
-        throw new ApiError(400, "You are already registered for this event");
+        return res
+            .status(400)
+            .json({ message: "You are already registered for this event" });
     }
 
     await Event.findByIdAndUpdate(eventId, {

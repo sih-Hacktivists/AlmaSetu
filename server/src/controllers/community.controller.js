@@ -1,5 +1,4 @@
 import { asyncHandler } from "../utils/asyncHandler.js";
-import { ApiError } from "../utils/ApiError.js";
 import { ApiResponse } from "../utils/ApiResponse.js";
 import { Post } from "../models/post.model.js";
 import { Community } from "../models/community.model.js";
@@ -11,13 +10,17 @@ import { User } from "../models/user.model.js";
 // for alumni
 const createCommunity = asyncHandler(async (req, res) => {
     if (req.user.role !== "alumni") {
-        throw new ApiError(403, "You are not authorized to create a community");
+        return res
+            .status(403)
+            .json({ message: "You are not authorized to create a community" });
     }
 
     const { name, description, topics } = req.body;
 
     if (!name || !description || !topics) {
-        throw new ApiError(400, "Name, description and topics are required");
+        return res
+            .status(400)
+            .json({ message: "Name, description and topics are required" });
     }
 
     let imageLocalPath;
@@ -28,7 +31,7 @@ const createCommunity = asyncHandler(async (req, res) => {
     const image = await uploadOnCloudinary(imageLocalPath);
 
     if (!image) {
-        throw new ApiError(500, "Image file is required");
+        return res.status(400).json({ message: "Image is required" });
     }
 
     const community = await Community.create({
@@ -53,7 +56,9 @@ const createCommunity = asyncHandler(async (req, res) => {
 // remove member from community
 const removeMemberFromCommunity = asyncHandler(async (req, res) => {
     if (req.user.role !== "alumni") {
-        throw new ApiError(403, "You are not authorized to remove a member");
+        return res
+            .status(403)
+            .json({ message: "You are not authorized to remove a member" });
     }
 
     const { communityId, memberId } = req.params;
@@ -61,17 +66,21 @@ const removeMemberFromCommunity = asyncHandler(async (req, res) => {
     const community = await Community.findById(communityId);
 
     if (!community) {
-        throw new ApiError(404, "Community not found");
+        return res.status(404).json({ message: "Community not found" });
     }
 
     if (!community.admins.includes(req.user._id)) {
-        throw new ApiError(403, "You are not authorized to remove a member");
+        return res
+            .status(403)
+            .json({ message: "You are not authorized to remove a member" });
     }
 
     const user = await User.findById(memberId);
 
     if (!community.members.includes(memberId)) {
-        throw new ApiError(404, "Member not found in the community");
+        return res
+            .status(404)
+            .json({ message: "Member not found in the community" });
     }
 
     community.members.pull(memberId);
@@ -91,13 +100,15 @@ const joinCommunity = asyncHandler(async (req, res) => {
     const community = await Community.findById(communityId);
 
     if (!community) {
-        throw new ApiError(404, "Community not found");
+        return res.status(404).json({ message: "Community not found" });
     }
 
     const user = await User.findById(req.user._id);
 
     if (community.members.includes(req.user._id)) {
-        throw new ApiError(400, "You are already a member of this community");
+        return res
+            .status(400)
+            .json({ message: "You are already a member of this community" });
     }
 
     community.members.push(req.user._id);
@@ -193,7 +204,9 @@ const createCommunityPost = asyncHandler(async (req, res) => {
     const { title, content } = req.body;
 
     if (!title || !content) {
-        throw new ApiError(400, "Title and content is required");
+        return res
+            .status(400)
+            .json({ message: "Title and content is required" });
     }
 
     let imageLocalPath;
@@ -233,17 +246,17 @@ const likeCommunityPost = asyncHandler(async (req, res) => {
     const community = await Community.findById(communityId);
 
     if (!community) {
-        throw new ApiError(404, "Community not found");
+        return res.status(404).json({ message: "Community not found" });
     }
 
     const post = await Post.findById(postId);
 
     if (!post) {
-        throw new ApiError(404, "Post not found");
+        return res.status(404).json({ message: "Post not found" });
     }
 
     if (post.likes.includes(req.user._id)) {
-        throw new ApiError(400, "You already liked this post");
+        return res.status(400).json({ message: "You already liked this post" });
     }
 
     post.likes.push(req.user._id);
@@ -269,17 +282,19 @@ const unlikeCommunityPost = asyncHandler(async (req, res) => {
     const community = await Community.findById(communityId);
 
     if (!community) {
-        throw new ApiError(404, "Community not found");
+        return res.status(404).json({ message: "Community not found" });
     }
 
     const post = await Post.findById(postId);
 
     if (!post) {
-        throw new ApiError(404, "Post not found");
+        return res.status(404).json({ message: "Post not found" });
     }
 
     if (!post.likes.includes(req.user._id)) {
-        throw new ApiError(400, "You have not liked this post");
+        return res
+            .status(400)
+            .json({ message: "You have not liked this post" });
     }
 
     post.likes.pull(req.user._id);
@@ -304,7 +319,7 @@ const createCommunityComment = asyncHandler(async (req, res) => {
     const { content } = req.body;
 
     if (!content) {
-        throw new ApiError(400, "Content is required");
+        return res.status(400).json({ message: "Content is required" });
     }
 
     const comment = await Comment.create({

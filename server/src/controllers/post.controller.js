@@ -1,5 +1,4 @@
 import { asyncHandler } from "../utils/asyncHandler.js";
-import { ApiError } from "../utils/ApiError.js";
 import { ApiResponse } from "../utils/ApiResponse.js";
 import { Post } from "../models/post.model.js";
 import { uploadOnCloudinary } from "../utils/cloudinary.js";
@@ -10,7 +9,9 @@ const createPost = asyncHandler(async (req, res) => {
     const { title, content } = req.body;
 
     if (!title || !content) {
-        throw new ApiError(400, "Tittle and Content are required");
+        return res
+            .status(400)
+            .json({ message: "Tittle and Content are required" });
     }
 
     let imageLocalPath;
@@ -48,11 +49,11 @@ const likePost = asyncHandler(async (req, res) => {
     const post = await Post.findById(postId);
 
     if (!post) {
-        throw new ApiError(404, "Post not found");
+        return res.status(404).json({ message: "Post not found" });
     }
 
     if (post.likes.includes(req.user._id)) {
-        throw new ApiError(400, "You already liked this post");
+        return res.status(400).json({ message: "You already liked this post" });
     }
 
     post.likes.push(req.user._id);
@@ -78,11 +79,13 @@ const unlikePost = asyncHandler(async (req, res) => {
     const post = await Post.findById(postId);
 
     if (!post) {
-        throw new ApiError(404, "Post not found");
+        return res.status(404).json({ message: "Post not found" });
     }
 
     if (!post.likes.includes(req.user._id)) {
-        throw new ApiError(400, "You have not liked this post");
+        return res
+            .status(400)
+            .json({ message: "You have not liked this post" });
     }
 
     post.likes.pull(req.user._id);

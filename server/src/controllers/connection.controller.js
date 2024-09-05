@@ -1,5 +1,4 @@
 import { asyncHandler } from "../utils/asyncHandler.js";
-import { ApiError } from "../utils/ApiError.js";
 import { ApiResponse } from "../utils/ApiResponse.js";
 import { Connection } from "../models/connection.model.js";
 import { User } from "../models/user.model.js";
@@ -9,13 +8,17 @@ const createConnection = asyncHandler(async (req, res) => {
     const userId = req.user._id;
 
     if (connectionId === userId) {
-        throw new ApiError(400, "You cannot connect with yourself");
+        return res
+            .status(400)
+            .json({ message: "You cannot connect with yourself" });
     }
 
     const getConnection = await User.findById(connectionId);
 
     if (getConnection.role !== "alumni") {
-        throw new ApiError(400, "You can only connect with alumni");
+        return res
+            .status(400)
+            .json({ message: "You can only connect with alumni" });
     }
 
     const connection = await Connection.create({
@@ -46,7 +49,9 @@ const acceptConnection = asyncHandler(async (req, res) => {
     );
 
     if (!connection) {
-        throw new ApiError(404, "Connection request not found");
+        return res
+            .status(404)
+            .json({ message: "Connection request not found" });
     }
 
     return res
@@ -66,7 +71,9 @@ const rejectConnection = asyncHandler(async (req, res) => {
     const connection = await Connection.findByIdAndDelete(connectionId);
 
     if (!connection) {
-        throw new ApiError(404, "Connection request not found");
+        return res
+            .status(404)
+            .json({ message: "Connection request not found" });
     }
 
     return res

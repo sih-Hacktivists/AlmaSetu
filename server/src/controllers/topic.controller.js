@@ -1,17 +1,19 @@
 import { asyncHandler } from "../utils/asyncHandler.js";
-import { ApiError } from "../utils/ApiError.js";
 import { ApiResponse } from "../utils/ApiResponse.js";
 import { Topic } from "../models/topic.model.js";
 
+// for alumni
 const createTopic = asyncHandler(async (req, res) => {
     if (req.user.role !== "alumni") {
-        throw new ApiError(403, "You are not authorized to create a topic");
+        return res
+            .status(403)
+            .json({ message: "You are not authorized to create a topic" });
     }
 
     const { name } = req.body;
 
     if (!name) {
-        throw new ApiError(400, "Name is required");
+        return res.status(400).json({ message: "Name is required" });
     }
 
     const topic = await Topic.create({ name });
@@ -23,7 +25,9 @@ const createTopic = asyncHandler(async (req, res) => {
 
 const getTopics = asyncHandler(async (req, res) => {
     if (req.user.role !== "alumni") {
-        throw new ApiError(403, "You are not authorized to get all topics");
+        return res
+            .status(403)
+            .json({ message: "You are not authorized to get all topics" });
     }
 
     const topics = await Topic.find();

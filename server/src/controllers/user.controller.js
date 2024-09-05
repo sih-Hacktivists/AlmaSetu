@@ -1,5 +1,4 @@
 import { asyncHandler } from "../utils/asyncHandler.js";
-import { ApiError } from "../utils/ApiError.js";
 import { ApiResponse } from "../utils/ApiResponse.js";
 import jwt from "jsonwebtoken";
 import axios from "axios";
@@ -22,10 +21,10 @@ const generateAccessAndRefreshTokens = async (userId) => {
 
         return { accessToken, refreshToken };
     } catch (error) {
-        throw new ApiError(
-            500,
-            "Something went wrong while genrating refresh and access token"
-        );
+        return res.status(500).json({
+            message:
+                "Something went wrong while genrating refresh and access token",
+        });
     }
 };
 
@@ -64,7 +63,7 @@ const register = asyncHandler(async (req, res) => {
         !skills ||
         !password
     ) {
-        throw new ApiError(400, "Please fill all the fields");
+        return res.status(400).json({ message: "Please fill all the fields" });
     }
 
     const existingUser = await User.findOne({
@@ -72,7 +71,7 @@ const register = asyncHandler(async (req, res) => {
     });
 
     if (existingUser) {
-        throw new ApiError(400, "User already exists");
+        return res.status(400).json({ message: "User already exists" });
     }
 
     let profilePicLocalPath;
@@ -85,7 +84,7 @@ const register = asyncHandler(async (req, res) => {
     console.log(profilePicLocalPath);
 
     if (!profilePic) {
-        throw new ApiError(500, "Profile pic is required");
+        return res.status(400).json({ message: "Profile pic is required" });
     }
 
     let documentLocalPath;
@@ -122,7 +121,9 @@ const register = asyncHandler(async (req, res) => {
     );
 
     if (!createdUser) {
-        throw new ApiError(500, "Something went wrong while creating user");
+        return res
+            .status(500)
+            .json({ message: "Something went wrong while creating user" });
     }
 
     if (createdUser.isCollegeEmail) {
@@ -168,13 +169,13 @@ const verifyEmail = asyncHandler(async (req, res) => {
     const user = await User.findById(userId);
 
     if (!user) {
-        throw new ApiError(404, "User not found");
+        return res.status(404).json({ message: "User not found" });
     }
 
     const hasToken = await Token.findOne({ userId, token });
 
     if (!hasToken) {
-        throw new ApiError(404, "Invalid link");
+        return res.status(404).json({ message: "Invalid link" });
     }
 
     await User.findByIdAndUpdate(userId, { isVerified: true });
@@ -189,7 +190,9 @@ const login = asyncHandler(async (req, res) => {
     const { email, password } = req.body;
 
     if (!email || !password) {
-        throw new ApiError(400, "email or password is required");
+        return res
+            .status(400)
+            .json({ message: "email or password is required" });
     }
 
     const user = await User.findOne({ email });
@@ -283,7 +286,7 @@ const refreshAccessToken = asyncHandler(async (req, res) => {
         req.cookies.refreshToken || req.body.refreshToken;
 
     if (!incommingRefreshToken) {
-        throw new ApiError(401, "Unauthorized request");
+        return res.status(401).json({ message: "Unauthorized request" });
     }
 
     try {
@@ -295,11 +298,13 @@ const refreshAccessToken = asyncHandler(async (req, res) => {
         const user = await User.findById(decodedToken?._id);
 
         if (!user) {
-            throw new ApiError(404, "Invalid refresh token");
+            return res.status(401).json({ message: "Invalid refresh token" });
         }
 
         if (incommingRefreshToken !== user?.refreshToken) {
-            throw new ApiError(401, "Refresh token is expired or used");
+            return res
+                .status(401)
+                .json({ message: "Refresh token is expired or used" });
         }
 
         const options = {
@@ -325,7 +330,9 @@ const refreshAccessToken = asyncHandler(async (req, res) => {
                 )
             );
     } catch (error) {
-        throw new ApiError(401, error?.message || "Invalid refresh token");
+        return res
+            .status(401)
+            .json({ message: error?.message || "Invalid refresh token" });
     }
 });
 
@@ -337,7 +344,7 @@ const changeCurrentPassword = asyncHandler(async (req, res) => {
     const isPasswordCorrect = await user.isPasswordCorrect(oldPassword);
 
     if (!isPasswordCorrect) {
-        throw new ApiError(400, "Invalid Password");
+        return res.status(400).json({ message: "Invalid Password" });
     }
 
     user.password = newPassword;
@@ -364,7 +371,7 @@ const updateProfilePic = asyncHandler(async (req, res) => {
     }
 
     if (!profilePicLocalPath) {
-        throw new ApiError(400, "Profile pic file is required");
+        return res.status(400).json({ message: "Profile pic is required" });
     }
 
     console.log(profilePicLocalPath);
@@ -379,7 +386,9 @@ const updateProfilePic = asyncHandler(async (req, res) => {
     const profilePic = await uploadOnCloudinary(profilePicLocalPath);
 
     if (!profilePic.url) {
-        throw new ApiError(400, "Error while uploading Profile pic");
+        return res
+            .status(400)
+            .json({ message: "Error while uploading Profile pic" });
     }
 
     await User.findByIdAndUpdate(
@@ -401,7 +410,7 @@ const getUserProfile = asyncHandler(async (req, res) => {
     const user = await User.findById(userId).populate("events communities");
 
     if (!user) {
-        throw new ApiError(404, "User not found");
+        return res.status(404).json({ message: "User not found" });
     }
 
     return res
@@ -442,8 +451,9 @@ const giveRecomendation = asyncHandler(async (req, res) => {
             );
     } catch (error) {
         console.error("Error calling Flask API:", error.message);
-
-        throw new ApiError(500, "Failed to get recommendations");
+        return res
+            .status(500)
+            .json({ message: "Failed to get recommendations" });
     }
 });
 
