@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 
 const universities = [
- "Ch. Maloo Ram Bhambhu Govt. Poly. College",
+  "Ch. Maloo Ram Bhambhu Govt. Poly. College",
   "Govt. Polytechnic College",
   "Govt. Polytechnic College",
   "Govt. Women Polytechnic College",
@@ -10,14 +10,14 @@ const universities = [
   "Indraprastha Institute of Polytechnic",
   "Shree Shyochand Memorial Institute of Engineering and Technology",
   "Yaduvanshi Polytechnic",
-  "Govt. Polytechnic College"
+  "Govt. Polytechnic College",
 ];
 
-const getCurrentYear = () => new Date().getFullYear()+4;
+const getCurrentYear = () => new Date().getFullYear() + 4;
 
 const StepThree = ({ formData, handleChange, errors }) => {
   const [filteredUniversities, setFilteredUniversities] = useState([]);
-  const [inputValue, setInputValue] = useState(formData.university);
+  const [inputValue, setInputValue] = useState(formData.college);
   const [highlightedIndex, setHighlightedIndex] = useState(-1);
   const dropdownRef = useRef(null);
 
@@ -33,7 +33,7 @@ const StepThree = ({ formData, handleChange, errors }) => {
     }
   }, [highlightedIndex, filteredUniversities]);
 
-  const handleUniversityChange = (e) => {
+  const handleCollegeChange = (e) => {
     const value = e.target.value;
     setInputValue(value);
     setHighlightedIndex(-1);
@@ -48,11 +48,11 @@ const StepThree = ({ formData, handleChange, errors }) => {
     }
   };
 
-  const handleUniversitySelect = (value) => {
+  const handleCollegeSelect = (value) => {
     setInputValue(value);
     setFilteredUniversities([]);
     setHighlightedIndex(-1);
-    handleChange({ target: { name: "university", value } });
+    handleChange({ target: { name: "college", value } });
   };
 
   const handleKeyDown = (e) => {
@@ -70,7 +70,7 @@ const StepThree = ({ formData, handleChange, errors }) => {
         highlightedIndex >= 0 &&
         highlightedIndex < filteredUniversities.length
       ) {
-        handleUniversitySelect(filteredUniversities[highlightedIndex]);
+        handleCollegeSelect(filteredUniversities[highlightedIndex]);
       }
     }
   };
@@ -79,26 +79,26 @@ const StepThree = ({ formData, handleChange, errors }) => {
     <>
       <div>
         <label
-          htmlFor="university"
+          htmlFor="college"
           className="block mb-2 text-sm font-medium text-gray-900"
         >
           College
         </label>
         <input
           type="text"
-          name="university"
-          onChange={handleUniversityChange}
+          name="college"
+          onChange={handleCollegeChange}
           onKeyDown={handleKeyDown}
           value={inputValue}
-          id="university"
+          id="college"
           className={`bg-gray-50 border ${
-            errors.university ? "border-red-500" : "border-gray-300"
+            errors.college ? "border-red-500" : "border-gray-300"
           } text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5`}
           placeholder="Type to search..."
           required
         />
-        {errors.university && (
-          <p className="text-red-500 text-sm">{errors.university}</p>
+        {errors.college && (
+          <p className="text-red-500 text-sm">{errors.college}</p>
         )}
         {inputValue && filteredUniversities.length > 0 && (
           <ul className="mt-2 border border-gray-300 rounded-lg bg-white absolute z-10">
@@ -109,7 +109,7 @@ const StepThree = ({ formData, handleChange, errors }) => {
                 className={`p-2 cursor-pointer ${
                   highlightedIndex === index ? "bg-gray-300" : ""
                 }`}
-                onClick={() => handleUniversitySelect(uni)}
+                onClick={() => handleCollegeSelect(uni)}
               >
                 {uni}
               </li>
@@ -142,7 +142,9 @@ const StepThree = ({ formData, handleChange, errors }) => {
           <option value="ME">ME</option>
           <option value="Biotech">Biotech</option>
         </select>
-        {errors.branch && <p className="text-red-500 text-sm">{errors.branch}</p>}
+        {errors.branch && (
+          <p className="text-red-500 text-sm">{errors.branch}</p>
+        )}
       </div>
       <div>
         <label
