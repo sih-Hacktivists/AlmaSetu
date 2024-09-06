@@ -1,0 +1,1 @@
+export const AdminApprovalsTab=["Student","Alumni","Pending Approval"]

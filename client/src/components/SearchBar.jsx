@@ -10,19 +10,19 @@ export function SearchBar({ showProfile }) {
   }
   return (
     <>
-      <div className="flex items-center gap-4 mx-auto px-2">
+      <div className="flex items-center gap-10 mx-auto px-2  max-w-screen-xl">
         <img
           src="https://cdn-icons-png.flaticon.com/128/999/999663.png"
           width={40}
           height={40}
           alt=""
         />
-        <div className="relative flex items-center w-full">
+        <div className="relative flex items-center w-full ">
           <input    
             type="text"
             value={input}
             onChange={(e) => setInput(e.target.value)}
-            className="block w-full p-4 text-sm text-gray-500 border border-gray-300 rounded-2xl bg-[#BBDCF1] focus:outline-none"
+            className="block w-full p-4 text-sm text-gray-500 border border-gray-300 rounded-2xl bg-[#BBDCF1] focus:outline-none  h-10"
             placeholder="Search Events,Posts..."
           />
 
@@ -35,17 +35,18 @@ export function SearchBar({ showProfile }) {
             height={30}
           />
         </div>
-        {showProfile ? (
-          <UserProfileDropdown />
-        ) : (
-          <img
+        <img
             src={NotificationIcon}
-            width={35}
-            height={35}
+            
             alt=""
-            className="outline outline-1 h-full rounded-lg bg-[#BBDCF1]"
+            className="h-[30px] w-[30px] max-xl:h-[25px] max-xl:w-[25px] outline outline-1  rounded-lg bg-[#BBDCF1]"
           />
+        {showProfile ? (
+          <UserProfileDropdown institution={true} email={"ume@gmail.com"} name={"UEM Kolkata  "} nameClass={"w-36"}/>
+        ) : (
+        ""
         )}
+         
       </div>
     </>
   );
@@ -61,11 +62,11 @@ const UserProfileDropdown = ({ name, nameClass, institution, email }) => {
   };
 
   return (
-    <div className="mr-12 relative flex-shrink z-100">
+    <div className=" relative flex-shrink z-100 border border-b-2 rounded-2xl">
       <button
         id="dropdownAvatarNameButton"
         onClick={toggleDropdown}
-        className="flex items-center text-sm pe-1 font-medium  rounded-full hover:text-blue-600 focus:ring-4 focus:ring-gray-100 md:me-0"
+        className="flex items-center text-sm pe-1  font-medium  rounded-full hover:text-blue-600 focus:ring-4 focus:ring-gray-100 md:me-0"
         type="button"
       >
         <img
@@ -76,10 +77,10 @@ const UserProfileDropdown = ({ name, nameClass, institution, email }) => {
         <div className={nameClass}>{name}</div>
         {institution ? (
           <svg
-            className="w-2.5 h-2.5 ms-3"
+            className="w-5 h-5 ms-3"
             aria-hidden="true"
             xmlns="http://www.w3.org/2000/svg"
-            fill="none"
+            fill="black"
             viewBox="0 0 10 6"
           >
             <path
