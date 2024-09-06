@@ -41,9 +41,13 @@ const createEvent = asyncHandler(async (req, res) => {
         image: image.url,
     });
 
-    await User.findByIdAndUpdate(req.user._id, {
-        $push: { events: event._id },
-    });
+    await User.findByIdAndUpdate(
+        req.user._id,
+        {
+            $push: { events: event._id },
+        },
+        { new: true }
+    );
 
     return res
         .status(201)
