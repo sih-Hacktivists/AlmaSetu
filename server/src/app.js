@@ -29,6 +29,7 @@ import messageRouter from "./routes/messages.routes.js";
 import postRouter from "./routes/post.routes.js";
 import commentRouter from "./routes/comment.routes.js";
 import connectionRouter from "./routes/connection.routes.js";
+import adminRouter from "./routes/admin.routes.js";
 
 // Routes declaration
 app.use("/api/v1/users/", userRouter);
@@ -40,6 +41,7 @@ app.use("/api/v1/messages/", messageRouter);
 app.use("/api/v1/posts/", postRouter);
 app.use("/api/v1/comments/", commentRouter);
 app.use("/api/v1/connections/", connectionRouter);
+app.use("/api/v1/admin/", adminRouter);
 
 // Initialize Socket.IO with the HTTP server
 const io = new SocketIOServer(server, {
