@@ -1,19 +1,20 @@
 /* Custom scrollbar for the TopEvents component */
 .scrollbar-custom::-webkit-scrollbar {
-  height: 7px; /* Height of the scrollbar track */
-  width: 10px; /* Not needed for horizontal scrollbar, but defining for clarity */
+  height:2px; /* Height of the scrollbar track */
+  width: 5px; /* Not needed for horizontal scrollbar, but defining for clarity */
   margin: auto; /* Center scrollbar horizontally */
 }
 
 .scrollbar-custom::-webkit-scrollbar-track {
   background: #ECF7FE; /* Color of the scrollbar track */
-  border-radius: 5px; /* Rounded corners for the track */
+  border-radius: 5px; 
+  height: 2px;/* Rounded corners for the track */
 }
 
 .scrollbar-custom::-webkit-scrollbar-thumb {
   background: #888; /* Color of the scrollbar thumb */
   border-radius: 5px; /* Rounded corners for thumb */
-  width: 83px; /* Width of the scrollbar thumb */
-  min-height: 5px; /* Minimum height of the scrollbar thumb */
+  min-height: 2px; /* Minimum height of the scrollbar thumb */
+  height: 2px;
 }
 

@@ -1,24 +1,33 @@
 import React from "react";
 import SearchIcon from "../assets/searchIcon.svg";
-import SortIcon from "../assets/sortIcon.svg"
+import SortIcon from "../assets/sortIcon.svg";
+import TableRow from "./TableRow";
+import { users } from "../assets/Constant";
 
-const Table = ({ title }) => {
+const Table = () => {
   return (
-    <div className="mt-10 px-10 border-2 border-black  ">
-      <FilterAndSearch />
-      <div className="fixed bottom-0">
-      </div>
+    <div className="mt-5 px-10 border-2 border-black  rounded-2xl h-[480px] xl:h-[700px] overflow-hidden">
+      
+        <FilterAndSearch />
+        
+        <div className="mt-20  overflow-y-auto max-h-screen scrollbar-custom pr-2">
+          {users.map((user,index)=>{
+            return  <TableRow key={index} name={user.name} role={user.role} profilePic={user.profilePic}/>
+          })}
+        </div>
+        
+      
     </div>
   );
 };
 
 function FilterAndSearch() {
   return (
-    <div className="flex items-center justify-start">
+    <div className="flex items-center justify-start fixed w-full mt-5 ">
       <input
         type="text"
         placeholder="Search.."
-        className=" w-1/3 text-slate-400 text-sm  xl:py-2 px-2 border-2 border-slate-700/3 shadow-md rounded-2xl focus:outline-none"
+        className=" w-1/3 text-slate-400 text-sm  py-2 px-2 border-2 border-slate-700/3 shadow-md rounded-2xl focus:outline-none"
       />
 
       <img
@@ -27,13 +36,14 @@ function FilterAndSearch() {
         alt="searchIcon"
       />
 
-      <div className="font-medium shadow-md border-2 border-slate-700/3  text-sm  px-2 rounded-2xl flex items-center justify-between">
+      <div className="font-medium shadow-md border-2 bg-white border-slate-700/3  text-sm py-1  px-2 rounded-2xl flex items-center justify-between">
         Sort & Filter
         <img
-        className="w-8 h-8 max-xl:w-6 max-xl:h-6 p-1 relative "
-        src={SortIcon} alt="" />
+          className="w-8 h-8 max-xl:w-6 max-xl:h-6 p-1 relative "
+          src={SortIcon}
+          alt=""
+        />
       </div>
-
     </div>
   );
 }

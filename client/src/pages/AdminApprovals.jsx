@@ -7,7 +7,7 @@ const Approvals = () => {
   const [tab, setTab] = useState("");
 
   return (
-    <div className="w-full">
+    <div className="w-full ">
       <div className="flex justify-center gap-20 max-xl:gap-8">
         {AdminApprovalsTab.map((tab, index) => {
           return (
@@ -24,8 +24,8 @@ const Approvals = () => {
         })}
       </div>
       {/* Table component */}
-      <div className=" ">
-        <Table title={tab} />
+      <div className="">
+        <Table />
       </div>
     </div>
   );

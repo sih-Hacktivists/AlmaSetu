@@ -12,7 +12,7 @@ import NotFound from "./components/NotFound";
 function AdminLayout() {
   return (
     <>
-      <div className="flex ">
+      <div className="flex bg-[#ECF7FE]">
         <SideBar />
         <div className=" w-full p-2 px-10  ">
           <SearchBar showProfile={true} />
