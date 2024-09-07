@@ -17,7 +17,13 @@ const TableRow = ({ name, role, profilePic, title, onApprove, onReject }) => {
     <div className="w-full border-2 border-slate-900 rounded-3xl flex justify-between items-center px-2 py-2 my-2">
       <div className="flex justify-items-start items-center gap-2">
         <img className="w-10 h-10 rounded-full" src={profilePic} alt="ppic" />
-        {name} , {role}
+        <div className="flex items-baseline gap-2 text-md font-normal">
+
+        {name} ,
+        <div className="font-semibold text-sm">
+          {role[0].toUpperCase() + role.slice(1)}
+        </div>
+        </div>
       </div>
       {title === "Pending Approval" ? (
         <div className="flex gap-5 items-center">
