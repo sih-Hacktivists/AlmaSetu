@@ -9,45 +9,55 @@ function SideBar() {
 
   return (
     <div>
-      {/* Toggle button for collapsed sidebar */}
-      {isCollapsed ? (
-        <img
-          src={bars}
-          alt="Expand Sidebar"
-          className="w-10 h-10 absolute top-4 left-2 z-50 cursor-pointer rounded-2xl border-2 border-slate-500 hover:bg-slate-200 transition-transform duration-300 ease-in-out"
-          width={30}
-          height={30}
-          onClick={() => setIsCollapsed(false)}
-        />
-      ) : (
-        // Full sidebar when expanded
+      {/* Overlay for sidebar */}
+      {!isCollapsed && (
         <div
-          className={`bg-[#BBDCF1] fixed z-50 border-2 border-black top-0 left-0 h-screen flex-shrink-0 transition-transform duration-300 ease-in-out ${
-            isCollapsed ? "-translate-x-full" : "translate-x-0"
-          } w-60 overflow-hidden rounded-2xl`}
-        >
-          {/* Collapse button */}
+          className="fixed inset-0 bg-black bg-opacity-50 z-40 transition-opacity duration-300 ease-in-out"
+          onClick={() => setIsCollapsed(true)}
+        />
+      )}
+      {/* Sidebar */}
+      <div>
+        {/* Toggle button for collapsed sidebar */}
+        {isCollapsed ? (
           <img
-            className="absolute top-4 right-4 cursor-pointer"
-            onClick={() => setIsCollapsed(true)}
-            src={cross}
-            alt="Collapse Sidebar"
+            src={bars}
+            alt="Expand Sidebar"
+            className="w-10 h-10 absolute top-4 left-2 z-50 cursor-pointer rounded-2xl border-2 border-slate-500 hover:bg-slate-200 transition-transform duration-300 ease-in-out"
             width={30}
             height={30}
+            onClick={() => setIsCollapsed(false)}
           />
-          <div className="flex flex-col h-full justify-center items-center">
-            <div className="flex flex-col w-11/12 gap-10 items-start">
-              {sideLinks.map((nav, index) => (
-                <NavigateButton
-                  key={index}
-                  isCollapsed={isCollapsed}
-                  title={nav.title[0].toUpperCase() + nav.title.slice(1)}
-                />
-              ))}
+        ) : (
+          // Full sidebar when expanded
+          <div
+            className={`bg-[#BBDCF1] fixed z-50 border-2 border-black top-0 left-0 h-screen flex-shrink-0 transition-transform duration-300 ease-in-out ${
+              isCollapsed ? "-translate-x-full" : "translate-x-0"
+            } w-60 overflow-hidden rounded-2xl`}
+          >
+            {/* Collapse button */}
+            <img
+              className="absolute top-4 right-4 cursor-pointer"
+              onClick={() => setIsCollapsed(true)}
+              src={cross}
+              alt="Collapse Sidebar"
+              width={30}
+              height={30}
+            />
+            <div className="flex flex-col h-full justify-center items-center">
+              <div className="flex flex-col w-11/12 gap-10 items-start">
+                {sideLinks.map((nav, index) => (
+                  <NavigateButton
+                    key={index}
+                    isCollapsed={isCollapsed}
+                    title={nav.title[0].toUpperCase() + nav.title.slice(1)}
+                  />
+                ))}
+              </div>
             </div>
           </div>
-        </div>
-      )}
+        )}
+      </div>
     </div>
   );
 }
