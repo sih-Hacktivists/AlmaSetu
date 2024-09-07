@@ -12,6 +12,8 @@ import {
     giveRecomendation,
     sendPasswordResetEmail,
     resetPassword,
+    checkWhetherEmailOrPhoneExists,
+    checkWhetherEnrollmentExists,
 } from "../controllers/user.controller.js";
 import { Router } from "express";
 import { upload } from "../middlewares/multer.middleware.js";
@@ -35,6 +37,9 @@ router.route("/:userId/verify-email/:token").get(verifyEmail);
 router.route("/login").post(login);
 
 router.route("/:userId").get(getUserProfile);
+
+router.route("/check-email-or-phone").post(checkWhetherEmailOrPhoneExists);
+router.route("/check-enrollment").post(checkWhetherEnrollmentExists);
 
 // secure routes
 router.route("/logout").post(verifyJWT, logout);

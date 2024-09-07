@@ -126,7 +126,33 @@ export const MultiStepForm = () => {
     return Object.keys(stepErrors).length === 0;
   };
 
-  const nextStep = () => {
+  const nextStep = async () => {
+    if (currentStep === 1) {
+      const { email, phone } = formData;
+      try {
+        await axios.post(`${API}/users/check-email-or-phone`, {
+          email,
+          phone,
+        });
+        setMessage("");
+      } catch (error) {
+        console.log(error);
+        setMessage(error.response.data.message);
+        return;
+      }
+    } else if (currentStep === 4) {
+      const { enrollmentNumber } = formData;
+      try {
+        await axios.post(`${API}/users/check-enrollment`, {
+          enrollmentNumber,
+        });
+        setMessage("");
+      } catch (error) {
+        console.log(error);
+        setMessage(error.response.data.message);
+        return;
+      }
+    }
     if (validateStep()) {
       setCurrentStep((prev) => Math.min(prev + 1, 7));
     }
@@ -154,6 +180,37 @@ export const MultiStepForm = () => {
         setMessage(error.response.data.message);
         console.log(error);
       }
+    }
+  };
+
+  const checkEmailPhone = async (email, phone) => {
+    try {
+      const response = await axios.post(`${API}/users/check-email-or-phone`, {
+        email,
+        phone,
+      });
+      setMessage("");
+      console.log(response.data.message);
+      return false;
+    } catch (error) {
+      console.log(error);
+      setMessage(error.response.data.message);
+      return true;
+    }
+  };
+
+  const checkEnrollment = async (enrollmentNumber) => {
+    try {
+      const response = await axios.post(`${API}/users/check-enrollment`, {
+        enrollmentNumber,
+      });
+      setMessage("");
+      console.log(response.data.message);
+      return false;
+    } catch (error) {
+      console.log(error);
+      setMessage(error.response.data.message);
+      return true;
     }
   };
 

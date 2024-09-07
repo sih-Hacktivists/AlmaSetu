@@ -1,11 +1,11 @@
 import React, { useState } from "react";
-import ShowButton from "../../assets/eyeButton.svg"
-import HideButton from "../../assets/hideEyeButton.svg"
+import ShowButton from "../../assets/eyeButton.svg";
+import HideButton from "../../assets/hideEyeButton.svg";
 
 const StepOne = ({ formData, handleChange, handleCheckboxChange, errors }) => {
-  const [show,setShow] = useState(false);
-  function handleClick(){
-    setShow(!show)
+  const [show, setShow] = useState(false);
+  function handleClick() {
+    setShow(!show);
   }
   return (
     <>
@@ -47,9 +47,10 @@ const StepOne = ({ formData, handleChange, handleCheckboxChange, errors }) => {
           className={`bg-gray-50 border ${
             errors.email ? "border-red-500" : "border-gray-300"
           } text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5`}
-          placeholder={`${formData.isCollegeEmail?"....@x.edu.in" :"....@gmail.com"} `}
+          placeholder={`${
+            formData.isCollegeEmail ? "....@x.edu.in" : "....@gmail.com"
+          } `}
           required
-         
         />
         {errors.email && <p className="text-red-500 text-sm">{errors.email}</p>}
         <div className="flex gap-2 items-center mt-2">
@@ -84,8 +85,17 @@ const StepOne = ({ formData, handleChange, handleCheckboxChange, errors }) => {
             errors.password ? "border-red-500" : "border-gray-300"
           } text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5`}
           required
-          />
-          <div onClick={handleClick} className="cursor-pointer absolute right-2 top-10">{show ? <img width={20} height={20} src={HideButton}/> : <img width={20} height={20} src={ShowButton}/>}</div>
+        />
+        <div
+          onClick={handleClick}
+          className="cursor-pointer absolute right-2 top-10"
+        >
+          {show ? (
+            <img width={20} height={20} src={HideButton} />
+          ) : (
+            <img width={20} height={20} src={ShowButton} />
+          )}
+        </div>
         {errors.password && (
           <p className="text-red-500 text-sm">{errors.password}</p>
         )}
@@ -98,7 +108,7 @@ const StepOne = ({ formData, handleChange, handleCheckboxChange, errors }) => {
         >
           Phone Number
         </label>
-        
+
         <input
           type="tel"
           name="phone"
@@ -117,7 +127,5 @@ const StepOne = ({ formData, handleChange, handleCheckboxChange, errors }) => {
     </>
   );
 };
-
-
 
 export default StepOne;

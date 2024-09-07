@@ -342,6 +342,36 @@ const refreshAccessToken = asyncHandler(async (req, res) => {
     }
 });
 
+const checkWhetherEmailOrPhoneExists = asyncHandler(async (req, res) => {
+    const { email, phone } = req.body;
+
+    const existingUser = await User.findOne({
+        $or: [{ email }, { phone }],
+    });
+
+    if (existingUser) {
+        return res
+            .status(400)
+            .json({ message: "User with this email or phone already exists" });
+    }
+
+    return res.status(200).json(new ApiResponse(200, {}, "User not found"));
+});
+
+const checkWhetherEnrollmentExists = asyncHandler(async (req, res) => {
+    const { enrollmentNumber } = req.body;
+
+    const existingUser = await User.findOne({ enrollmentNumber });
+
+    if (existingUser) {
+        return res.status(400).json({
+            message: "User with this enrollment number already exists",
+        });
+    }
+
+    return res.status(200).json(new ApiResponse(200, {}, "User not found"));
+});
+
 const changeCurrentPassword = asyncHandler(async (req, res) => {
     const { oldPassword, newPassword } = req.body;
 
@@ -539,4 +569,6 @@ export {
     giveRecomendation,
     sendPasswordResetEmail,
     resetPassword,
+    checkWhetherEmailOrPhoneExists,
+    checkWhetherEnrollmentExists,
 };
