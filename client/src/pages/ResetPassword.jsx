@@ -2,22 +2,10 @@ import React, { useState } from "react";
 import axios from "axios";
 import { API } from "../utils/api";
 import { Link, useNavigate } from "react-router-dom";
-const generateRandomCode = () => {
-  const characters =
-    "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-  let result = "";
-  const charactersLength = characters.length;
-  for (let i = 0; i < 4; i++) {
-    result += characters.charAt(Math.floor(Math.random() * charactersLength));
-  }
-  return result;
-};
 
-const CAPTCHA_CODE = generateRandomCode(); // Simulated CAPTCHA code for demonstration
-
-const ForgotPasswordPage = () => {
-  const [email, setEmail] = useState("");
-  const [captchaInput, setCaptchaInput] = useState("");
+const ResetPasswordPage = () => {
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
   const [message, setMessage] = useState("");
   const [errors, setErrors] = useState({});
   const navigate = useNavigate();
@@ -25,20 +13,17 @@ const ForgotPasswordPage = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const errors = {};
-    if (!email) errors.email = "Email is required.";
-    if (captchaInput !== CAPTCHA_CODE) errors.captcha = "Invalid CAPTCHA code.";
+    if (!password) errors.password = "Password is required.";
+    if (password !== confirmPassword) errors.confirmPassword = "Passwords do not match.";
     setErrors(errors);
 
     if (Object.keys(errors).length === 0) {
-      // Handle password reset request here
       try {
         setMessage("Please wait...");
-        const response = await axios.post(
-          `${API}/users/send-password-reset-email`,
-          { email }
-        );
-        setEmail("");
-        setCaptchaInput("");
+        // Replace the URL with the appropriate endpoint for resetting the password
+        const response = await axios.post(`${API}/users/reset-password`, { password });
+        setPassword("");
+        setConfirmPassword("");
         setMessage(response.data.message);
         console.log(response.data.message);
         navigate("/login");
@@ -67,57 +52,51 @@ const ForgotPasswordPage = () => {
         <div className="w-full rounded-lg shadow md:mt-0 sm:max-w-md xl:p-0 border">
           <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
             <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl">
-              Forgot Password
+              Reset Password
             </h1>
 
             <form onSubmit={handleSubmit} className="space-y-4 md:space-y-6">
               <div>
                 <label
-                  htmlFor="email"
+                  htmlFor="password"
                   className="block text-sm font-medium text-gray-900"
                 >
-                  Email
+                  New Password
                 </label>
                 <input
-                  type="email"
-                  id="email"
-                  name="email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
+                  type="password"
+                  id="password"
+                  name="password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
                   className={`mt-1 block w-full px-3 py-2 border rounded-lg shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm ${
-                    errors.email ? "border-red-500" : ""
+                    errors.password ? "border-red-500" : ""
                   }`}
                 />
-                {errors.email && (
-                  <p className="mt-2 text-sm text-red-600">{errors.email}</p>
+                {errors.password && (
+                  <p className="mt-2 text-sm text-red-600">{errors.password}</p>
                 )}
               </div>
 
               <div>
                 <label
-                  htmlFor="captcha"
+                  htmlFor="confirmPassword"
                   className="block text-sm font-medium text-gray-900"
                 >
-                  CAPTCHA
+                  Confirm Password
                 </label>
-                <div className="flex items-center space-x-2">
-                  <div className="bg-gray-200 p-2 rounded-lg">
-                    {CAPTCHA_CODE}
-                  </div>
-                  <input
-                    type="text"
-                    id="captcha"
-                    name="captcha"
-                    value={captchaInput}
-                    onChange={(e) => setCaptchaInput(e.target.value)}
-                    className={`mt-1 block w-full px-3 py-2 border rounded-lg shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm ${
-                      errors.captcha ? "border-red-500" : ""
-                    }`}
-                    placeholder="Enter CAPTCHA"
-                  />
-                </div>
-                {errors.captcha && (
-                  <p className="mt-2 text-sm text-red-600">{errors.captcha}</p>
+                <input
+                  type="password"
+                  id="confirmPassword"
+                  name="confirmPassword"
+                  value={confirmPassword}
+                  onChange={(e) => setConfirmPassword(e.target.value)}
+                  className={`mt-1 block w-full px-3 py-2 border rounded-lg shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm ${
+                    errors.confirmPassword ? "border-red-500" : ""
+                  }`}
+                />
+                {errors.confirmPassword && (
+                  <p className="mt-2 text-sm text-red-600">{errors.confirmPassword}</p>
                 )}
               </div>
 
@@ -129,7 +108,7 @@ const ForgotPasswordPage = () => {
                 type="submit"
                 className="w-full px-5 py-2.5 text-white bg-blue-500 rounded-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-400 text-sm font-medium"
               >
-                Send Password Reset Link
+                Reset Password
               </button>
 
               <div className="text-sm font-medium text-gray-900">
@@ -145,4 +124,4 @@ const ForgotPasswordPage = () => {
   );
 };
 
-export default ForgotPasswordPage;
+export default ResetPasswordPage;

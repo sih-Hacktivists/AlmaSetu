@@ -8,6 +8,7 @@ import AdminApprovals from "./pages/AdminApprovals";
 import { SearchBar } from "./components/SearchBar";
 import SideBar from "./components/SideBar";
 import NotFound from "./components/NotFound";
+import ResetPasswordPage from "./pages/ResetPassword";
 
 function AdminLayout() {
   return (
@@ -36,6 +37,7 @@ function App() {
       <Route path="/home" element={<Home />} />
       <Route path="/login" element={<LoginPage />} />
       <Route path="/forgot-password" element={<ForgotPasswordPage />} />
+      <Route path="/reset-password" element={<ResetPasswordPage/>}/>
       {/* <Route path="/admin/*" element={<NotFound/>}/> */}
       <Route path="/admin/*" element={<AdminLayout />} />
     </Routes>
