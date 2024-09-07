@@ -10,6 +10,7 @@ import SideBar from "./components/SideBar";
 import NotFound from "./components/NotFound";
 import ResetPasswordPage from "./pages/ResetPassword";
 import VerificationPage from "./pages/VerifiedPage";
+import Events from "./pages/Events";
 
 function AdminLayout() {
   return (
@@ -48,6 +49,7 @@ function App() {
         path="/users/:userId/verify-email/:token"
         element={<VerificationPage />}
       />
+      <Route path="/events" element={<Events/>} />
     </Routes>
   );
 }
