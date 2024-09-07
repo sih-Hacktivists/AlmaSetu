@@ -16,7 +16,8 @@ import Events from "./pages/Events";
 function AdminLayout() {
   return (
     <>
-      <div className="flex bg-[#ECF7FE]">
+    
+      <div className="flex bg-[#ECF7FE] relative" >
         <SideBar />
         <div className=" w-full p-2 px-10  ">
           <SearchBar showProfile={true} />
@@ -52,6 +53,7 @@ function App() {
       <Route path="/admin/*" element={<AdminLayout />} />
       <Route path="/admin/login" element={<AdminLogin />} />
       <Route path="/users/events" element={<Events />} />
+      <Route path="/*" element={<NotFound/>}/>
     </Routes>
   );
 }

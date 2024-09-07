@@ -10,15 +10,16 @@ export function SearchBar({ showProfile }) {
   }
   return (
     <>
-      <div className="flex items-center gap-10 mx-auto px-2  max-w-screen-xl">
+      <div className="flex items-center gap-10 mx-auto px-2  max-w-screen-xl xl:max-w-screen-lg pt-1">
         <img
           src="https://cdn-icons-png.flaticon.com/128/999/999663.png"
-          width={40}
-          height={40}
+          width={45}
+          height={45}
+          className=" pt-2"
           alt=""
         />
         <div className="relative flex items-center w-full ">
-          <input    
+          <input
             type="text"
             value={input}
             onChange={(e) => setInput(e.target.value)}
@@ -36,24 +37,27 @@ export function SearchBar({ showProfile }) {
           />
         </div>
         <img
-            src={NotificationIcon}
-            
-            alt=""
-            className="h-[30px] w-[30px] max-xl:h-[25px] max-xl:w-[25px] outline outline-1  rounded-lg bg-white"
-          />
+          src={NotificationIcon}
+          alt=""
+          className="h-[30px] w-[30px] max-xl:h-[25px] max-xl:w-[25px] outline outline-1  rounded-lg bg-white"
+        />
         {showProfile ? (
-          <UserProfileDropdown institution={true} email={"ume@gmail.com"} name={"UEM Kolkata  "} nameClass={"w-36"}/>
+          <UserProfileDropdown
+            institution={true}
+            email={"ume@gmail.com"}
+            name={"Potti Sriramulu College of Engineering & Technology"}
+            nameClass={"w-36 "}
+          />
         ) : (
-        ""
+          ""
         )}
-         
       </div>
     </>
   );
 }
 
 //have to fix
-//make it component wise clean code 
+//make it component wise clean code
 const UserProfileDropdown = ({ name, nameClass, institution, email }) => {
   const [isOpen, setIsOpen] = useState(false);
 
@@ -74,7 +78,13 @@ const UserProfileDropdown = ({ name, nameClass, institution, email }) => {
           src="https://flowbite.com/docs/images/people/profile-picture-3.jpg"
           alt="user photo"
         />
-        <div className={nameClass}>{name}</div>
+        <div className={nameClass}>
+          {name
+            .split(" ")
+            .filter((word) => !["of", "and","&"].includes(word.toLowerCase()))
+            .map((word) => word[0])
+            .join("")}
+        </div>
         {institution ? (
           <svg
             className="w-5 h-5 ms-3"

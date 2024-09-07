@@ -113,3 +113,19 @@ export const users = [
       "https://flowbite.com/docs/images/people/profile-picture-20.jpg",
   },
 ];
+
+export const sideLinks = [
+  {
+    title: "dashboard",
+  },
+  {
+    title: "events",
+  },
+  {
+    title: "mails",
+  },
+  {
+    title: "settings",
+  },
+  
+];
