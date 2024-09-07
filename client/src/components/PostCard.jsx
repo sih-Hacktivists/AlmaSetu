@@ -2,7 +2,7 @@ import React from 'react';
 
 export const PostCard = ({ post }) => {
   return (
-    <div className="bg-white rounded-lg shadow-md p-4 mb-4 relative">
+    <div className="bg-[#BBDCF1] rounded-lg shadow-md p-4 mb-4 relative">
       {/* User Info */}
       <div className="flex items-center mb-3">
         <img

@@ -1,7 +1,18 @@
-import React from "react";
+import React, { useState } from "react";
 import ViewIcon from "../assets/viewDocument.svg";
+import DocumentModal from "../components/DocumentModal";
 
 const TableRow = ({ name, role, profilePic, title, onApprove, onReject }) => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const handleViewDocumentClick = () => {
+    setIsModalOpen(true);
+  };
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+  };
+
   return (
     <div className="w-full border-2 border-slate-900 rounded-3xl flex justify-between items-center px-2 py-2 my-2">
       <div className="flex justify-items-start items-center gap-2">
@@ -10,7 +21,10 @@ const TableRow = ({ name, role, profilePic, title, onApprove, onReject }) => {
       </div>
       {title === "Pending Approval" ? (
         <div className="flex gap-5 items-center">
-          <div className="rounded-2xl border-2 border-slate-700/30 text-sm px-4 py-2 flex gap-2 items-center cursor-pointer hover:bg-slate-500/30 font-medium">
+          <div
+            onClick={handleViewDocumentClick}
+            className="rounded-2xl border-2 border-slate-700/30 text-sm px-4 py-2 flex gap-2 items-center cursor-pointer hover:bg-slate-500/30 font-medium"
+          >
             View Document
             <img src={ViewIcon} className="w-4 h-4" alt="view Document" />
           </div>
@@ -31,6 +45,12 @@ const TableRow = ({ name, role, profilePic, title, onApprove, onReject }) => {
         <div className="rounded-2xl border-2 border-red-700 text-red-500 hover:bg-red-400 px-5 py-2 font-medium">
           Delete
         </div>
+      )}
+      {isModalOpen && (
+        <DocumentModal
+          user={{ name, role, profilePic }}
+          onClose={handleCloseModal}
+        />
       )}
     </div>
   );
