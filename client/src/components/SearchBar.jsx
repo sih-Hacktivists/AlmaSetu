@@ -22,7 +22,7 @@ export function SearchBar({ showProfile }) {
             type="text"
             value={input}
             onChange={(e) => setInput(e.target.value)}
-            className="block w-full p-4 text-sm text-gray-500 border border-gray-300 rounded-2xl bg-[#BBDCF1] focus:outline-none  h-10"
+            className="block w-full p-4 text-sm text-gray-500 border-black border-2 rounded-2xl bg-white  h-10"
             placeholder="Search Events,Posts..."
           />
 
@@ -39,7 +39,7 @@ export function SearchBar({ showProfile }) {
             src={NotificationIcon}
             
             alt=""
-            className="h-[30px] w-[30px] max-xl:h-[25px] max-xl:w-[25px] outline outline-1  rounded-lg bg-[#BBDCF1]"
+            className="h-[30px] w-[30px] max-xl:h-[25px] max-xl:w-[25px] outline outline-1  rounded-lg bg-white"
           />
         {showProfile ? (
           <UserProfileDropdown institution={true} email={"ume@gmail.com"} name={"UEM Kolkata  "} nameClass={"w-36"}/>
