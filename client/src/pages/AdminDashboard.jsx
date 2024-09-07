@@ -3,13 +3,31 @@ import { AdminApprovalsTab } from "../assets/Constant";
 import Tab from "../components/Tab";
 import Table from "../components/Table";
 
-const Approvals = () => {
+const AdminDashboard = () => {
   const [selectedTab, setSelectedTab] = useState("Pending Approval"); // Track selected tab
   const [users, setUsers] = useState([
     // Initial users list, assuming these users are fetched from a backend or constant
-    { id: 1, name: "John Doe", role: "student", profilePic: "path/to/pic1.jpg", approve: false },
-    { id: 2, name: "Jane Smith", role: "alumni", profilePic: "path/to/pic2.jpg", approve: false },
-    { id: 3, name: "Rahul Das", role: "student", profilePic: "path/to/pic3.jpg", approve: false },
+    {
+      id: 1,
+      name: "John Doe",
+      role: "student",
+      profilePic: "path/to/pic1.jpg",
+      approve: false,
+    },
+    {
+      id: 2,
+      name: "Jane Smith",
+      role: "alumni",
+      profilePic: "path/to/pic2.jpg",
+      approve: false,
+    },
+    {
+      id: 3,
+      name: "Rahul Das",
+      role: "student",
+      profilePic: "path/to/pic3.jpg",
+      approve: false,
+    },
     // More user objects...
   ]);
 
@@ -17,18 +35,14 @@ const Approvals = () => {
   const handleApprove = (userId) => {
     setUsers((prevUsers) =>
       prevUsers.map((user) =>
-        user.id === userId
-          ? { ...user, approve: true }
-          : user
+        user.id === userId ? { ...user, approve: true } : user
       )
     );
   };
 
   // Function to handle rejecting a user
   const handleReject = (userId) => {
-    setUsers((prevUsers) =>
-      prevUsers.filter((user) => user.id !== userId)
-    );
+    setUsers((prevUsers) => prevUsers.filter((user) => user.id !== userId));
   };
 
   // Function to filter users based on the selected tab
@@ -36,7 +50,9 @@ const Approvals = () => {
     if (selectedTab === "Pending Approval") {
       return users.filter((user) => !user.approve);
     }
-    return users.filter((user) => user.approve && user.role === selectedTab.toLowerCase());
+    return users.filter(
+      (user) => user.approve && user.role === selectedTab.toLowerCase()
+    );
   };
 
   return (
@@ -54,10 +70,15 @@ const Approvals = () => {
       </div>
       {/* Display Table component based on selected tab */}
       <div className="max-h-screen">
-        <Table title={selectedTab} users={getFilteredUsers()} onApprove={handleApprove} onReject={handleReject} />
+        <Table
+          title={selectedTab}
+          users={getFilteredUsers()}
+          onApprove={handleApprove}
+          onReject={handleReject}
+        />
       </div>
     </div>
   );
 };
 
-export default Approvals;
+export default AdminDashboard;

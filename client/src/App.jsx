@@ -4,7 +4,7 @@ import { Home } from "./pages/Home";
 import "./App.css";
 import LoginPage from "./pages/LoginPage";
 import ForgotPasswordPage from "./pages/ForgotPassword";
-import AdminApprovals from "./pages/AdminApprovals";
+import AdminDashboard from "./pages/AdminDashboard";
 import { SearchBar } from "./components/SearchBar";
 import SideBar from "./components/SideBar";
 import NotFound from "./components/NotFound";
@@ -20,8 +20,8 @@ function AdminLayout() {
           <SearchBar showProfile={true} />
           <div className="py-10">
             <Routes>
-              <Route path="/approvals" element={<AdminApprovals />} />
-              <Route path="/events" element={<AdminApprovals />} />
+              <Route path="/dashboard" element={<AdminDashboard />} />
+              <Route path="/events" element={<AdminDashboard />} />
             </Routes>
           </div>
         </div>
