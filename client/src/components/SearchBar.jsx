@@ -10,7 +10,7 @@ export function SearchBar({ showProfile }) {
   }
   return (
     <>
-      <div className="flex items-center gap-10 mx-auto px-2  max-w-screen-xl xl:max-w-screen-lg pt-1">
+      <div className="flex items-center gap-10 mx-auto px-2  max-w-screen-2xl xl:max-w-screen-lg pt-1">
         <img
           src="https://cdn-icons-png.flaticon.com/128/999/999663.png"
           width={45}

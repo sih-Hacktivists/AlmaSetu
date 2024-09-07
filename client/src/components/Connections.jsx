@@ -37,7 +37,7 @@ export const Connections = () => {
   return (
     <div className="bg-[#BBDCF1] rounded-2xl  w-full  ">
       {/* Header */}
-      <div className="bg-[#ECF7FE] rounded-t-2xl border-slate-800 border-[1px]  text-center text-2xl font-normal ">
+      <div className="bg-[#ECF7FE] rounded-t-2xl border-slate-800 border-[1px]  text-center text-2xl 2xl:text-4xl font-normal ">
         Suggested Connections
       </div>
 

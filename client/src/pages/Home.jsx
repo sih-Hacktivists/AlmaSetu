@@ -115,10 +115,10 @@ export const Home = () => {
           <div className="row-span-1 p-2 xl:pt-5 ">
             <SearchBar showProfile={false} />
           </div>
-          <div className="row-span-3 p-2 scrollbar-custom overflow-x-auto mb-5">
+          <div className="row-span-3 xl:row-span-4 p-2 scrollbar-custom overflow-x-auto pt-5 2xl:pt-10   ">
             <TopEvents />
           </div>
-          <div className="row-span-7  p-2 ">
+          <div className="row-span-7 xl:row-span-6  p-2 pt-5">
             <Posts />
           </div>
         </div>

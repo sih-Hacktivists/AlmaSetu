@@ -17,7 +17,7 @@ export const Communities = () => {
   return (
     <div className="bg-[#BBDCF1] rounded-2xl ">
       {/* Header */}
-      <div className="bg-[#ECF7FE] rounded-t-2xl border-slate-800 border-[1px] text-center text-2xl font-normal ">
+      <div className="bg-[#ECF7FE]  2xl:text-4xl rounded-t-2xl border-slate-800 border-[1px] text-center text-2xl font-normal ">
         Communities
       </div>
 
