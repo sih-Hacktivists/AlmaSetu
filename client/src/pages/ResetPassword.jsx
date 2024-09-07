@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { API } from "../utils/api";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 
 const ResetPasswordPage = () => {
   const [password, setPassword] = useState("");
@@ -9,19 +9,24 @@ const ResetPasswordPage = () => {
   const [message, setMessage] = useState("");
   const [errors, setErrors] = useState({});
   const navigate = useNavigate();
+  const params = useParams();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     const errors = {};
     if (!password) errors.password = "Password is required.";
-    if (password !== confirmPassword) errors.confirmPassword = "Passwords do not match.";
+    if (password !== confirmPassword)
+      errors.confirmPassword = "Passwords do not match.";
     setErrors(errors);
 
     if (Object.keys(errors).length === 0) {
       try {
         setMessage("Please wait...");
         // Replace the URL with the appropriate endpoint for resetting the password
-        const response = await axios.post(`${API}/users/reset-password`, { password });
+        const response = await axios.post(
+          `${API}/users/${params.userId}/reset-password/${params.token}`,
+          { password }
+        );
         setPassword("");
         setConfirmPassword("");
         setMessage(response.data.message);
@@ -96,7 +101,9 @@ const ResetPasswordPage = () => {
                   }`}
                 />
                 {errors.confirmPassword && (
-                  <p className="mt-2 text-sm text-red-600">{errors.confirmPassword}</p>
+                  <p className="mt-2 text-sm text-red-600">
+                    {errors.confirmPassword}
+                  </p>
                 )}
               </div>
 
