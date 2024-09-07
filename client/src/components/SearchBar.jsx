@@ -113,7 +113,7 @@ const UserProfileDropdown = ({ name, nameClass, institution, email }) => {
       {isOpen && (
         <div
           id="dropdownAvatarName"
-          className="absolute z-10 bg-white divide-y divide-gray-100 rounded-lg shadow w-44"
+          className="absolute z-10 bg-[#ECF7FE] divide-y divide-gray-100 rounded-lg shadow w-44"
         >
           <div className="px-4 py-3 text-sm text-gray-900">
             <div className="font-medium">Pro User</div>
