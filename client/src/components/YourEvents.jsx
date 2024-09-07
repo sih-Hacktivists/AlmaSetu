@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 let events2 = [
-    { day: 1, month: "january", title: "Web Dev", desc: "Description" },
-    { day: 2, month: "february", title: "App Dev", desc: "Description" },
-    { day: 3, month: "march", title: "AR", desc: "Description" },
-    { day: 4, month: "march", title: "Machine Learning", desc: "Description" }
+    { day: 1, month: "january", title: "Web Dev", desc: "Description" , image:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ7EtqOpuewOP5rSURN8E4W8rUPhuGoPK2LKw&s"},
+    { day: 2, month: "february", title: "App Dev", desc: "Description", image:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRDPw-2tr_a_sdwKp6X4SFWp2xMrDHRBBBAWA&s" },
+    { day: 3, month: "march", title: "AR", desc: "Description" , image:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRgobl4AGKjs2EN-QvNkXW2TWmhiE-QM9bhPA&s"},
+    { day: 4, month: "march", title: "Machine Learning", desc: "Description", image:"https://media.istockphoto.com/id/1324380506/photo/people-with-vr-grasses-playing-virtual-reality-game-future-digital-technology-and-3d-virtual.jpg?s=612x612&w=0&k=20&c=I_9fnEi1hNHFwy0qe8g7V1ZQJmgyKEDOSDJonScTSMU=" }
 ];
 
 export const YourEvents = () => {
@@ -41,17 +41,18 @@ export const YourEvents = () => {
 
 function EventCard({ event }) {
     return (
-        <div className="relative w-96 h-28 xl:h-40 bg-white rounded-2xl  drop-shadow-xl  shadow-slate-400 shadow-md border-black border-2">
+        <div className="relative w-96 h-[50px] xl:h-40 bg-url[(event.image)] rounded-2xl  drop-shadow-xl  shadow-slate-400 shadow-md border-black border-2"
+        style={{ backgroundImage: `url(${event.image})`, backgroundSize: 'cover', backgroundPosition: 'center' }}>
             <div className="absolute text-center text-orange-500    top-0 right-6 rounded-b-2xl  w-[60px] h-[60px] bg-[#111E4B]">
-                <div className="font-normal text-xl">
+                <div className="font-bold text-xl">
                     {event.month.charAt(0).toUpperCase() +
                         event.month.slice(1, 3).toLowerCase() +
                         " ."}
                 </div>
-                <div className="text-lg font-medium">{event.day}</div>
+                <div className="text-lg font-bold">{event.day}</div>
             </div>
-            <p className="px-2 py-2 text-start text-2xl">{event.title}</p>
-            <p className="px-2 text-start">{event.desc}</p>
+            <p className="px-2 py-2 text-start text-2xl text-white font-bold">{event.title}</p>
+            <p className="px-2 text-start text-white font-bold">{event.desc}</p>
         </div>
     );
 }
