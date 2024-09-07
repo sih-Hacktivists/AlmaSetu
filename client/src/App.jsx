@@ -9,6 +9,7 @@ import { SearchBar } from "./components/SearchBar";
 import SideBar from "./components/SideBar";
 import NotFound from "./components/NotFound";
 import ResetPasswordPage from "./pages/ResetPassword";
+import VerificationPage from "./pages/VerifiedPage";
 
 function AdminLayout() {
   return (
@@ -40,6 +41,7 @@ function App() {
       <Route path="/reset-password" element={<ResetPasswordPage/>}/>
       {/* <Route path="/admin/*" element={<NotFound/>}/> */}
       <Route path="/admin/*" element={<AdminLayout />} />
+      <Route path="/verify" element={<VerificationPage/>}/>
     </Routes>
   );
 }
