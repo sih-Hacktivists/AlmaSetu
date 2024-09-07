@@ -10,6 +10,7 @@ import SideBar from "./components/SideBar";
 import NotFound from "./components/NotFound";
 import ResetPasswordPage from "./pages/ResetPassword";
 import VerificationPage from "./pages/VerifiedPage";
+import AdminLogin from "./pages/AdminLogin";
 import Events from "./pages/Events";
 
 function AdminLayout() {
@@ -22,7 +23,7 @@ function AdminLayout() {
           <div className="py-10">
             <Routes>
               <Route path="/dashboard" element={<AdminDashboard />} />
-              <Route path="/events" element={<AdminDashboard />} />
+              {/* <Route path="/events" element={<AdminDashboard />} /> */}
             </Routes>
           </div>
         </div>
@@ -36,7 +37,7 @@ function App() {
     <Routes>
       {/* <Route path="/" element={}/> */}
       <Route path="/register" element={<MultiStepForm />} />
-      <Route path="/home" element={<Home />} />
+      <Route path="/users/home" element={<Home />} />
       <Route path="/login" element={<LoginPage />} />
       <Route path="/forgot-password" element={<ForgotPasswordPage />} />
       <Route
@@ -44,12 +45,13 @@ function App() {
         element={<ResetPasswordPage />}
       />
       {/* <Route path="/admin/*" element={<NotFound/>}/> */}
-      <Route path="/admin/*" element={<AdminLayout />} />
       <Route
         path="/users/:userId/verify-email/:token"
         element={<VerificationPage />}
       />
-      <Route path="/events" element={<Events/>} />
+      <Route path="/admin/*" element={<AdminLayout />} />
+      <Route path="/admin/login" element={<AdminLogin />} />
+      <Route path="/users/events" element={<Events />} />
     </Routes>
   );
 }

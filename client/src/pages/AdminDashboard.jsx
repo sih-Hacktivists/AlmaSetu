@@ -1,59 +1,80 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { AdminApprovalsTab } from "../assets/Constant";
 import Tab from "../components/Tab";
 import Table from "../components/Table";
+import axios from "axios";
+import { API } from "../utils/api";
 
 const AdminDashboard = () => {
   const [selectedTab, setSelectedTab] = useState("Pending Approval"); // Track selected tab
-  const [users, setUsers] = useState([
-    // Initial users list, assuming these users are fetched from a backend or constant
-    {
-      id: 1,
-      name: "John Doe",
-      role: "student",
-      profilePic: "path/to/pic1.jpg",
-      approve: false,
-    },
-    {
-      id: 2,
-      name: "Jane Smith",
-      role: "alumni",
-      profilePic: "path/to/pic2.jpg",
-      approve: false,
-    },
-    {
-      id: 3,
-      name: "Rahul Das",
-      role: "student",
-      profilePic: "path/to/pic3.jpg",
-      approve: false,
-    },
-    // More user objects...
-  ]);
+  const [users, setUsers] = useState([]);
+  const [isChanged, setIsChanged] = useState(false);
+  const [message, setMessage] = useState(""); // Track message to display to the user
+
+  useEffect(() => {
+    (async () => {
+      // console.log("Fetching users");
+      setUsers([]);
+      setMessage("Loading...");
+      if (selectedTab === "Students") {
+        try {
+          const response = await axios.get(`${API}/admin/verified-students`);
+          setUsers(response.data.data);
+          setMessage("");
+        } catch (error) {
+          console.log(error);
+        }
+      } else if (selectedTab === "Alumni") {
+        try {
+          const response = await axios.get(`${API}/admin/verified-alumni`);
+          setUsers(response.data.data);
+          setMessage("");
+        } catch (error) {
+          console.log(error);
+        }
+      } else {
+        try {
+          const response = await axios.get(`${API}/admin/unverified-users`);
+          setUsers(response.data.data);
+          setMessage("");
+        } catch (error) {
+          console.log(error);
+        }
+      }
+    })();
+  }, [selectedTab, isChanged]);
 
   // Function to handle approving a user
-  const handleApprove = (userId) => {
-    setUsers((prevUsers) =>
-      prevUsers.map((user) =>
-        user.id === userId ? { ...user, approve: true } : user
-      )
-    );
+  const handleApprove = async (userId) => {
+    try {
+      await axios.put(`${API}/admin/approve-user/${userId}`);
+      alert("User Approved");
+      setIsChanged(!isChanged);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   // Function to handle rejecting a user
-  const handleReject = (userId) => {
-    setUsers((prevUsers) => prevUsers.filter((user) => user.id !== userId));
+  const handleReject = async (userId) => {
+    try {
+      await axios.delete(`${API}/admin/reject-user/${userId}`);
+      alert("User Removed");
+      setIsChanged(!isChanged);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   // Function to filter users based on the selected tab
-  const getFilteredUsers = () => {
-    if (selectedTab === "Pending Approval") {
-      return users.filter((user) => !user.approve);
-    }
-    return users.filter(
-      (user) => user.approve && user.role === selectedTab.toLowerCase()
-    );
-  };
+  // const getFilteredUsers = () => {
+  //   if (selectedTab === "Pending Approval") {
+  //     return users.filter((user) => !user.approve);
+  //   }
+  //   return users.filter(
+  //     (user) => user.approve && user.role === selectedTab.toLowerCase()
+  //   );
+  // };
 
   return (
     <div className="w-full">
@@ -72,9 +93,10 @@ const AdminDashboard = () => {
       <div className="max-h-screen">
         <Table
           title={selectedTab}
-          users={getFilteredUsers()}
+          users={users}
           onApprove={handleApprove}
           onReject={handleReject}
+          message={message}
         />
       </div>
     </div>

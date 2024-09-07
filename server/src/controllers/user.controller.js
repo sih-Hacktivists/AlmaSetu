@@ -505,6 +505,14 @@ const resetPassword = asyncHandler(async (req, res) => {
 
     await Token.findOneAndDelete({ userId });
 
+    await User.findByIdAndUpdate(
+        userId,
+        {
+            $unset: { refreshToken: 1 }, // this removes the field from the document
+        },
+        { new: true }
+    );
+
     const options = {
         httpOnly: true,
         secure: true,

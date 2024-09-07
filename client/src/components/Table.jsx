@@ -3,11 +3,12 @@ import SearchIcon from "../assets/searchIcon.svg";
 import SortIcon from "../assets/sortIcon.svg";
 import TableRow from "./TableRow";
 
-const Table = ({ title, users, onApprove, onReject }) => {
+const Table = ({ title, users, onApprove, onReject, message }) => {
   return (
     <div className="mt-5 px-10 border-2 border-black rounded-2xl h-[480px] xl:h-[700px] overflow-hidden">
       <FilterAndSearch />
       <div className="mt-20 overflow-y-auto max-h-screen scrollbar-custom pr-2">
+        {message && <p className="text-blue-500 text-center">{message}</p>}
         {users.map((user, index) => (
           <TableRow
             key={index}
@@ -15,8 +16,9 @@ const Table = ({ title, users, onApprove, onReject }) => {
             role={user.role}
             profilePic={user.profilePic}
             title={title}
-            onApprove={() => onApprove(user.id)} // Pass the approve handler
-            onReject={() => onReject(user.id)} // Pass the reject handler
+            document={user.document}
+            onApprove={() => onApprove(user._id)} // Pass the approve handler
+            onReject={() => onReject(user._id)} // Pass the reject handler
           />
         ))}
       </div>

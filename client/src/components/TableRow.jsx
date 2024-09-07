@@ -35,14 +35,17 @@ const TableRow = ({ name, role, profilePic, title, onApprove, onReject }) => {
             Approve
           </div>
           <div
-            className="rounded-2xl border-2 border-red-700 text-red-500 hover:bg-red-400 px-5 py-2 font-medium cursor-pointer"
+            className="rounded-2xl border-2 border-red-700 text-red-500 hover:bg-red-400 hover:text-white px-5 py-2 font-medium cursor-pointer"
             onClick={onReject} // Reject the user
           >
             Reject
           </div>
         </div>
       ) : (
-        <div className="rounded-2xl border-2 border-red-700 text-red-500 hover:bg-red-400 px-5 py-2 font-medium">
+        <div
+          className="rounded-2xl border-2 border-red-700 text-red-500 hover:bg-red-400 hover:text-white px-5 py-2 font-medium cursor-pointer"
+          onClick={onReject} // Delete the user
+        >
           Delete
         </div>
       )}
