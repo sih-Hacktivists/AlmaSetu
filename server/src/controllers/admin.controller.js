@@ -66,15 +66,15 @@ const registerAdmin = asyncHandler(async (req, res) => {
 });
 
 const loginAdmin = asyncHandler(async (req, res) => {
-    const { email, password } = req.body;
+    const { role, email, password } = req.body;
 
-    if (!email || !password) {
+    if (!email || !password || !role) {
         return res
             .status(400)
             .json({ message: "Please provide all the required fields" });
     }
 
-    const admin = await Admin.findOne({ email });
+    const admin = await Admin.findOne({ email, role: role.toLowerCase() });
 
     if (!admin) {
         return res.status(404).json({ message: "Admin not found" });
@@ -104,7 +104,11 @@ const loginAdmin = asyncHandler(async (req, res) => {
         .cookie("accessToken", accessToken, options)
         .cookie("refreshToken", refreshToken, options)
         .json(
-            new ApiResponse(200, loggedInUser, "User logged In Successfully")
+            new ApiResponse(
+                200,
+                { accessToken, refreshToken },
+                "User logged In Successfully"
+            )
         );
 });
 
@@ -270,14 +274,11 @@ const getVerifiedCollegeStudents = asyncHandler(async (req, res) => {
             .json({ message: "You are not authorized to view students" });
     }
 
-    const students = await User.find(
-        {
-            college: req.admin.college,
-            role: "student",
-            isVerified: true,
-        },
-        { sortBy: { updatedAt: -1 } }
-    );
+    const students = await User.find({
+        college: req.admin.college,
+        role: "student",
+        isVerified: true,
+    }).sort({ updatedAt: -1 });
 
     return res
         .status(200)
@@ -291,14 +292,11 @@ const getVerifiedCollegeAlumni = asyncHandler(async (req, res) => {
             .json({ message: "You are not authorized to view alumni" });
     }
 
-    const alumni = await User.find(
-        {
-            college: req.admin.college,
-            role: "alumni",
-            isVerified: true,
-        },
-        { sortBy: { updatedAt: -1 } }
-    );
+    const alumni = await User.find({
+        college: req.admin.college,
+        role: "alumni",
+        isVerified: true,
+    }).sort({ updatedAt: -1 });
 
     return res
         .status(200)
@@ -312,14 +310,12 @@ const getUnverifiedCollegeStudents = asyncHandler(async (req, res) => {
             .json({ message: "You are not authorized to view students" });
     }
 
-    const students = await User.find(
-        {
-            college: req.admin.college,
-            role: "student",
-            isVerified: false,
-        },
-        { sortBy: { createdAt: -1 } }
-    );
+    const students = await User.find({
+        college: req.admin.college,
+        role: "student",
+        isVerified: false,
+        isCollegeEmail: false,
+    }).sort({ createdAt: 1 });
 
     return res
         .status(200)
@@ -333,78 +329,85 @@ const getUnverifiedCollegeAlumni = asyncHandler(async (req, res) => {
             .json({ message: "You are not authorized to view alumni" });
     }
 
-    const alumni = await User.find(
-        {
-            college: req.admin.college,
-            role: "alumni",
-            isVerified: false,
-        },
-        { sortBy: { createdAt: -1 } }
-    );
+    const alumni = await User.find({
+        college: req.admin.college,
+        role: "alumni",
+        isVerified: false,
+        isCollegeEmail: false,
+    }).sort({ createdAt: 1 });
 
     return res
         .status(200)
         .json(new ApiResponse(200, alumni, "Alumni fetched successfully"));
 });
 
-const approveStudent = asyncHandler(async (req, res) => {
+const getAllUnverifiedCollegeUsers = asyncHandler(async (req, res) => {
     if (req.admin.role !== "admin") {
         return res
             .status(401)
-            .json({ message: "You are not authorized to approve a student" });
+            .json({ message: "You are not authorized to view users" });
     }
 
-    const { studentId } = req.params;
-    const student = await User.findById(studentId);
-
-    if (!student) {
-        return res.status(404).json({ message: "Student not found" });
-    }
-
-    if (student.role !== "student") {
-        return res.status(400).json({ message: "Invalid role" });
-    }
-
-    if (student.college !== req.admin.college) {
-        return res.status(400).json({ message: "Invalid college" });
-    }
-
-    student.isVerified = true;
-    await student.save({ validateBeforeSave: false });
+    const users = await User.find({
+        college: req.admin.college,
+        isVerified: false,
+        isCollegeEmail: false,
+    }).sort({ createdAt: 1 });
 
     return res
         .status(200)
-        .json(new ApiResponse(200, student, "Student approved successfully"));
+        .json(new ApiResponse(200, users, "Users fetched successfully"));
 });
 
-const approveAlumni = asyncHandler(async (req, res) => {
+const approveUser = asyncHandler(async (req, res) => {
     if (req.admin.role !== "admin") {
         return res
             .status(401)
-            .json({ message: "You are not authorized to approve an alumni" });
+            .json({ message: "You are not authorized to approve a user" });
     }
 
-    const { alumniId } = req.params;
-    const alumni = await User.findById(alumniId);
+    const { userId } = req.params;
+    const user = await User.findById(userId);
 
-    if (!alumni) {
-        return res.status(404).json({ message: "Alumni not found" });
+    if (!user) {
+        return res.status(404).json({ message: "User not found" });
     }
 
-    if (alumni.role !== "alumni") {
-        return res.status(400).json({ message: "Invalid role" });
-    }
-
-    if (alumni.college !== req.admin.college) {
+    if (user.college !== req.admin.college) {
         return res.status(400).json({ message: "Invalid college" });
     }
 
-    alumni.isVerified = true;
-    await alumni.save({ validateBeforeSave: false });
+    user.isVerified = true;
+    await user.save({ validateBeforeSave: false });
 
     return res
         .status(200)
-        .json(new ApiResponse(200, alumni, "Alumni approved successfully"));
+        .json(new ApiResponse(200, user, "User approved successfully"));
+});
+
+const rejectUser = asyncHandler(async (req, res) => {
+    if (req.admin.role !== "admin") {
+        return res
+            .status(401)
+            .json({ message: "You are not authorized to reject a user" });
+    }
+
+    const { userId } = req.params;
+    const user = await User.findById(userId);
+
+    if (!user) {
+        return res.status(404).json({ message: "User not found" });
+    }
+
+    if (user.college !== req.admin.college) {
+        return res.status(400).json({ message: "Invalid college" });
+    }
+
+    await User.findByIdAndDelete(userId);
+
+    return res
+        .status(200)
+        .json(new ApiResponse(200, {}, "User rejected successfully"));
 });
 
 export {
@@ -419,6 +422,7 @@ export {
     getVerifiedCollegeAlumni,
     getUnverifiedCollegeStudents,
     getUnverifiedCollegeAlumni,
-    approveStudent,
-    approveAlumni,
+    getAllUnverifiedCollegeUsers,
+    approveUser,
+    rejectUser,
 };

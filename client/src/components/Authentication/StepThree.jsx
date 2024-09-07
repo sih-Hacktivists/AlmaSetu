@@ -3,14 +3,11 @@ import React, { useState, useEffect, useRef } from "react";
 const universities = [
   "Ch. Maloo Ram Bhambhu Govt. Poly. College",
   "Govt. Polytechnic College",
-  "Govt. Polytechnic College",
-  "Govt. Women Polytechnic College",
   "Govt. Women Polytechnic College",
   "Laxmidhar Polytechnic College",
   "Indraprastha Institute of Polytechnic",
   "Shree Shyochand Memorial Institute of Engineering and Technology",
   "Yaduvanshi Polytechnic",
-  "Govt. Polytechnic College",
 ];
 
 const getCurrentYear = () => new Date().getFullYear() + 4;

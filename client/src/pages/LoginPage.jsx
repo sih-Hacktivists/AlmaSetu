@@ -29,7 +29,7 @@ const LoginPage = () => {
 
         setMessage("");
         console.log(response.data.message);
-        navigate("/home");
+        navigate("/users/home");
       } catch (error) {
         setMessage(error.response.data.message);
         console.log(error);
