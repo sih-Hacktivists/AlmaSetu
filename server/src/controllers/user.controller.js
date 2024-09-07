@@ -138,7 +138,7 @@ const register = asyncHandler(async (req, res) => {
             ),
         });
 
-        const url = `${process.env.BASE_URL}/users/${createdUser._id}/verify-email/${token.token}`;
+        const url = `${process.env.BASE_URL}/users/${createdUser._id}/verify-email/${encodeURIComponent(token.token)}`;
         await sendEmail(createdUser.email, "Verify Email", url);
 
         return res
@@ -178,12 +178,18 @@ const verifyEmail = asyncHandler(async (req, res) => {
         return res.status(404).json({ message: "Invalid link" });
     }
 
-    await User.findByIdAndUpdate(userId, { isVerified: true });
-    await Token.findOneAndDelete({ userId, token });
+    await User.findByIdAndUpdate(userId, { isVerified: true }, { new: true });
+    await Token.findOneAndDelete({ userId, token }, { new: true });
 
     return res
         .status(200)
-        .json(new ApiResponse(200, {}, "Email verified successfully"));
+        .json(
+            new ApiResponse(
+                200,
+                {},
+                "Email verified successfully!! Now you can Login"
+            )
+        );
 });
 
 const login = asyncHandler(async (req, res) => {
