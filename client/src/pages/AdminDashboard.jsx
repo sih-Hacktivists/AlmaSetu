@@ -6,99 +6,119 @@ import axios from "axios";
 import { API } from "../utils/api";
 
 const AdminDashboard = () => {
-  const [selectedTab, setSelectedTab] = useState("Pending Approval"); // Track selected tab
+  const [selectedTab, setSelectedTab] = useState("Pending Approval");
   const [users, setUsers] = useState([]);
   const [isChanged, setIsChanged] = useState(false);
-  const [message, setMessage] = useState(""); // Track message to display to the user
+  const [message, setMessage] = useState("");
+  const [showConfirmModal, setShowConfirmModal] = useState(false);
+  const [selectedUserId, setSelectedUserId] = useState(null);
+  const [actionType, setActionType] = useState(""); // State to track action type
 
   useEffect(() => {
     (async () => {
-      // console.log("Fetching users");
       setUsers([]);
       setMessage("Loading...");
-      if (selectedTab === "Students") {
-        try {
-          const response = await axios.get(`${API}/admin/verified-students`);
-          setUsers(response.data.data);
-          setMessage("");
-        } catch (error) {
-          console.log(error);
+      try {
+        let response;
+        if (selectedTab === "Students") {
+          response = await axios.get(`${API}/admin/verified-students`);
+        } else if (selectedTab === "Alumni") {
+          response = await axios.get(`${API}/admin/verified-alumni`);
+        } else {
+          response = await axios.get(`${API}/admin/unverified-users`);
         }
-      } else if (selectedTab === "Alumni") {
-        try {
-          const response = await axios.get(`${API}/admin/verified-alumni`);
-          setUsers(response.data.data);
-          setMessage("");
-        } catch (error) {
-          console.log(error);
-        }
-      } else {
-        try {
-          const response = await axios.get(`${API}/admin/unverified-users`);
-          setUsers(response.data.data);
-          setMessage("");
-        } catch (error) {
-          console.log(error);
-        }
+        setUsers(response.data.data);
+        setMessage("");
+      } catch (error) {
+        console.log(error);
       }
     })();
   }, [selectedTab, isChanged]);
 
-  // Function to handle approving a user
-  const handleApprove = async (userId) => {
+  // Function to show confirmation modal for approval
+  const handleApprove = (userId) => {
+    setSelectedUserId(userId);
+    setActionType("approve");
+    setShowConfirmModal(true);
+  };
+
+  // Function to show confirmation modal for rejection or deletion
+  const handleRejectOrDelete = (userId) => {
+    setSelectedUserId(userId);
+    setActionType(selectedTab === "Pending Approval" ? "reject" : "delete");
+    setShowConfirmModal(true);
+  };
+
+  // Function to handle confirmation of approval, rejection, or deletion
+  const confirmAction = async () => {
     try {
-      await axios.put(`${API}/admin/approve-user/${userId}`);
-      alert("User Approved");
-      setIsChanged(!isChanged);
+      if (actionType === "approve") {
+        await axios.put(`${API}/admin/approve-user/${selectedUserId}`);
+        setMessage("User Approved");
+      } else if (actionType === "reject") {
+        await axios.delete(`${API}/admin/reject-user/${selectedUserId}`);
+        setMessage("User Rejected");
+      } else if (actionType === "delete") {
+        await axios.delete(`${API}/admin/delete-user/${selectedUserId}`);
+        setMessage("User Deleted");
+      }
     } catch (error) {
       console.log(error);
     }
-  };
 
-  // Function to handle rejecting a user
-  const handleReject = async (userId) => {
-    try {
-      await axios.delete(`${API}/admin/reject-user/${userId}`);
-      alert("User Removed");
-      setIsChanged(!isChanged);
-    } catch (error) {
-      console.log(error);
-    }
+    setShowConfirmModal(false);
+    setIsChanged(!isChanged);
   };
-
-  // Function to filter users based on the selected tab
-  // const getFilteredUsers = () => {
-  //   if (selectedTab === "Pending Approval") {
-  //     return users.filter((user) => !user.approve);
-  //   }
-  //   return users.filter(
-  //     (user) => user.approve && user.role === selectedTab.toLowerCase()
-  //   );
-  // };
 
   return (
     <div className="w-full">
       <div className="flex justify-center gap-20 max-xl:gap-8">
         {/* Render Tab Buttons */}
         {AdminApprovalsTab.map((tabLabel, index) => (
-          <div
-            onClick={() => setSelectedTab(tabLabel)} // Set selected tab
-            key={index}
-          >
+          <div onClick={() => setSelectedTab(tabLabel)} key={index}>
             <Tab label={tabLabel} isActive={selectedTab === tabLabel} />
           </div>
         ))}
       </div>
+
       {/* Display Table component based on selected tab */}
       <div className="max-h-screen">
         <Table
           title={selectedTab}
           users={users}
           onApprove={handleApprove}
-          onReject={handleReject}
+          onReject={handleRejectOrDelete}  // Updated to handleRejectOrDelete
           message={message}
         />
       </div>
+
+      {/* Confirmation Modal */}
+      {showConfirmModal && (
+        <div className="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-50 z-50">
+          <div className="bg-white p-6 rounded shadow-lg max-w-md w-full">
+            <h2 className="text-xl font-semibold mb-4">
+              {actionType === "approve" ? "Confirm Approval" : actionType === "reject" ? "Confirm Rejection" : "Confirm Deletion"}
+            </h2>
+            <p>
+              Are you sure you want to {actionType === "approve" ? "approve" : actionType === "reject" ? "reject" : "delete"} this user?
+            </p>
+            <div className="mt-6 flex justify-end">
+              <button
+                className="bg-red-500 text-white px-4 py-2 rounded mr-2"
+                onClick={() => setShowConfirmModal(false)}
+              >
+                Cancel
+              </button>
+              <button
+                className="bg-blue-500 text-white px-4 py-2 rounded"
+                onClick={confirmAction}
+              >
+                {actionType === "approve" ? "Approve" : actionType === "reject" ? "Reject" : "Delete"}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

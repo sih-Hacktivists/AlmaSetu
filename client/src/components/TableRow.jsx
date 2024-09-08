@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import ViewIcon from "../assets/viewDocument.svg";
-import DocumentModal from "../components/DocumentModal";
+import Document from "../components/DocumentModal";
 
 const TableRow = ({ name, role, profilePic, title, onApprove, onReject,document }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -12,6 +12,7 @@ const TableRow = ({ name, role, profilePic, title, onApprove, onReject,document 
   const handleCloseModal = () => {
     setIsModalOpen(false);
   };
+
 
   return (
     <div className="w-full border-2 border-slate-900 rounded-3xl flex justify-between items-center px-2 py-2 my-2">
@@ -56,7 +57,7 @@ const TableRow = ({ name, role, profilePic, title, onApprove, onReject,document 
         </div>
       )}
       {isModalOpen && (
-        <DocumentModal
+        <Document
           user={{ name, role, profilePic }}
           document={document}
           onClose={handleCloseModal}
