@@ -13,6 +13,7 @@ import VerificationPage from "./pages/VerifiedPage";
 import AdminLogin from "./pages/AdminLogin";
 import Events from "./pages/Events";
 import EventDetails from "./pages/EventDetails";
+import SuperAdmin from "./pages/SuperAdmin";
 
 function AdminLayout() {
   return (
@@ -56,6 +57,8 @@ function App() {
       <Route path="/users/events" element={<Events />} />
       <Route path="/user/events/:eventid" element={<EventDetails/>}/>
       <Route path="/*" element={<NotFound/>}/>
+
+      <Route path="/superadmin" element={<SuperAdmin/>}/>
     </Routes>
   );
 }
