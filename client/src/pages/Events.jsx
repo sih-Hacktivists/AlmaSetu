@@ -23,7 +23,7 @@ export default function Events() {
                     <p className='bg-[#0F1035] mb-6 text-white w-48 h-10 text-2xl rounded-[25px] flex items-center justify-center gap-2'>Your Events</p>
                     {alumni ? <button className='bg-[#0F1035] mb-6 text-white w-48 h-10 hover:bg-[#497fa1] hover:text-black text-2xl rounded-[25px] flex items-center justify-center gap-2'>Create Event <b className='text-2xl'>+</b></button> : null}
                 </div>
-                <div className="">
+                <div className="overflow-x-auto">
                     <YourEvents />
                 </div>
             </div>
