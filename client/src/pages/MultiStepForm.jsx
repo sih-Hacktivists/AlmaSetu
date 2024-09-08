@@ -294,7 +294,7 @@ export const MultiStepForm = () => {
             src="https://cdn-icons-png.flaticon.com/128/999/999663.png"
             alt="logo"
           />
-          AlmaLink
+          AlmaSetu
         </a>
 
         <div className="w-full rounded-lg shadow md:mt-0 sm:max-w-md xl:p-0 border">
