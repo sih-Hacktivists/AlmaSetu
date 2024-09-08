@@ -36,7 +36,7 @@ router.route("/register").post(
 router.route("/:userId/verify-email/:token").get(verifyEmail);
 router.route("/login").post(login);
 
-router.route("/:userId").get(getUserProfile);
+router.route("/u/:userId").get(getUserProfile);
 
 router.route("/check-email-or-phone").post(checkWhetherEmailOrPhoneExists);
 router.route("/check-enrollment").post(checkWhetherEnrollmentExists);

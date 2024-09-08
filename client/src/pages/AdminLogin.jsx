@@ -30,8 +30,11 @@ const AdminLogin = () => {
         });
 
         setMessage("");
-        console.log(response.data.message);
-        navigate("/admin/dashboard");
+        if (response.data.data.role == "admin") {
+          navigate("/admin/dashboard");
+        } else if (response.data.data.role == "superadmin") {
+          navigate("/superadmin/dashboard");
+        }
       } catch (error) {
         setMessage(error.response.data.message);
         console.log(error);

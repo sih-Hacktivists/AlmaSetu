@@ -77,7 +77,7 @@ const loginAdmin = asyncHandler(async (req, res) => {
     const admin = await Admin.findOne({ email, role: role.toLowerCase() });
 
     if (!admin) {
-        return res.status(404).json({ message: "Admin not found" });
+        return res.status(404).json({ message: `${role} not found` });
     }
 
     const isPasswordCorrect = await admin.isPasswordCorrect(password);
@@ -104,11 +104,7 @@ const loginAdmin = asyncHandler(async (req, res) => {
         .cookie("accessToken", accessToken, options)
         .cookie("refreshToken", refreshToken, options)
         .json(
-            new ApiResponse(
-                200,
-                { accessToken, refreshToken },
-                "User logged In Successfully"
-            )
+            new ApiResponse(200, loggedInAdmin, "User logged In Successfully")
         );
 });
 

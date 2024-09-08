@@ -14,12 +14,12 @@ import AdminLogin from "./pages/AdminLogin";
 import Events from "./pages/Events";
 import EventDetails from "./pages/EventDetails";
 import SuperAdmin from "./pages/SuperAdmin";
+import Profile from "./pages/Profile";
 
 function AdminLayout() {
   return (
     <>
-    
-      <div className="flex bg-[#ECF7FE] relative" >
+      <div className="flex bg-[#ECF7FE] relative">
         <SideBar />
         <div className=" w-full p-2 px-10  ">
           <SearchBar showProfile={true} />
@@ -55,10 +55,11 @@ function App() {
       <Route path="/admin/*" element={<AdminLayout />} />
       <Route path="/admin/login" element={<AdminLogin />} />
       <Route path="/users/events" element={<Events />} />
-      <Route path="/user/events/:eventid" element={<EventDetails/>}/>
-      <Route path="/*" element={<NotFound/>}/>
+      <Route path="/users/events/:eventid" element={<EventDetails />} />
+      <Route path="/users/myprofile" element={<Profile />} />
+      <Route path="/*" element={<NotFound />} />
 
-      <Route path="/superadmin" element={<SuperAdmin/>}/>
+      <Route path="/superadmin" element={<SuperAdmin />} />
     </Routes>
   );
 }
