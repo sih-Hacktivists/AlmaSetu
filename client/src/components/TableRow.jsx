@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import ViewIcon from "../assets/viewDocument.svg";
 import DocumentModal from "../components/DocumentModal";
 
-const TableRow = ({ name, role, profilePic, title, onApprove, onReject }) => {
+const TableRow = ({ name, role, profilePic, title, onApprove, onReject,document }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const handleViewDocumentClick = () => {
@@ -58,6 +58,7 @@ const TableRow = ({ name, role, profilePic, title, onApprove, onReject }) => {
       {isModalOpen && (
         <DocumentModal
           user={{ name, role, profilePic }}
+          document={document}
           onClose={handleCloseModal}
         />
       )}

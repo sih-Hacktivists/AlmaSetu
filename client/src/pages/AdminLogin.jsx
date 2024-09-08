@@ -15,7 +15,7 @@ const AdminLogin = () => {
     e.preventDefault();
     // Simple validation
     const errors = {};
-    if(!role) errors.role= "Select your role"
+    if (!role) errors.role = "Select your role";
     if (!email) errors.email = "Email is required.";
     if (!password) errors.password = "Password is required.";
     setErrors(errors);
@@ -66,33 +66,32 @@ const AdminLogin = () => {
             </h1>
 
             <form onSubmit={handleSubmit} className="space-y-4 md:space-y-6">
-            <div>
-  <label
-    htmlFor="role"
-    className="block text-sm font-medium text-gray-900"
-  >
-    Role
-  </label>
-  <select
-    id="role"
-    name="role"
-    value={role}
-    onChange={(e) => setRole(e.target.value)}
-    className={`mt-1 block w-full px-3 py-2 border rounded-lg shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm ${
-      errors.role ? "border-red-500" : ""
-    }`}
-  >
-    <option value="" disabled>
-      Select role
-    </option>
-    <option value="Admin">Admin</option>
-    {/* <option value="SuperAdmin">SuperAdmin</option> */}
-  </select>
-  {errors.role && (
-    <p className="mt-2 text-sm text-red-600">{errors.role}</p>
-  )}
-</div>
-
+              <div>
+                <label
+                  htmlFor="role"
+                  className="block text-sm font-medium text-gray-900"
+                >
+                  Role
+                </label>
+                <select
+                  id="role"
+                  name="role"
+                  value={role}
+                  onChange={(e) => setRole(e.target.value)}
+                  className={`mt-1 block w-full px-3 py-2 border rounded-lg shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm ${
+                    errors.role ? "border-red-500" : ""
+                  }`}
+                >
+                  <option value="" disabled>
+                    Select role
+                  </option>
+                  <option value="Admin">Admin</option>
+                  <option value="SuperAdmin">SuperAdmin</option>
+                </select>
+                {errors.role && (
+                  <p className="mt-2 text-sm text-red-600">{errors.role}</p>
+                )}
+              </div>
 
               <div>
                 <label

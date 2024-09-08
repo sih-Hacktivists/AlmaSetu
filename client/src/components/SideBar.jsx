@@ -45,7 +45,7 @@ export default function SideBar() {
               height={30}
             />
             <div className="flex flex-col h-full justify-center items-center">
-              <div className="flex flex-col w-11/12 gap-10 items-start">
+              <div className="flex flex-col w-11/12 gap-10 items-start px-4">
                 {sideLinks.map((nav, index) => (
                   <NavigateButton
                     key={index}
