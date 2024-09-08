@@ -113,7 +113,7 @@ export const Home = () => {
       <div className="col-span-8 grid grid-cols-8 px-5 overflow-y-auto">
         <div className="  h-screen col-span-6 grid grid-rows-[repeat(12,minmax(0,1fr))]  ">
           <div className="row-span-1 p-2 xl:pt-5 ">
-            <SearchBar showProfile={false} />
+            <SearchBar showProfile={false} showSearch={true}/>
           </div>
           <div className="row-span-3 xl:row-span-4 p-2 scrollbar-custom overflow-x-auto pt-5 2xl:pt-10   ">
             <TopEvents />

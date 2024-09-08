@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import SearchIcon from "../assets/searchIcon.svg";
 import NotificationIcon from "../assets/notification.svg";
 
-export function SearchBar({ showProfile,superAdmin }) {
+export function SearchBar({ showProfile,superAdmin,showSearch ,dropDown}) {
   const [input, setInput] = useState("");
 
   function onClick() {
@@ -10,16 +10,19 @@ export function SearchBar({ showProfile,superAdmin }) {
   }
   return (
     <>
-      <div className="flex items-center gap-10 mx-auto px-2  max-w-screen-2xl xl:max-w-screen-lg pt-1">
+      <div className="flex items-center gap-10 mx-auto px-2  max-w-screen-xl 2xl:max-w-screen-lg pt-1 ">
         {superAdmin ? null :<img
           src="https://cdn-icons-png.flaticon.com/128/999/999663.png"
           width={45}
           height={45}
-          className=" pt-2"
+          className=" pt-2 ml-10"
           alt=""
         />}
         <div className={!superAdmin ?"relative flex items-center w-full " : "relative h-7 flex items-center w-[500px]"}>
-          <input
+          {
+            showSearch ?  
+            <>
+            <input
             type="text"
             value={input}
             onChange={(e) => setInput(e.target.value)}
@@ -36,7 +39,10 @@ export function SearchBar({ showProfile,superAdmin }) {
             alt="SearchIcon"
             width={20}
             height={20}
-          />
+          /></>:
+          ""
+          }
+        
         </div>
         {superAdmin ? null : <img
           src={NotificationIcon}
@@ -46,9 +52,10 @@ export function SearchBar({ showProfile,superAdmin }) {
         {showProfile ? (
           <UserProfileDropdown
             institution={true}
+            dropDown={dropDown}
             email={"ume@gmail.com"}
             name={"Potti Sriramulu College of Engineering & Technology"}
-            nameClass={"w-36 "}
+            nameClass={"w-36  "}
           />
         ) : (
           ""
@@ -60,7 +67,7 @@ export function SearchBar({ showProfile,superAdmin }) {
 
 //have to fix
 //make it component wise clean code
-const UserProfileDropdown = ({ name, nameClass, institution, email }) => {
+const UserProfileDropdown = ({ name, nameClass, institution, email,dropDown }) => {
   const [isOpen, setIsOpen] = useState(false);
 
   const toggleDropdown = () => {
@@ -87,7 +94,7 @@ const UserProfileDropdown = ({ name, nameClass, institution, email }) => {
             .map((word) => word[0])
             .join("")}
         </div>
-        {institution ? (
+        {/* {institution ? (
           <svg
             className="w-5 h-5 ms-3"
             aria-hidden="true"
@@ -119,28 +126,32 @@ const UserProfileDropdown = ({ name, nameClass, institution, email }) => {
               d="m1 1 4 4 4-4"
             />
           </svg>
-        )}
+        )} */}
       </button>
-
-      {isOpen && (
-        <div
-          id="dropdownAvatarName"
-          className="absolute z-10 bg-[#ECF7FE] divide-y divide-gray-100 rounded-lg shadow w-44"
+      {dropDown ? (
+  isOpen && (
+    <div
+      id="dropdownAvatarName"
+      className="absolute z-10 bg-[#ECF7FE] divide-y divide-gray-100 rounded-lg shadow w-44"
+    >
+      <div className="px-4 py-3 text-sm text-gray-900">
+        <div className="font-medium">Pro User</div>
+        <div className="truncate">{email}</div>
+      </div>
+      <div className="py-2">
+        <a
+          href="#"
+          className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
         >
-          <div className="px-4 py-3 text-sm text-gray-900">
-            <div className="font-medium">Pro User</div>
-            <div className="truncate">{email}</div>
-          </div>
-          <div className="py-2">
-            <a
-              href="#"
-              className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-            >
-              Sign out
-            </a>
-          </div>
-        </div>
-      )}
+          Sign out
+        </a>
+      </div>
+    </div>
+  )
+) : (
+  ""
+)}
+
     </div>
   );
 };

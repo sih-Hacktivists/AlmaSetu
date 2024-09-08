@@ -23,7 +23,7 @@ function AdminLayout() {
       <div className="flex bg-[#ECF7FE] relative">
         <SideBar />
         <div className=" w-full p-2 px-10  ">
-          <SearchBar showProfile={true} />
+          <SearchBar showProfile={true} showSearch={false} dropDown={false} />
           <div className="py-10">
             <Routes>
               <Route path="/dashboard" element={<AdminDashboard />} />

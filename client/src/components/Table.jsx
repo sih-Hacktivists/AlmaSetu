@@ -5,7 +5,7 @@ import TableRow from "./TableRow";
 
 const Table = ({ title, users, onApprove, onReject, message }) => {
   return (
-    <div className="mt-5 px-4 lg:px-10 border-2 border-black rounded-2xl h-[480px] xl:h-[700px] overflow-hidden relative">
+    <div className="mt-5 px-4 lg:px-10 border-2 border-black rounded-2xl h-[480px] 2xl:h-[700px] overflow-hidden relative">
       <FilterAndSearch />
       <div className="mt-20 overflow-y-auto max-h-[calc(100vh-150px)] lg:max-h-screen scrollbar-custom pr-2">
         {message && <p className="text-blue-500 text-center">{message}</p>}
@@ -34,7 +34,7 @@ function FilterAndSearch() {
     <input
       type="text"
       placeholder="Search.."
-      className="w-full text-slate-400 text-sm py-2 pr-10 px-2 border-2 border-slate-700/30 shadow-md rounded-2xl focus:outline-none"
+      className="w-full bg-white text-slate-400 text-sm py-2 pr-10 px-2 border-2 border-slate-700/30 shadow-md rounded-2xl focus:outline-none"
     />
     {/* Search Icon positioned inside the input */}
     <img
@@ -48,7 +48,7 @@ function FilterAndSearch() {
   <div  className=" gap-5 flex items-center justify-between font-medium shadow-md border-2 bg-white border-slate-700/30 text-sm py-1 px-2 rounded-2xl">
     <span>Sort & Filter</span>
     <img
-      className="cursor-pointer w-6 h-6 md:w-8 md:h-8 p-1 bg-slate-400 rounded-lg hover:bg-slate-300 "
+      className="cursor-pointer w-6 h-6 md:w-8 md:h-8 p-1 bg-[#d1e6f3] rounded-lg hover:bg-[#c4e1f3] "
       src={SortIcon}
       alt="Sort Icon"
     />
