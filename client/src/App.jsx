@@ -12,6 +12,7 @@ import ResetPasswordPage from "./pages/ResetPassword";
 import VerificationPage from "./pages/VerifiedPage";
 import AdminLogin from "./pages/AdminLogin";
 import Events from "./pages/Events";
+import EventDetails from "./pages/EventDetails";
 
 function AdminLayout() {
   return (
@@ -53,6 +54,7 @@ function App() {
       <Route path="/admin/*" element={<AdminLayout />} />
       <Route path="/admin/login" element={<AdminLogin />} />
       <Route path="/users/events" element={<Events />} />
+      <Route path="/user/events/:eventid" element={<EventDetails/>}/>
       <Route path="/*" element={<NotFound/>}/>
     </Routes>
   );
