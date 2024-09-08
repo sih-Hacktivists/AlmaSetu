@@ -15,6 +15,7 @@ import Events from "./pages/Events";
 import EventDetails from "./pages/EventDetails";
 import SuperAdmin from "./pages/SuperAdmin";
 import Profile from "./pages/Profile";
+import AdminRegister from "./pages/AdminRegister";
 
 function AdminLayout() {
   return (
@@ -54,6 +55,7 @@ function App() {
       />
       <Route path="/admin/*" element={<AdminLayout />} />
       <Route path="/admin/login" element={<AdminLogin />} />
+      <Route path="/admin/register" element={<AdminRegister/>}/>
       <Route path="/users/events" element={<Events />} />
       <Route path="/users/events/:eventid" element={<EventDetails />} />
       <Route path="/users/myprofile" element={<Profile />} />
