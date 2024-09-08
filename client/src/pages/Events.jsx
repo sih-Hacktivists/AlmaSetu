@@ -13,7 +13,7 @@ export default function Events() {
             <div className='flex w-full h-20 items-center m-6'>
                 <img className="w-20 h-10 basis-1/12" src={Bar} />
                 <div className="flex items-center justify-center basis-11/12">
-                    <div className="w-3/5"><SearchBar showProfile={false} /></div>
+                    <div className="w-3/5"><SearchBar showProfile={false} superAdmin={false} /></div>
                 </div>
             </div>
 

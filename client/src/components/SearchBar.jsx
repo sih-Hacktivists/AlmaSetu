@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import SearchIcon from "../assets/searchIcon.svg";
 import NotificationIcon from "../assets/notification.svg";
 
-export function SearchBar({ showProfile }) {
+export function SearchBar({ showProfile,superAdmin }) {
   const [input, setInput] = useState("");
 
   function onClick() {
@@ -11,19 +11,19 @@ export function SearchBar({ showProfile }) {
   return (
     <>
       <div className="flex items-center gap-10 mx-auto px-2  max-w-screen-2xl xl:max-w-screen-lg pt-1">
-        <img
+        {superAdmin ?"":<img
           src="https://cdn-icons-png.flaticon.com/128/999/999663.png"
           width={45}
           height={45}
           className=" pt-2"
           alt=""
-        />
+        />}
         <div className="relative flex items-center w-full ">
           <input
             type="text"
             value={input}
             onChange={(e) => setInput(e.target.value)}
-            className="block w-full p-4 text-sm text-gray-500 border-black border-2 rounded-2xl bg-white  h-10"
+            className="block w-full p-4 text-sm text-gray-500 border-black border-2 outline-none rounded-2xl bg-white  h-10"
             placeholder="Search Events,Posts..."
           />
 
@@ -36,11 +36,11 @@ export function SearchBar({ showProfile }) {
             height={30}
           />
         </div>
-        <img
+        {superAdmin ?"": <img
           src={NotificationIcon}
           alt=""
           className="h-[30px] w-[30px] max-xl:h-[25px] max-xl:w-[25px] outline outline-1  rounded-lg bg-white"
-        />
+        />}
         {showProfile ? (
           <UserProfileDropdown
             institution={true}
