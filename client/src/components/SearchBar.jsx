@@ -11,32 +11,34 @@ export function SearchBar({ showProfile,superAdmin }) {
   return (
     <>
       <div className="flex items-center gap-10 mx-auto px-2  max-w-screen-2xl xl:max-w-screen-lg pt-1">
-        {superAdmin ?"":<img
+        {superAdmin ? null :<img
           src="https://cdn-icons-png.flaticon.com/128/999/999663.png"
           width={45}
           height={45}
           className=" pt-2"
           alt=""
         />}
-        <div className="relative flex items-center w-full ">
+        <div className={!superAdmin ?"relative flex items-center w-full " : "relative h-7 flex items-center w-[500px]"}>
           <input
             type="text"
             value={input}
             onChange={(e) => setInput(e.target.value)}
-            className="block w-full p-4 text-sm text-gray-500 border-black border-2 outline-none rounded-2xl bg-white  h-10"
-            placeholder="Search Events,Posts..."
+            className={!superAdmin ? "block w-full p-4 text-sm text-gray-500 border-black border-2 outline-none rounded-2xl bg-white  h-10"
+              :"text-center w-full p-1  text-sm text-black border-black border-2 outline-none rounded-2xl bg-white  h-7"
+            }
+            placeholder={!superAdmin ? "Search Events,Posts...": "Search Institutes..."}
           />
 
           <img
-            className="h-full absolute right-3 "
+            className={!superAdmin ? "h-full absolute right-3 " : "h-6 absolute right-3 "}
             onClick={onClick}
             src={SearchIcon}
             alt="SearchIcon"
-            width={30}
-            height={30}
+            width={20}
+            height={20}
           />
         </div>
-        {superAdmin ?"": <img
+        {superAdmin ? null : <img
           src={NotificationIcon}
           alt=""
           className="h-[30px] w-[30px] max-xl:h-[25px] max-xl:w-[25px] outline outline-1  rounded-lg bg-white"

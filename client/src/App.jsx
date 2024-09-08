@@ -59,7 +59,7 @@ function App() {
       <Route path="/users/myprofile" element={<Profile />} />
       <Route path="/*" element={<NotFound />} />
 
-      <Route path="/superadmin" element={<SuperAdmin />} />
+      <Route path="/superadmin/dashboard" element={<SuperAdmin />} />
     </Routes>
   );
 }
