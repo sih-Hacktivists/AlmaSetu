@@ -22,7 +22,7 @@ export default function Filter() {
             </button>
 
             {isOpen && (
-                <ul className="bg-white text-black hover:cursor-pointer absolute top-7 ">
+                <ul className="bg-white text-black hover:cursor-pointer rounded-2xl absolute top-7 ">
                     <li className='h-10 w-40 text-center border-black border-2 rounded-t-2xl' onClick={()=>handleClick("All")}>All</li>
                     <li className='h-10 w-40 text-center border-black border-t-0 border-2' onClick={()=>handleClick("Branch")}>Branch</li>
                     <li className='h-10 w-40 text-center border-black border-t-0 border-2 rounded-b-2xl' onClick={()=>handleClick("Year")}>Year</li>

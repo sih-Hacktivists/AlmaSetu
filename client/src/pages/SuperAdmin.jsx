@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import SearchIcon from "../assets/searchIcon.svg";
 import Filter from '../components/Filter';
 import { SearchBar } from '../components/SearchBar';
+import CollegeList from '../components/CollegeList';
 
 export default function SuperAdmin() {
   const [input, setInput] = useState("")
@@ -36,16 +37,18 @@ export default function SuperAdmin() {
         </div>
 
         <div className='flex flex-col items-center justify-center border-t-0 border-2 border-black rounded-b-xl'>
-          
+
           <div className='p-3 gap-10 flex items-center justify-center'>
             {/* Search Bar */}
-            <SearchBar superAdmin={true}/>
+            <SearchBar superAdmin={true} />
 
             {/* Filter */}
-            <Filter/>
+            <Filter />
           </div>
 
-          
+          <div className='mt-5 overflow-y-auto max-h-[380px] scrollbar-custom'>
+            <CollegeList />
+          </div>
 
           <div>
           </div>
