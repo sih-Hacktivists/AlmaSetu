@@ -3,6 +3,7 @@ import { SearchBar } from '../components/SearchBar';
 import Bar from "../assets/bar.svg";
 import { YourEvents } from '../components/YourEvents';
 import { TopEvents } from '../components/TopEvents';
+import SideBar from '../components/SideBar';
 
 export default function Events() {
     const [alumni, setAlumni] = useState(true)
@@ -11,7 +12,7 @@ export default function Events() {
         <div className='w-full h-screen bg-[#ECF7FE] flex flex-col items-center'>
             {/* Top Portion */}
             <div className='flex w-full h-20 items-center m-6'>
-                <img className="w-20 h-10 basis-1/12" src={Bar} />
+                <SideBar/>
                 <div className="flex items-center justify-center basis-11/12">
                     <div className="w-3/5"><SearchBar showProfile={false} superAdmin={false} /></div>
                 </div>

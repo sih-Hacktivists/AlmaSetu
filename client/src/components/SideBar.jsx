@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import cross from "../assets/Cross.svg";
-import bars from "../assets/Left.svg";
+import bars from "../assets/bar.svg";
 import { useState } from "react";
 import { sideLinks } from "../assets/Constant.js";
 
@@ -23,7 +23,7 @@ export default function SideBar() {
           <img
             src={bars}
             alt="Expand Sidebar"
-            className="w-10 h-10 absolute top-4 left-2 z-50 cursor-pointer rounded-2xl border-2 border-slate-500 hover:bg-slate-200 transition-transform duration-300 ease-in-out"
+            className="w-10 h-10 absolute top-4 left-2 z-50 cursor-pointer rounded-2xl hover:bg-slate-200 transition-transform duration-300 ease-in-out"
             width={30}
             height={30}
             onClick={() => setIsCollapsed(false)}
@@ -33,7 +33,7 @@ export default function SideBar() {
           <div
             className={`bg-[#BBDCF1] fixed z-50 border-2 border-black top-0 left-0 h-screen flex-shrink-0 transition-transform duration-300 ease-in-out ${
               isCollapsed ? "-translate-x-full" : "translate-x-0"
-            } w-60 overflow-hidden rounded-2xl`}
+            } w-64 overflow-hidden rounded-r-2xl`}
           >
             {/* Collapse button */}
             <img
