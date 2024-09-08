@@ -9,6 +9,7 @@ import VerifyCollegeEmail from "../components/Authentication/VerifyEmailPage";
 import UploadCollegeDocument from "../components/Authentication/UploadDocument";
 import axios from "axios";
 import { API } from "../utils/api";
+import { Link } from "react-router-dom";
 
 export const MultiStepForm = () => {
   const [currentStep, setCurrentStep] = useState(1);
@@ -308,7 +309,8 @@ export const MultiStepForm = () => {
               {message && (
                 <p className="text-blue-500 text-center">{message}</p>
               )}
-              <div className="flex justify-between mt-4">
+              <div className="flex justify-between mt-4 items-center">
+                
                 {currentStep > 1 && currentStep !== 7 && (
                   <button
                     type="button"
@@ -318,7 +320,6 @@ export const MultiStepForm = () => {
                     Previous
                   </button>
                 )}
-
                 {currentStep < 6 && (
                   <button
                     type="button"
@@ -328,7 +329,17 @@ export const MultiStepForm = () => {
                     Next
                   </button>
                 )}
+                {currentStep === 1 && (
+                  <>
+                  <div className="text-sm">
 
+                  Already have an account?{" "}
+                    <Link className="text-sm text-blue-400" to={"/login"}>
+                   Sign in
+                    </Link>
+                  </div>
+                  </>
+                ) }
                 {currentStep === 6 && (
                   <button
                     type="button"
@@ -338,7 +349,6 @@ export const MultiStepForm = () => {
                     Next
                   </button>
                 )}
-
                 {currentStep === 7 && (
                   <button
                     type="button"

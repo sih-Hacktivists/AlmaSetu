@@ -119,7 +119,10 @@ export const Home = () => {
 
       {/* Left Sidebar */}
       <div className="col-span-2 p-5 h-screen px-5 ">
+        
+
         <MyProfile user={user} />
+        
       </div>
 
       {/* Main Content Area */}
@@ -127,9 +130,9 @@ export const Home = () => {
       <div className="col-span-8 grid grid-cols-8 px-5 overflow-y-auto">
         <div className="  h-screen col-span-6 grid grid-rows-[repeat(12,minmax(0,1fr))]  ">
           <div className="row-span-1 p-2 xl:pt-5 ">
-            <SearchBar showProfile={false} showSearch={true}/>
+            <SearchBar showProfile={false} showSearch={true} />
           </div>
-          <div className="row-span-3 xl:row-span-4 p-2 scrollbar-custom overflow-x-auto pt-5 2xl:pt-10   ">
+          <div className="row-span-3 xl:row-span-4 p-2 scrollbar-custom overflow-x-auto overflow-y-hidden pt-5 2xl:pt-10   ">
             <TopEvents />
           </div>
           <div className="row-span-7 xl:row-span-6  p-2 pt-5">
@@ -138,11 +141,11 @@ export const Home = () => {
         </div>
 
         {/* Right Sidebar */}
-        <div className=" h-full col-span-2 grid grid-rows-[repeat(12,minmax(0,1fr))] px-5">
-          <div className="row-span-4 w-full h-full p-2  ">
+        <div className=" h-full col-span-2 flex  flex-col   fixed right-0 top-0 pr-2 2xl:pr-5 ">
+          <div className="row-span-3 w-full  p-2  ">
             <Connections />
           </div>
-          <div className="row-span-8 h-full   p-2 ">
+          <div className="row-span-5    p-2 ">
             <Communities />
           </div>
         </div>

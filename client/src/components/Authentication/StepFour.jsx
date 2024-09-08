@@ -12,7 +12,7 @@ const StepFour = ({ formData, handleChange, handleFileChange, errors }) => {
           Enrollment Number
         </label>
         <input
-          type="text"
+          type="number"
           name="enrollmentNumber"
           id="enrollmentNumber"
           onChange={handleChange}
