@@ -2,6 +2,7 @@ import { ApiResponse } from "../utils/ApiResponse.js";
 import { asyncHandler } from "../utils/asyncHandler.js";
 import { Admin } from "../models/admin.model.js";
 import { User } from "../models/user.model.js";
+import { deleteFromCloudinary } from "../utils/cloudinary.js";
 
 const generateAccessAndRefreshTokens = async (adminId) => {
     try {
@@ -397,6 +398,20 @@ const rejectUser = asyncHandler(async (req, res) => {
 
     if (user.college !== req.admin.college) {
         return res.status(400).json({ message: "Invalid college" });
+    }
+
+    if (user.profilePic) {
+        const oldLink = user.profilePic.split("/");
+        const publicId = oldLink[oldLink.length - 1].split(".")[0];
+        console.log(publicId);
+        await deleteFromCloudinary(publicId);
+    }
+
+    if (user.document) {
+        const oldLink = user.document.split("/");
+        const publicId = oldLink[oldLink.length - 1].split(".")[0];
+        console.log(publicId);
+        await deleteFromCloudinary(publicId);
     }
 
     await User.findByIdAndDelete(userId);

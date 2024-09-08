@@ -3,21 +3,19 @@ import Bar from "../assets/bar.svg";
 import EnvelopeIcon from "../assets/Envelope.jsx"; // Import the React component
 import TickIcon from "../assets/Tick.jsx"; // Import the React component
 
-export const MyProfile = () => {
+export const MyProfile = ({ user }) => {
   return (
     <div className="relative bg-[#BBDCF1] w-full h-full rounded-2xl py-2 flex flex-col px-5 border-[1px] border-slate-800">
       <img className="w-[36px] h-[36px]" src={Bar} alt="" />
       <div className=" flex flex-col items-center flex-grow">
-        <img
-          className="rounded-full w-36 h-36"
-          src="https://flowbite.com/docs/images/people/profile-picture-3.jpg"
-          alt=""
-        />
+        <img className="rounded-full w-36 h-36" src={user.profilePic} alt="" />
         <div className="text-2xl py-2 flex items-center">
-          Rahul Das
+          {user.name}
           <TickIcon color="white" />
         </div>
-        <div className="text-sm">Student</div>
+        <div className="text-sm">
+          {user.role && user.role[0].toUpperCase() + user.role.slice(1)}
+        </div>
         <div className="grid items-center p-10 w-full ">
           <SocialAndLink iconColor="black" url={"das"} />
           <SocialAndLink iconColor="black" url={"das2060"} />

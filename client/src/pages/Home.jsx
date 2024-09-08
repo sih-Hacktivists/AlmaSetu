@@ -1,4 +1,4 @@
-import React,{useState} from "react";
+import React, { useEffect, useState } from "react";
 import { SearchBar } from "../components/SearchBar";
 import { TopEvents } from "../components/TopEvents";
 import { Posts } from "../components/Posts";
@@ -7,6 +7,8 @@ import { Connections } from "../components/Connections";
 import { Communities } from "../components/Communities";
 import { Webchat, WebchatProvider, Fab, getClient } from "@botpress/webchat";
 import { buildTheme } from "@botpress/webchat-generator";
+import axios from "axios";
+import { API } from "../utils/api";
 
 // Building the theme for the chat
 const { theme, style } = buildTheme({
@@ -20,6 +22,18 @@ const clientId = "df3edf74-90c2-46e5-a0b0-36efe80bd2bd";
 export const Home = () => {
   const client = getClient({ clientId });
   const [isWebchatOpen, setIsWebchatOpen] = useState(false);
+  const [user, setUser] = useState({});
+
+  useEffect(() => {
+    (async () => {
+      try {
+        const response = await axios.get(`${API}/users/me`);
+        setUser(response.data.data);
+      } catch (error) {
+        console.log(error);
+      }
+    })();
+  }, []);
 
   // Toggles the visibility of the chatbot
   const toggleWebchat = () => {
@@ -56,7 +70,7 @@ export const Home = () => {
 
   return (
     <div className="grid grid-cols-10   relative  bg-[#ECF7FE] ">
-            <style>{style}</style>
+      <style>{style}</style>
       <WebchatProvider theme={theme} configuration={config} client={client}>
         {/* Customized floating action button */}
         <Fab
@@ -105,7 +119,7 @@ export const Home = () => {
 
       {/* Left Sidebar */}
       <div className="col-span-2 p-5 h-screen px-5 ">
-        <MyProfile />
+        <MyProfile user={user} />
       </div>
 
       {/* Main Content Area */}
