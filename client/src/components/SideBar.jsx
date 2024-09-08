@@ -2,9 +2,9 @@ import { Link } from "react-router-dom";
 import cross from "../assets/Cross.svg";
 import bars from "../assets/Left.svg";
 import { useState } from "react";
-import { sideLinks } from "../assets/Constant";
+import { sideLinks } from "../assets/Constant.js";
 
-function SideBar() {
+export default function SideBar() {
   const [isCollapsed, setIsCollapsed] = useState(true);
 
   return (
@@ -77,4 +77,3 @@ function NavigateButton({ title, isCollapsed }) {
   );
 }
 
-export default SideBar;
