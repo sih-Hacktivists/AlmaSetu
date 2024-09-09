@@ -18,7 +18,7 @@ export function SearchBar({ showProfile,superAdmin,showSearch ,dropDown}) {
           className=" pt-2 ml-10"
           alt=""
         />}
-        <div className={!superAdmin ?"relative flex items-center w-full " : "relative h-7 flex items-center w-[500px]"}>
+        <div className={!superAdmin ?"relative flex items-center w-full " : "relative h-7 flex items-center w-[520px]"}>
           {
             showSearch ?  
             <>
