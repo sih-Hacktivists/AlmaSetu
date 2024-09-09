@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import cross from "../assets/Cross.svg";
 import bars from "../assets/bar.svg";
 import { useState } from "react";
-import { sideLinks } from "../assets/Constant.js";
+import { sideLinks, userSideLinks } from "../assets/Constant.js";
 
 export default function SideBar({user}) {
   const [isCollapsed, setIsCollapsed] = useState(true);
@@ -46,13 +46,23 @@ export default function SideBar({user}) {
             />
             <div className="flex flex-col h-full justify-center items-center">
               <div className="flex flex-col w-11/12 gap-10 items-start px-4">
-                {sideLinks.map((nav, index) => (
+              {user ?
+                (userSideLinks.map((nav, index) => (
+                  <NavigateButton
+                  user={true}
+                    key={index}
+                    isCollapsed={isCollapsed}
+                    title={nav.title[0].toUpperCase() + nav.title.slice(1)}
+                  />
+                )))
+              :
+                (sideLinks.map((nav, index) => (
                   <NavigateButton
                     key={index}
                     isCollapsed={isCollapsed}
                     title={nav.title[0].toUpperCase() + nav.title.slice(1)}
                   />
-                ))}
+                )))}
               </div>
             </div>
           </div>
@@ -62,13 +72,13 @@ export default function SideBar({user}) {
   );
 }
 
-function NavigateButton({ title, isCollapsed }) {
+function NavigateButton({ title, isCollapsed ,user}) {
   return (
     <div className="border-2 border-black hover:border-white text-center w-full hover:bg-[#111E4B] bg-[#ECF7FE] rounded-3xl p-2 text-black hover:text-white">
       {!isCollapsed && (
         <Link
           className="flex-1 text-left text-2xl font-medium"
-          to={`/admin/${title}`}
+          to={`/${user ?"users":"admin"}/${title}`}
         >
           {title}
         </Link>

@@ -39,8 +39,8 @@ function AdminLayout() {
 function UserLayout() {
 
   return <>
-  <div className="bg-[#ECF7FE] fixed w-full ">
-
+  <div className="bg-[#ECF7FE] fixed w-full scrollbar-custom">
+<SideBar user={true}/>
   <Routes>
     <Route path="/home" element={<Home />} />
     <Route
@@ -54,7 +54,7 @@ function UserLayout() {
       />
     <Route path="/events" element={<Events />} />
     <Route path="/events/:eventid" element={<EventDetails />} />
-    <Route path="/myprofile" element={<Profile />} />
+    <Route path="/profile" element={<Profile />} />
   </Routes>;
       </div>
       </>

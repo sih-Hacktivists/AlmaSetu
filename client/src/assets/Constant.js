@@ -129,3 +129,21 @@ export const sideLinks = [
   },
   
 ];
+
+export const userSideLinks=[
+  {
+    title: "home",
+  },
+  {
+    title: "chats",
+  },
+  {
+    title: "events",
+  },
+  {
+    title: "community",
+  },
+  {
+    title: "profile",
+  }
+]
