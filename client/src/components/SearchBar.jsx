@@ -10,13 +10,6 @@ export function SearchBar({ showProfile, superAdmin, showSearch, dropDown }) {
   }
   return (
     <>
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-      <div className="flex items-center gap-10 mx-auto px-2  max-w-screen-xl 2xl:max-w-screen-lg pt-1 ">
-        {superAdmin ? null : (
-=======
-=======
->>>>>>> Stashed changes
       <div className="flex items-center gap-10 mx-auto px-2  max-w-screen-xl  2xl:max-w-screen-2xl pt-1 ">
         {superAdmin ? null :<img
           src="https://cdn-icons-png.flaticon.com/128/999/999663.png"
