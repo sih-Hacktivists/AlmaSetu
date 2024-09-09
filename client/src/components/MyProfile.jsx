@@ -8,8 +8,8 @@ export const MyProfile = ({ user }) => {
   return (
     <div className="fixed top-0 left-0 h-screen w-72 px-5 py-2">
       <div className="relative bg-[#BBDCF1] w-full h-full rounded-2xl flex flex-col border-[1px] border-slate-800">
-        <div className="flex flex-col items-center flex-grow">
-          <img className="rounded-full w-36 h-36 pt-2" src={user.profilePic || "https://flowbite.com/docs/images/people/profile-picture-2.jpg"} alt="" />
+        <div className="flex flex-col items-center flex-grow ">
+          <img className="rounded-full w-32 h-32 pt-2 object-cover " src={user.profilePic || "https://flowbite.com/docs/images/people/profile-picture-2.jpg"} alt="" />
           <div className="text-2xl py-2 flex items-center">
             {user.name || "Rahul Das"}
             <TickIcon color="white" />

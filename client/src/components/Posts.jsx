@@ -15,7 +15,7 @@ export const Posts = () => {
     ]
   };
   return (
-    <div className='rounded-lg'>
+    <div className='rounded-lg bg-[#ECF7FE]'>
         <PostCard post={samplePost}/>
         <PostCard post={samplePost}/>
         <PostCard post={samplePost}/>

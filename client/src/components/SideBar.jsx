@@ -4,7 +4,7 @@ import bars from "../assets/bar.svg";
 import { useState } from "react";
 import { sideLinks } from "../assets/Constant.js";
 
-export default function SideBar() {
+export default function SideBar({user}) {
   const [isCollapsed, setIsCollapsed] = useState(true);
 
   return (
@@ -12,7 +12,7 @@ export default function SideBar() {
       {/* Overlay for sidebar */}
       {!isCollapsed && (
         <div
-          className="fixed inset-0 bg-black bg-opacity-50 z-40 transition-opacity duration-300 ease-in-out"
+          className="fixed inset-0 bg-black bg-opacity-50 z-40 transition-opacity duration-300 ease-in-out "
           onClick={() => setIsCollapsed(true)}
         />
       )}
@@ -23,7 +23,7 @@ export default function SideBar() {
           <img
             src={bars}
             alt="Expand Sidebar"
-            className="w-10 h-10 absolute top-4 left-2 z-50 cursor-pointer rounded-2xl hover:bg-slate-200 transition-transform duration-300 ease-in-out"
+            className={`w-10 h-10 absolute top-4 ${user ? "left-6" :"left-2"}  z-50 cursor-pointer rounded-2xl ${user?"hover:bg-[#a8cfe9]":"hover:bg-slate-200"} transition-transform duration-300 ease-in-out  `}
             width={30}
             height={30}
             onClick={() => setIsCollapsed(false)}

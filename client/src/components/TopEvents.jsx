@@ -29,7 +29,7 @@ export const TopEvents = () => {
 
 function EventCard({ date }) {
   return (
-    <div className="relative flex justify-center items-center w-52  h-32 xl:w-60  xl:h-40 bg-[#ECF7FE] rounded-lg font-bold text-white drop-shadow-xl shadow-[#ECF7FE] border border-black"
+    <div className="relative flex justify-center items-center w-52  h-32 2xl:w-80  2xl:h-52 bg-[#ECF7FE] rounded-lg font-bold text-white drop-shadow-xl shadow-slate-700/3  border border-black"
     style={{ backgroundImage: `url(${date.image})`, backgroundSize: 'cover', backgroundPosition: 'center' }}>
       <div className="absolute text-center text-orange-500    top-0 right-4 rounded-b-2xl  w-[46px] h-[55px] bg-[#111E4B]">
         <div className="font-bold text-sm">

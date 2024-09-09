@@ -1,4 +1,9 @@
 /* Custom scrollbar for the TopEvents component */
+.body{
+background-color: #ECF7FE;
+}
+
+
 .scrollbar-custom::-webkit-scrollbar {
   height:5px; /* Height of the scrollbar track */
   width: 5px; /* Not needed for horizontal scrollbar, but defining for clarity */

@@ -36,29 +36,41 @@ function AdminLayout() {
   );
 }
 
+function UserLayout() {
+
+  return <>
+  <div className="bg-[#ECF7FE] fixed w-full ">
+
+  <Routes>
+    <Route path="/home" element={<Home />} />
+    <Route
+      path="/:userId/reset-password/:token"
+      element={<ResetPasswordPage />}
+      />
+    {/* <Route path="/admin/*" element={<NotFound/>}/> */}
+    <Route
+      path="/:userId/verify-email/:token"
+      element={<VerificationPage />}
+      />
+    <Route path="/events" element={<Events />} />
+    <Route path="/events/:eventid" element={<EventDetails />} />
+    <Route path="/myprofile" element={<Profile />} />
+  </Routes>;
+      </div>
+      </>
+}
 function App() {
   return (
     <Routes>
-      {/* <Route path="/" element={}/> */}
+      <Route path="/users/*" element={<UserLayout/>}/>
+
       <Route path="/register" element={<MultiStepForm />} />
-      <Route path="/users/home" element={<Home />} />
       <Route path="/login" element={<LoginPage />} />
       <Route path="/forgot-password" element={<ForgotPasswordPage />} />
-      <Route
-        path="/users/:userId/reset-password/:token"
-        element={<ResetPasswordPage />}
-      />
-      {/* <Route path="/admin/*" element={<NotFound/>}/> */}
-      <Route
-        path="/users/:userId/verify-email/:token"
-        element={<VerificationPage />}
-      />
+
       <Route path="/admin/*" element={<AdminLayout />} />
       <Route path="/admin/login" element={<AdminLogin />} />
-      <Route path="/admin/register" element={<AdminRegister/>}/>
-      <Route path="/users/events" element={<Events />} />
-      <Route path="/users/events/:eventid" element={<EventDetails />} />
-      <Route path="/users/myprofile" element={<Profile />} />
+      <Route path="/admin/register" element={<AdminRegister />} />
       <Route path="/*" element={<NotFound />} />
 
       <Route path="/superadmin/dashboard" element={<SuperAdmin />} />
