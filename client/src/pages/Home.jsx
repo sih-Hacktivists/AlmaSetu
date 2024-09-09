@@ -118,7 +118,7 @@ export const Home = () => {
       </WebchatProvider>
 
       {/* Left Sidebar */}
-      <div className="col-span-2 p-5 h-screen px-5 ">
+      <div className="col-span-2 p-5 h-screen px-5 pt-5">
         
 
         <MyProfile user={user} />
