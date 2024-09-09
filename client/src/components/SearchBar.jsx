@@ -10,8 +10,36 @@ export function SearchBar({ showProfile, superAdmin, showSearch, dropDown }) {
   }
   return (
     <>
+<<<<<<< Updated upstream
+<<<<<<< Updated upstream
       <div className="flex items-center gap-10 mx-auto px-2  max-w-screen-xl 2xl:max-w-screen-lg pt-1 ">
         {superAdmin ? null : (
+=======
+=======
+>>>>>>> Stashed changes
+      <div className="flex items-center gap-10 mx-auto px-2  max-w-screen-xl  2xl:max-w-screen-2xl pt-1 ">
+        {superAdmin ? null :<img
+          src="https://cdn-icons-png.flaticon.com/128/999/999663.png"
+          width={45}
+          height={45}
+          className=" pt-2 ml-10 2xl:ml-20"
+          alt=""
+        />}
+        <div className={!superAdmin ?"relative flex items-center w-full " : "relative h-7 flex items-center w-[520px]"}>
+          {
+            showSearch ?  
+            <>
+            <input
+            type="text"
+            value={input}
+            onChange={(e) => setInput(e.target.value)}
+            className={!superAdmin ? "block w-full p-4 text-sm text-gray-500 border-black border-2 outline-none rounded-2xl bg-white  h-10"
+              :"text-center w-full p-1  text-sm text-black border-black border-2 outline-none rounded-2xl bg-white  h-7"
+            }
+            placeholder={!superAdmin ? "Search Events,Posts...": "Search Institutes..."}
+          />
+
+>>>>>>> Stashed changes
           <img
             src="https://cdn-icons-png.flaticon.com/128/999/999663.png"
             width={45}
