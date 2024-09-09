@@ -3,21 +3,33 @@ import { PostCard } from './PostCard.jsx'
 
 export const Posts = () => {
   const samplePost = {
-    userName: "John Doe",
-    userLocation: "New York, NY",
+    userName: "Yuvraj Singh",
+    userLocation: "University of Engineering and Management",
     userImg: "https://flowbite.com/docs/images/people/profile-picture-2.jpg",
-    content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+    content: " Robotics is the intersection of science, engineering and technology that produces machines, called robots, that replicate or substitute for human actions. Robots perform basic and repetitive tasks with greater efficiency and accuracy than humans, making them ideal for industries like manufacturing.",
     photos: [
-      "https://flowbite.com/docs/images/people/profile-picture-2.jpg",
-      "https://flowbite.com/docs/images/people/profile-picture-3.jpg",
-      "https://flowbite.com/docs/images/people/profile-picture-4.jpg",
-      "https://flowbite.com/docs/images/people/profile-picture-5.jpg",
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRGWUz9ahrsNQz1gySB_Ie7MI4ozs1S1PiHsw&s",
+      "https://png.pngtree.com/thumb_back/fh260/background/20230408/pngtree-robot-white-cute-robot-blue-light-background-image_2199825.jpg",
+      "https://cdn.pixabay.com/photo/2023/03/05/21/11/ai-generated-7832244_640.jpg",
+      "https://images.pexels.com/photos/9029795/pexels-photo-9029795.jpeg?auto=compress&cs=tinysrgb&w=600",
+    ]
+  };
+  const samplePost1 = {
+    userName: "Rohan Sharma",
+    userLocation: "University of Engineering and Management",
+    userImg: "https://flowbite.com/docs/images/people/profile-picture-2.jpg",
+    content: " A machine is a physical system that uses power to apply forces and control movement to perform an action. The term is commonly applied to artificial devices, such as those employing engines or motors, but also to natural biological macromolecules, such as molecular machines. Machines can be driven by animals and people, by natural forces such as wind and water, and by chemical, thermal, or electrical power, and include a system of mechanisms that shape the actuator input to achieve a specific application of output forces and movement. They can also include computers and sensors that monitor performance and plan movement, often called mechanical systems.",
+    photos: [
+      "https://esskaymachines.com/blog/wp-content/uploads/2020/12/industrial-machinery-imhe-384x288_tcm27-3207.jpg",
+      "https://cdn.prod.website-files.com/60c8c09220a68c595992bca4/65548695f7d67904b8ec9b3b_machine-01.jpg",
+      "https://esskaymachines.com/blog/wp-content/uploads/2020/12/Industrial-Machines.jpg",
+      "https://cdn2.hubspot.net/hubfs/637862/Blog-Images/Data-Analysis/iiot-challenges-for-industrial-machines.jpg",
     ]
   };
   return (
     <div className='rounded-lg bg-[#ECF7FE]'>
         <PostCard post={samplePost}/>
-        <PostCard post={samplePost}/>
+        <PostCard post={samplePost1}/>
         <PostCard post={samplePost}/>
     </div>
   )
