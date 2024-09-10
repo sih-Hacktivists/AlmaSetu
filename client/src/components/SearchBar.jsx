@@ -14,6 +14,7 @@ export function SearchBar({
   function onClick() {
     setInput("");
   }
+
   return (
     <>
       <div className="flex items-center gap-10 mx-auto px-2  max-w-screen-xl 2xl:max-w-screen-lg pt-1 ">
@@ -91,8 +92,6 @@ export function SearchBar({
   );
 }
 
-//have to fix
-//make it component wise clean code
 const UserProfileDropdown = ({
   name,
   nameClass,
@@ -107,17 +106,17 @@ const UserProfileDropdown = ({
   };
 
   return (
-    <div className=" relative flex-shrink z-100 border border-b-2 rounded-2xl">
+    <div className="relative flex-shrink z-100 border border-b-2 rounded-2xl">
       <button
         id="dropdownAvatarNameButton"
         onClick={toggleDropdown}
-        className="flex items-center text-sm pe-1  font-medium  rounded-full hover:text-blue-600 focus:ring-4 focus:ring-gray-100 md:me-0"
+        className="flex items-center text-sm pe-1 font-medium rounded-full hover:text-blue-600 focus:ring-4 focus:ring-gray-100 md:me-0"
         type="button"
       >
         <img
           className="w-8 h-8 me-2 rounded-full"
           src="https://flowbite.com/docs/images/people/profile-picture-3.jpg"
-          alt="user photo"
+          alt="User Avatar"
         />
         <div className={nameClass}>
           {name &&
@@ -129,61 +128,26 @@ const UserProfileDropdown = ({
               .map((word) => word[0])
               .join("")}
         </div>
-        {/* {institution ? (
-          <svg
-            className="w-5 h-5 ms-3"
-            aria-hidden="true"
-            xmlns="http://www.w3.org/2000/svg"
-            fill="black"
-            viewBox="0 0 10 6"
-          >
-            <path
-              stroke="white"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth="2"
-              d="m1 1 4 4 4-4"
-            />
-          </svg>
-        ) : (
-          <svg
-            className="w-2.5 h-2.5 ms-3"
-            aria-hidden="true"
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 10 6"
-          >
-            <path
-              stroke="#6B7280"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth="2"
-              d="m1 1 4 4 4-4"
-            />
-          </svg>
-        )} */}
       </button>
-      {dropDown
-        ? isOpen && (
-            <div
-              id="dropdownAvatarName"
-              className="absolute z-10 bg-[#ECF7FE] divide-y divide-gray-100 rounded-lg shadow w-44"
+      {dropDown && isOpen && (
+        <div
+          id="dropdownAvatarName"
+          className="absolute z-10 bg-[#ECF7FE] divide-y divide-gray-100 rounded-lg shadow w-44"
+        >
+          <div className="px-4 py-3 text-sm text-gray-900">
+            <div className="font-medium">Pro User</div>
+            <div className="truncate">{email}</div>
+          </div>
+          <div className="py-2">
+            <a
+              href="#"
+              className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
             >
-              <div className="px-4 py-3 text-sm text-gray-900">
-                <div className="font-medium">Pro User</div>
-                <div className="truncate">{email}</div>
-              </div>
-              <div className="py-2">
-                <a
-                  href="#"
-                  className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                >
-                  Sign out
-                </a>
-              </div>
-            </div>
-          )
-        : ""}
+              Sign out
+            </a>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
