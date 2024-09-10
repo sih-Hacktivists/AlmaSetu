@@ -19,21 +19,9 @@ const { theme, style } = buildTheme({
 // Add your Client ID here ⬇️
 const clientId = "df3edf74-90c2-46e5-a0b0-36efe80bd2bd";
 
-export const Home = () => {
+export const Home = ({ loggedInUser }) => {
   const client = getClient({ clientId });
   const [isWebchatOpen, setIsWebchatOpen] = useState(false);
-  const [user, setUser] = useState({});
-
-  useEffect(() => {
-    (async () => {
-      try {
-        const response = await axios.get(`${API}/users/me`);
-        setUser(response.data.data);
-      } catch (error) {
-        console.log(error);
-      }
-    })();
-  }, []);
 
   // Toggles the visibility of the chatbot
   const toggleWebchat = () => {
@@ -119,10 +107,7 @@ export const Home = () => {
 
       {/* Left Sidebar */}
       <div className="col-span-2 p-5 h-screen px-5 pt-5">
-        
-
-        <MyProfile user={user} />
-        
+        <MyProfile user={loggedInUser} />
       </div>
 
       {/* Main Content Area */}

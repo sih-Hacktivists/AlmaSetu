@@ -185,6 +185,10 @@ const refreshAccessToken = asyncHandler(async (req, res) => {
     }
 });
 
+const getCurrentAdmin = asyncHandler(async (req, res) => {
+    return res.status(200).json(new ApiResponse(200, req.admin, "Admin found"));
+});
+
 // for college admin
 const createEvent = asyncHandler(async (req, res) => {
     if (req.admin.role !== "admin") {
@@ -426,6 +430,7 @@ export {
     loginAdmin,
     logoutAdmin,
     refreshAccessToken,
+    getCurrentAdmin,
     createEvent,
     getCollegeEvents,
     getAdminEvents,

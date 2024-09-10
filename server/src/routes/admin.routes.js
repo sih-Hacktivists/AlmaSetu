@@ -3,6 +3,7 @@ import {
     loginAdmin,
     logoutAdmin,
     refreshAccessToken,
+    getCurrentAdmin,
     createEvent,
     getCollegeEvents,
     getAdminEvents,
@@ -25,6 +26,7 @@ router.route("/login").post(loginAdmin);
 // secure routes
 router.route("/logout").post(verifyAdmin, logoutAdmin);
 router.route("/refresh-token").post(verifyAdmin, refreshAccessToken);
+router.route("/current").get(verifyAdmin, getCurrentAdmin);
 router
     .route("/create-event")
     .post(verifyAdmin, upload.single("image"), createEvent);

@@ -2,7 +2,13 @@ import React, { useState } from "react";
 import SearchIcon from "../assets/searchIcon.svg";
 import NotificationIcon from "../assets/notification.svg";
 
-export function SearchBar({ showProfile, superAdmin, showSearch, dropDown }) {
+export function SearchBar({
+  showProfile,
+  superAdmin,
+  showSearch,
+  dropDown,
+  loggedInAdmin,
+}) {
   const [input, setInput] = useState("");
 
   function onClick() {
@@ -74,7 +80,7 @@ export function SearchBar({ showProfile, superAdmin, showSearch, dropDown }) {
             institution={true}
             dropDown={dropDown}
             email={"ume@gmail.com"}
-            name={"Govt. Polytechnic College"}
+            name={loggedInAdmin && loggedInAdmin.college}
             nameClass={"w-36  "}
           />
         ) : (
@@ -114,11 +120,14 @@ const UserProfileDropdown = ({
           alt="user photo"
         />
         <div className={nameClass}>
-          {name
-            .split(" ")
-            .filter((word) => !["of", "and", "&"].includes(word.toLowerCase()))
-            .map((word) => word[0])
-            .join("")}
+          {name &&
+            name
+              .split(" ")
+              .filter(
+                (word) => !["of", "and", "&"].includes(word.toLowerCase())
+              )
+              .map((word) => word[0])
+              .join("")}
         </div>
         {/* {institution ? (
           <svg

@@ -1,8 +1,4 @@
-import React, { useEffect, useState } from "react";
-import axios from "axios";
-import { API } from "../utils/api";
-
-const Profile = () => {
+const Profile = ({ loggedInUser }) => {
   const dummyUser = {
     name: "Saahiti Tiwari",
     role: "Student (2022-2026)",
@@ -38,18 +34,6 @@ const Profile = () => {
       { icon: "fab fa-facebook", url: "https://facebook.com" },
     ],
   };
-  const [user, setUser] = useState({});
-
-  useEffect(() => {
-    (async () => {
-      try {
-        const response = await axios.get(`${API}/users/me`);
-        setUser(response.data.data);
-      } catch (error) {
-        console.log(error);
-      }
-    })();
-  }, []);
 
   return (
     <div className="flex min-h-screen bg-[#ECF7FE] text-[#000000]">
@@ -59,18 +43,23 @@ const Profile = () => {
         <div className="flex space-x-6">
           <div className="flex flex-col items-center">
             <img
-              src={user.profilePic}
+              src={loggedInUser && loggedInUser.profilePic}
               alt="Profile"
               className="rounded-full w-32 h-32 object-cover border-4 border-white shadow-lg"
             />
             <div className="text-center mt-7">
               <h2 className="text-3xl font-bold flex items-center ml-6">
-                {user.name} <span className="text-blue-500 ml-1">✔</span>
+                {loggedInUser && loggedInUser.name}{" "}
+                <span className="text-blue-500 ml-1">✔</span>
               </h2>
               <p className="text-gray-600 mr-3">
-                {user.role && user.role[0].toUpperCase() + user.role.slice(1)}
+                {loggedInUser &&
+                  loggedInUser.role[0].toUpperCase() +
+                    loggedInUser.role.slice(1)}
               </p>
-              <p className="text-gray-600">{user.college}</p>
+              <p className="text-gray-600">
+                {loggedInUser && loggedInUser.college}
+              </p>
             </div>
           </div>
 
@@ -82,7 +71,7 @@ const Profile = () => {
                 <h3 className="text-lg text-center font-semibold">Bio</h3>
               </div>
               <div className="p-6 rounded-b-[25px]">
-                <p>{user.bio}</p>
+                <p>{loggedInUser && loggedInUser.bio}</p>
               </div>
             </div>
 
@@ -97,12 +86,12 @@ const Profile = () => {
                 </div>
                 <div className="p-6 rounded-b-[25px]">
                   <ul className="list-disc list-inside space-y-1">
-                    {user.skills &&
-                      user.skills.map((skill, index) => (
+                    {loggedInUser &&
+                      loggedInUser.skills.map((skill, index) => (
                         <li key={index}>{skill}</li>
                       ))}
-                    {user.interests &&
-                      user.interests.map((interest, index) => (
+                    {loggedInUser &&
+                      loggedInUser.interests.map((interest, index) => (
                         <li key={index}>{interest}</li>
                       ))}
                   </ul>

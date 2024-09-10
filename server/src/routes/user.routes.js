@@ -45,7 +45,7 @@ router.route("/check-enrollment").post(checkWhetherEnrollmentExists);
 router.route("/logout").post(verifyJWT, logout);
 router.route("/refresh-token").post(verifyJWT, refreshAccessToken);
 router.route("/change-password").post(verifyJWT, changeCurrentPassword);
-router.route("/me").get(verifyJWT, getCurrentUser);
+router.route("/current").get(verifyJWT, getCurrentUser);
 router
     .route("/update-profile-pic")
     .post(verifyJWT, upload.single("profilePic"), updateProfilePic);
