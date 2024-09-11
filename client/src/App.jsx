@@ -16,20 +16,20 @@ import EventDetails from "./pages/EventDetails";
 import SuperAdmin from "./pages/SuperAdmin";
 import Profile from "./pages/Profile";
 import AdminRegister from "./pages/AdminRegister";
+import PanelDiscussion from "./components/Authentication/PanelDiscussion";
 
 function AdminLayout() {
   return (
     <>
-      <div className="flex bg-[#ECF7FE] relative">
+      <div className="flex bg-[#ECF7FE] w-full h-screen ">
         <SideBar />
         <div className=" w-full p-2 px-10  ">
           <SearchBar showProfile={true} showSearch={false} dropDown={false} />
-          <div className="py-10">
+      
             <Routes>
               <Route path="/dashboard" element={<AdminDashboard />} />
-              {/* <Route path="/events" element={<AdminDashboard />} /> */}
+              <Route path="/panel" element={<PanelDiscussion/>} />
             </Routes>
-          </div>
         </div>
       </div>
     </>
@@ -37,32 +37,34 @@ function AdminLayout() {
 }
 
 function UserLayout() {
-
-  return <>
-  <div className="bg-[#ECF7FE] fixed w-full scrollbar-custom">
-<SideBar user={true}/>
-  <Routes>
-    <Route path="/home" element={<Home />} />
-    <Route
-      path="/:userId/reset-password/:token"
-      element={<ResetPasswordPage />}
-      />
-    {/* <Route path="/admin/*" element={<NotFound/>}/> */}
-    <Route
-      path="/:userId/verify-email/:token"
-      element={<VerificationPage />}
-      />
-    <Route path="/events" element={<Events />} />
-    <Route path="/events/:eventid" element={<EventDetails />} />
-    <Route path="/profile" element={<Profile />} />
-  </Routes>;
+  return (
+    <>
+      <div className="bg-[#ECF7FE] fixed w-full scrollbar-custom">
+        <SideBar user={true} />
+        <Routes>
+          <Route path="/home" element={<Home />} />
+          <Route
+            path="/:userId/reset-password/:token"
+            element={<ResetPasswordPage />}
+          />
+          {/* <Route path="/admin/*" element={<NotFound/>}/> */}
+          <Route
+            path="/:userId/verify-email/:token"
+            element={<VerificationPage />}
+          />
+          <Route path="/events" element={<Events />} />
+          <Route path="/events/:eventid" element={<EventDetails />} />
+          <Route path="/profile" element={<Profile />} />
+        </Routes>
+        ;
       </div>
-      </>
+    </>
+  );
 }
 function App() {
   return (
     <Routes>
-      <Route path="/users/*" element={<UserLayout/>}/>
+      <Route path="/users/*" element={<UserLayout />} />
 
       <Route path="/register" element={<MultiStepForm />} />
       <Route path="/login" element={<LoginPage />} />
