@@ -8,20 +8,34 @@ export const MyProfile = ({ user }) => {
   return (
     <div className="fixed top-0 left-0 h-screen w-72 px-5 py-2">
       <div className="relative bg-[#BBDCF1] w-full h-full rounded-2xl flex flex-col border-[1px] border-slate-800">
-        <div className="flex flex-col items-center flex-grow ">
-          <img className="rounded-full w-32 h-32 pt-2 object-cover " src={user.profilePic || "https://flowbite.com/docs/images/people/profile-picture-2.jpg"} alt="" />
+        <div className="flex flex-col items-center pt-5">
+          {/* {user.profilePic} */}
+          <div className="w-32 h-32 overflow-hidden rounded-full">
+            <img
+              className="object-cover w-full h-full"
+              src={
+                (user && user.profilePic) ||
+                "https://flowbite.com/docs/images/people/profile-picture-2.jpg"
+              }
+              alt="Profile Picture"
+            />
+          </div>
+          {/* <img className="rounded-full w-32 h-32 " src={user.profilePic || "https://flowbite.com/docs/images/people/profile-picture-2.jpg"} alt="" /> */}
           <div className="text-2xl py-2 flex items-center">
-            {user.name || "Rahul Das"}
+            {(user && user.name) || "Rahul Das"}
             <TickIcon color="white" />
           </div>
           <div className="text-sm">
-            {user.role && user.role[0].toUpperCase() + user.role.slice(1) || "Student"}
+            {(user && user.role[0].toUpperCase() + user.role.slice(1)) ||
+              "Student"}
           </div>
           <div className="grid items-center p-10 w-full">
             <SocialAndLink
               iconColor="black"
-              url={user.email || "das206053@gmail.com"}
-              gitHuburl={user.githubUrl || "https://github.com/RAHULDAS6009"}
+              url={(user && user.email) || "das206053@gmail.com"}
+              gitHuburl={
+                (user && user.githubUrl) || "https://github.com/RAHULDAS6009"
+              }
             />
           </div>
           <div className="h-full justify-end gap-28 flex flex-col">
@@ -58,7 +72,10 @@ function SocialAndLink({ iconColor, url, gitHuburl }) {
       {gitHuburl && (
         <div className="flex items-center text-[12px] py-1 gap-2">
           <GithubIcon width={15} height={15} />
-          <div>{gitHuburl.slice(0,22)}{"..."}</div>
+          <div>
+            {gitHuburl.slice(0, 22)}
+            {"..."}
+          </div>
         </div>
       )}
     </div>

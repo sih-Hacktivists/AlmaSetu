@@ -1,4 +1,4 @@
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, useNavigate } from "react-router-dom";
 import { MultiStepForm } from "./pages/MultiStepForm";
 import { Home } from "./pages/Home";
 import "./App.css";
@@ -17,8 +17,26 @@ import SuperAdmin from "./pages/SuperAdmin";
 import Profile from "./pages/Profile";
 import AdminRegister from "./pages/AdminRegister";
 import PanelDiscussion from "./components/Authentication/PanelDiscussion";
+import { useEffect, useState } from "react";
+import axios from "axios";
+import { API } from "./utils/api";
 
 function AdminLayout() {
+  const [loggedInAdmin, setLoggedInAdmin] = useState(null);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    (async () => {
+      try {
+        const response = await axios.get(`${API}/admin/current`);
+        setLoggedInAdmin(response.data.data);
+      } catch (error) {
+        navigate("/admin/login");
+        console.log(error);
+      }
+    })();
+  }, []);
+
   return (
     <>
       <div className="flex bg-[#ECF7FE] w-full h-screen ">
@@ -26,9 +44,21 @@ function AdminLayout() {
         <div className=" w-full p-2 px-10  ">
           <SearchBar showProfile={true} showSearch={false} dropDown={false} />
       
+          <SearchBar
+            showProfile={true}
+            showSearch={false}
+            dropDown={false}
+            loggedInAdmin={loggedInAdmin}
+          />
+          <div className="py-10">
             <Routes>
               <Route path="/dashboard" element={<AdminDashboard />} />
               <Route path="/panel" element={<PanelDiscussion/>} />
+              <Route
+                path="/dashboard"
+                element={<AdminDashboard loggedInAdmin={loggedInAdmin} />}
+              />
+              {/* <Route path="/events" element={<AdminDashboard />} /> */}
             </Routes>
         </div>
       </div>
@@ -57,13 +87,60 @@ function UserLayout() {
           <Route path="/profile" element={<Profile />} />
         </Routes>
         ;
+  const [loggedInUser, setLoggedInUser] = useState(null);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    (async () => {
+      try {
+        const response = await axios.get(`${API}/users/current`);
+        setLoggedInUser(response.data.data);
+      } catch (error) {
+        navigate("/login");
+        console.log(error);
+      }
+    })();
+  }, []);
+
+  return (
+    <>
+      <div className="bg-[#ECF7FE] fixed w-full scrollbar-custom">
+        <SideBar user={true} />
+        <Routes>
+          <Route path="/home" element={<Home loggedInUser={loggedInUser} />} />
+          <Route
+            path="/:userId/reset-password/:token"
+            element={<ResetPasswordPage />}
+          />
+          {/* <Route path="/admin/*" element={<NotFound/>}/> */}
+          <Route
+            path="/:userId/verify-email/:token"
+            element={<VerificationPage />}
+          />
+          <Route
+            path="/events"
+            element={<Events loggedInUser={loggedInUser} />}
+          />
+          <Route
+            path="/events/:eventid"
+            element={<EventDetails loggedInUser={loggedInUser} />}
+          />
+          <Route
+            path="/profile"
+            element={<Profile loggedInUser={loggedInUser} />}
+          />
+        </Routes>
+        ;
       </div>
+    </>
+  );
     </>
   );
 }
 function App() {
   return (
     <Routes>
+      <Route path="/users/*" element={<UserLayout />} />
       <Route path="/users/*" element={<UserLayout />} />
 
       <Route path="/register" element={<MultiStepForm />} />

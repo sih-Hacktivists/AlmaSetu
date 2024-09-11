@@ -29,7 +29,9 @@ const DocumentModal = ({ user, onClose, document }) => {
           />
           <div>
             <p className="text-gray-700 text-lg font-medium">{user.name}</p>
-            <p className="text-gray-500">{user.role}</p>
+            <p className="text-gray-500">
+              {user.role[0].toUpperCase() + user.role.slice(1)}
+            </p>
           </div>
         </div>
 

@@ -32,7 +32,7 @@ export default function SuperAdmin() {
             value={input}
             onChange={(e) => setInput(e.target.value)}
             placeholder='Enter College Email ...'
-            className='w-[500px] bg-white text-black border-black border-2 rounded-2xl text-center outline-none' />
+            className='w-[400px] bg-white text-black border-black border-2 rounded-2xl text-center outline-none' />
           <button className='hover:bg-[#BBDCF1] hover:text-black  hover:border-black bg-[#0F1035] w-36 h-7 rounded-xl text-white'>Send</button>
         </div>
 
@@ -40,7 +40,7 @@ export default function SuperAdmin() {
 
           <div className='p-3 gap-10 flex items-center justify-center'>
             {/* Search Bar */}
-            <SearchBar superAdmin={true} />
+            <SearchBar superAdmin={true} showSearch={true}/>
 
             {/* Filter */}
             <Filter />
