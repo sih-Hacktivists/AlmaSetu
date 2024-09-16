@@ -1,6 +1,6 @@
 import { Route, Routes, useNavigate } from "react-router-dom";
 import { MultiStepForm } from "./pages/MultiStepForm";
-import { Home } from "./pages/Home";
+import Home from "./pages/Home";
 import "./App.css";
 import LoginPage from "./pages/LoginPage";
 import ForgotPasswordPage from "./pages/ForgotPassword";
@@ -43,7 +43,10 @@ function AdminLayout() {
       <div className="w-full p-2 px-10">
         <SearchBar showProfile={true} showSearch={false} dropDown={false} />
         <Routes>
-          <Route path="/dashboard" element={<AdminDashboard loggedInAdmin={loggedInAdmin} />} />
+          <Route
+            path="/dashboard"
+            element={<AdminDashboard loggedInAdmin={loggedInAdmin} />}
+          />
           <Route path="/panel" element={<PanelDiscussion />} />
         </Routes>
       </div>
@@ -68,19 +71,42 @@ function UserLayout() {
   }, [navigate]);
 
   return (
-    <div className="bg-[#ECF7FE] fixed w-full h-screen overflow-auto">
-      <SideBar user={true} />
-      <div className="ml-64 p-4"> {/* Adjust the left margin to match sidebar width */}
-        <Routes>
-          <Route path="/home" element={<Home loggedInUser={loggedInUser} />} />
-          <Route path="/:userId/reset-password/:token" element={<ResetPasswordPage />} />
-          <Route path="/:userId/verify-email/:token" element={<VerificationPage />} />
-          <Route path="/events" element={<Events loggedInUser={loggedInUser} />} />
-          <Route path="/events/:eventid" element={<EventDetails loggedInUser={loggedInUser} />} />
-          <Route path="/profile" element={<Profile loggedInUser={loggedInUser} />} />
-        </Routes>
+    <main className="bg-[#ECF7FE] relative">
+      <div className="flex">
+        <SideBar user={true} />
+        <div className="flex min-h-screen flex-1 ">
+          <div className="w-full">
+            {/* Adjust the left margin to match sidebar width */}
+            <Routes>
+              <Route
+                path="/home"
+                element={<Home loggedInUser={loggedInUser} />}
+              />
+              <Route
+                path="/:userId/reset-password/:token"
+                element={<ResetPasswordPage />}
+              />
+              <Route
+                path="/:userId/verify-email/:token"
+                element={<VerificationPage />}
+              />
+              <Route
+                path="/events"
+                element={<Events loggedInUser={loggedInUser} />}
+              />
+              <Route
+                path="/events/:eventid"
+                element={<EventDetails loggedInUser={loggedInUser} />}
+              />
+              <Route
+                path="/profile"
+                element={<Profile loggedInUser={loggedInUser} />}
+              />
+            </Routes>
+          </div>
+        </div>
       </div>
-    </div>
+    </main>
   );
 }
 

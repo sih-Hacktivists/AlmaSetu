@@ -1,18 +1,19 @@
-import React from "react";
 import EnvelopeIcon from "../assets/Envelope.jsx"; // Import the React component
 import TickIcon from "../assets/Tick.jsx"; // Import the React component
 import GithubIcon from "../assets/Github.jsx";
 
 // Main Profile Component
+
 export const MyProfile = ({ user }) => {
   return (
-    <div className="fixed top-0 left-0 h-screen w-72 px-5 py-2">
-      <div className="relative bg-[#BBDCF1] w-full h-full rounded-2xl flex flex-col border-[1px] border-slate-800">
-        <div className="flex flex-col items-center pt-5">
-          {/* {user.profilePic} */}
-          <div className="w-32 h-32 overflow-hidden rounded-full">
+    // <div className="fixed top-0 left-0 h-screen w-1/5 px-5 py-2">
+    <div className=" bg-[#BBDCF1] h-full rounded-2xl  border-[1px] border-slate-800">
+      <div className="flex flex-col items-center h-full p-5 gap-5 ">
+        {/* {user.profilePic} */}
+        <div className="flex flex-col w-full items-center">
+          <div className=" overflow-hidden rounded-full  ">
             <img
-              className="object-cover w-full h-full"
+              className="object-cover w-[152px] h-[152px]"
               src={
                 (user && user.profilePic) ||
                 "https://flowbite.com/docs/images/people/profile-picture-2.jpg"
@@ -29,48 +30,56 @@ export const MyProfile = ({ user }) => {
             {(user && user.role[0].toUpperCase() + user.role.slice(1)) ||
               "Student"}
           </div>
-          <div className="grid items-center p-10 w-full">
-            <SocialAndLink
-              iconColor="black"
-              url={(user && user.email) || "das206053@gmail.com"}
-              gitHuburl={
-                (user && user.githubUrl) || "https://github.com/RAHULDAS6009"
-              }
-            />
-          </div>
-          <div className="h-full justify-end gap-28 flex flex-col">
+        </div>
+
+        <div className="flex flex-col h-3/4 justify-between w-full items-center ">
+         
+            <div className="flex items-center justify-center w-full">
+              <SocialAndLink
+                iconColor="black"
+                url={(user && user.email) || "das206053@gmail.com"}
+                gitHuburl={
+                  (user && user.githubUrl) || "https://github.com/RAHULDAS6009"
+                }
+              />
+            </div>
+
             <div className="font-light flex flex-col items-center w-full">
-              <div className="text-sm font-semibold text-center">
+              <div className="text-sm 2xl:text-4xl font-semibold text-center">
                 Profile Performance
               </div>
-              <ul className="list-disc list-inside text-xs mt-4">
+              <ul className="list-disc list-inside text-xs mt-4 2xl:text-2xl">
                 <li>47 connections</li>
                 <li>2 Events attended</li>
               </ul>
             </div>
-            <div className="mb-5 px-2 text-2xl rounded-lg bg-[#111E4B] text-white flex items-center justify-evenly w-full h-12">
+            <div className=" px-2 text-2xl rounded-lg bg-[#111E4B] text-white  flex justify-center items-center  w-full h-12">
+              <div className="flex items-center justify-center gap-5">
+
               <EnvelopeIcon width={25} height={25} color="#ffffff" />
-              <span className="ml-2">messages</span>
+             messages
+              </div>
             </div>
-          </div>
         </div>
       </div>
     </div>
+    // </div>
   );
 };
 
 // Reusable SocialAndLink Component
 function SocialAndLink({ iconColor, url, gitHuburl }) {
   return (
-    <div className="space-y-2">
+    <div className="flex flex-col  ">
+      {" "}
       {url && (
-        <div className="flex items-center text-[12px] py-1 gap-2">
-          <EnvelopeIcon color={iconColor} width={15} height={15} />
+        <div className="flex items-center text-[12px] py-1 gap-2 2xl:text-xl  ">
+          <EnvelopeIcon color={iconColor} width={15} height={15}  />
           <div>{url}</div>
         </div>
       )}
       {gitHuburl && (
-        <div className="flex items-center text-[12px] py-1 gap-2">
+        <div className="flex items-center text-[12px] py-1 gap-2 2xl:text-xl">
           <GithubIcon width={15} height={15} />
           <div>
             {gitHuburl.slice(0, 22)}
