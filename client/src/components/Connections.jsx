@@ -1,4 +1,3 @@
-import React from "react";
 import { Link } from "react-router-dom";
 export const Connections = () => {
   const suggestedConnections = [
@@ -35,24 +34,27 @@ export const Connections = () => {
   ];
 
   return (
-    <div className="bg-[#BBDCF1] rounded-2xl  w-full 2xl:w-72   ">
+
+    <div className="bg-[#BBDCF1] rounded-2xl border-slate-800  border-[1px]  h-full">
       {/* Header */}
-      <div className="bg-[#ECF7FE] rounded-t-2xl border-slate-800 border-[1px]  text-center text-xl 2xl:text-2xl  px-2 font-bold ">
+      <div className=  "flex justify-center items-center h-1/5 bg-[#ECF7FE] rounded-t-2xl border-slate-800 border-b-[1px]  text-center text-lg 2xl:text-3xl  px-2 font-bold ">
         Suggested Connections
       </div>
 
       {/* Connections List */}
-      <div className="relative  px-2 border-slate-800 border-b-[1px] border-x-[1px] rounded-b-2xl">
+      <div className="h-4/5 flex flex-col justify-between  px-2 border-slate-800  ">
+        <div>
+
         {suggestedConnections.slice(0,4).map((connection) => (
           <div
             key={connection.id}
-            className=" flex items-center justify-between p-2"
+            className=" flex items-center justify-between py-1 2xl:py-4"
           >
             <div className="flex items-center px-2 ">
               <img
                 src={connection.img}
                 alt={connection.name}
-                className="rounded-full w-8 h-8 mr-3" // Increase the size and border radius
+                className="rounded-full size-5 2xl:size-8 mr-3" // Increase the size and border radius
               />
               <Link to={"/"}>
               <span className="text-sm font-medium cursor-pointer">{connection.name}</span>
@@ -60,6 +62,7 @@ export const Connections = () => {
             </div>
           </div>
         ))}
+        </div>
 
         {/* See More Button */}
         <div className="flex justify-center  pb-2 "> {/* Adjusted margin for better spacing */}
@@ -69,5 +72,6 @@ export const Connections = () => {
         </div>
       </div>
     </div>
+
   );
 };

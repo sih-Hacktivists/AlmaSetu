@@ -25,23 +25,23 @@ export const Communities = ({ admin }) => {
   ];
 
   return (
-    <div className={`bg-[#BBDCF1] rounded-2xl ${admin?"h-full":""}`}>
+    <div className={`bg-[#BBDCF1] rounded-2xl h-full`}>
       {/* Header */}
-      <div className="bg-[#ECF7FE]  2xl:text-4xl rounded-t-2xl border-slate-800 border-[1px] text-center text-2xl font-bold ">
+      <div className= "flex justify-center items-center bg-[#ECF7FE] h-[10%]  text-lg 2xl:text-2xl rounded-t-2xl border-slate-800 border-[1px] text-center  font-bold ">
         Communities
       </div>
 
       {/* Community List */}
       <div
-        className={`bg-[#BBDCF1] relative overflow-y-auto ${admin?"h-full":"h-72"}  flex flex-col justify-between  border-slate-800 border-b-[1px] border-x-[1px] rounded-b-2xl`}
+        className={`h-[90%] pb-2 bg-[#BBDCF1] relative overflow-y-auto   flex flex-col justify-between  border-slate-800 border-b-[1px] border-x-[1px] rounded-b-2xl`}
       >
-        <div>
+        <div className="">
           {communityList.slice(0, 10).map((community) => (
             <div
               key={community.id}
-              className="flex items-center justify-between "
+              className="flex items-center justify-between  "
             >
-              <div className="flex items-center py-[2px] pl-[2px] w-full border-[1px] border-white ">
+              <div className="flex items-center  pl-4 py-1 w-full border-b-[1px] border-black">
                 <img
                   src={community.img}
                   alt={community.name}
@@ -54,7 +54,7 @@ export const Communities = ({ admin }) => {
         </div>
 
         {/* Explore Button */}
-        <div className="rounded-2xl my-4 mx-2    flex justify-center  bg-[#111E4B] ">
+        <div className="rounded-2xl mx-2    flex justify-center  bg-[#111E4B] ">
           <button className="text-white rounded-2xl w-full  h-10 font-normal text-sm  hover:bg-[#233a91] hover:font-medium">
             Explore
           </button>
