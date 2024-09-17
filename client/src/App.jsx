@@ -16,7 +16,7 @@ import EventDetails from "./pages/EventDetails";
 import SuperAdmin from "./pages/SuperAdmin";
 import Profile from "./pages/Profile";
 import AdminRegister from "./pages/AdminRegister";
-import PanelDiscussion from "./components/Authentication/PanelDiscussion";
+import PanelDiscussion from "./pages/PanelDiscussion";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { API } from "./utils/api";
@@ -47,7 +47,6 @@ function AdminLayout() {
             path="/dashboard"
             element={<AdminDashboard loggedInAdmin={loggedInAdmin} />}
           />
-          <Route path="/panel" element={<PanelDiscussion />} />
         </Routes>
       </div>
     </div>
@@ -102,6 +101,7 @@ function UserLayout() {
                 path="/profile"
                 element={<Profile loggedInUser={loggedInUser} />}
               />
+              <Route path="/panel" element={<PanelDiscussion loggedInUser={loggedInUser} />} />
             </Routes>
           </div>
         </div>
