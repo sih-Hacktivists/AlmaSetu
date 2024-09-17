@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+/* eslint-disable react/prop-types */
+import { useState } from "react";
 import SearchIcon from "../assets/searchIcon.svg";
 import NotificationIcon from "../assets/notification.svg";
 
@@ -17,7 +18,7 @@ export function SearchBar({
 
   return (
     <>
-      <div className="flex items-center gap-10 mx-auto px-2  max-w-screen-xl 2xl:max-w-screen-lg pt-1 ">
+      <div className=" flex items-center gap-10  px-2  pt-1 ">
         {superAdmin ? null : (
           <img
             src="https://cdn-icons-png.flaticon.com/128/999/999663.png"
@@ -92,13 +93,7 @@ export function SearchBar({
   );
 }
 
-const UserProfileDropdown = ({
-  name,
-  nameClass,
-  institution,
-  email,
-  dropDown,
-}) => {
+const UserProfileDropdown = ({ name, nameClass, email, dropDown }) => {
   const [isOpen, setIsOpen] = useState(false);
 
   const toggleDropdown = () => {

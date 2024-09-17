@@ -17,7 +17,7 @@ background-color: #ECF7FE;
 }
 
 .scrollbar-custom::-webkit-scrollbar-thumb {
-  background: #888; /* Color of the scrollbar thumb */
+  background: #ECF7FE; /* Color of the scrollbar thumb */
   border-radius: 5px; /* Rounded corners for thumb */
   min-height: 2px; /* Minimum height of the scrollbar thumb */
   height: 2px;
