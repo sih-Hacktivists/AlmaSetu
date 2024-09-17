@@ -5,26 +5,25 @@ import Yukta from "../components/Yukta";
 import { SearchBar } from "../components/SearchBar";
 import { TopEvents } from "../components/TopEvents";
 import { Posts } from "../components/Posts";
-const Home = () => {
+const Home = ({ loggedInUser }) => {
   return (
     <section
       className="flex size-full
      text-black fixed  "
     >
       <div className="h-[95%] w-1/5  m-5    ">
-        <MyProfile />
+        <MyProfile user={loggedInUser} />
       </div>
       <div className=" mx-auto w-3/5 mt-5 flex-1 ">
         <div className="flex flex-col justify-between  h-full w-full">
           <SearchBar showProfile={false} showSearch={true} />
           <div className="overflow-y-auto scrollbar-custom">
-
-          <div className="h-1/4 ">
-            <TopEvents />
-          </div>
-          <div className="h-[60%] ">
-            <Posts />
-          </div>
+            <div className="h-1/4 ">
+              <TopEvents />
+            </div>
+            <div className="h-[60%] ">
+              <Posts />
+            </div>
           </div>
         </div>
       </div>
