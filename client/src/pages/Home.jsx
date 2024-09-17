@@ -18,13 +18,12 @@ const Home = () => {
         <div className="flex flex-col justify-between  h-full w-full">
           <SearchBar showProfile={false} showSearch={true} />
           <div className="overflow-y-auto scrollbar-custom">
-
-          <div className="h-1/4 ">
-            <TopEvents />
-          </div>
-          <div className="h-[60%] ">
-            <Posts />
-          </div>
+            <div className="h-1/4 ">
+              <TopEvents />
+            </div>
+            <div className="h-[60%] ">
+              <Posts />
+            </div>
           </div>
         </div>
       </div>
