@@ -2,6 +2,7 @@ import { asyncHandler } from "../utils/asyncHandler.js";
 import { ApiResponse } from "../utils/ApiResponse.js";
 import { Connection } from "../models/connection.model.js";
 import { User } from "../models/user.model.js";
+import { Notification } from "../models/notification.model.js";
 
 const createConnection = asyncHandler(async (req, res) => {
     const { connectionId } = req.params;
@@ -24,6 +25,11 @@ const createConnection = asyncHandler(async (req, res) => {
     const connection = await Connection.create({
         connectFrom: userId,
         connectTo: connectionId,
+    });
+
+    await Notification.create({
+        user: connectionId,
+        message: `${req.user.name} sent you a connection request`,
     });
 
     return res
@@ -68,6 +74,11 @@ const acceptConnection = asyncHandler(async (req, res) => {
             .json({ message: "Connection request not found" });
     }
 
+    await Notification.create({
+        user: isConnection.connectFrom,
+        message: `${req.user.name} accepted your connection request`,
+    });
+
     return res
         .status(200)
         .json(
@@ -104,11 +115,33 @@ const rejectConnection = asyncHandler(async (req, res) => {
             .json({ message: "Connection request not found" });
     }
 
+    await Notification.create({
+        user: isConnection.connectFrom,
+        message: `${req.user.name} rejected your connection request`,
+    });
+
     return res
         .status(200)
         .json(
             new ApiResponse(200, {}, "Connection request rejected successfully")
         );
+});
+
+const isConnection = asyncHandler(async (req, res) => {
+    const { connectionId } = req.params;
+    const userId = req.user._id;
+
+    const connection = await Connection.findOne({
+        connectFrom: userId,
+        connectTo: connectionId,
+        isAccepted: true,
+    });
+
+    if (!connection) {
+        return res.status(400).json({ message: "Not connected" });
+    }
+
+    return res.status(200).json(new ApiResponse(200, connection, "Connected"));
 });
 
 const getConnections = asyncHandler(async (req, res) => {
@@ -172,6 +205,7 @@ export {
     createConnection,
     acceptConnection,
     rejectConnection,
+    isConnection,
     getConnections,
     getPendingRequests,
     getPendingApprovals,
