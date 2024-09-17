@@ -14,6 +14,7 @@ import {
     resetPassword,
     checkWhetherEmailOrPhoneExists,
     checkWhetherEnrollmentExists,
+    editProfileDetails,
 } from "../controllers/user.controller.js";
 import { Router } from "express";
 import { upload } from "../middlewares/multer.middleware.js";
@@ -49,6 +50,7 @@ router.route("/current").get(verifyJWT, getCurrentUser);
 router
     .route("/update-profile-pic")
     .post(verifyJWT, upload.single("profilePic"), updateProfilePic);
+router.route("/edit-profile-details").post(verifyJWT, editProfileDetails);
 
 router.route("/").get(verifyJWT, allUsers);
 

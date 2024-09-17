@@ -85,16 +85,43 @@ const userSchema = new Schema(
             type: [String],
         },
         socialLinks: {
-            type: [String],
+            type: [
+                {
+                    name: {
+                        type: String,
+                        enum: ["linkedin", "github", "twitter"],
+                        required: true,
+                    },
+                    url: {
+                        type: String,
+                        required: true,
+                    },
+                },
+            ],
         },
         workExperience: {
             type: [
                 {
-                    company: String,
-                    role: String,
-                    startDate: Date,
-                    endDate: Date,
-                    present: Boolean,
+                    company: {
+                        type: String,
+                        required: true,
+                    },
+                    role: {
+                        type: String,
+                        required: true,
+                    },
+                    startDate: {
+                        type: Date,
+                        required: true,
+                    },
+                    endDate: {
+                        type: Date,
+                    },
+                    present: {
+                        type: Boolean,
+                        default: false,
+                        required: true,
+                    },
                 },
             ],
         },

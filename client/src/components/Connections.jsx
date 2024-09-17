@@ -45,10 +45,10 @@ export const Connections = () => {
       <div className="h-4/5 flex flex-col justify-between  px-2 border-slate-800  ">
         <div>
 
-        {suggestedConnections.slice(0,4).map((connection) => (
+        {suggestedConnections.slice(0,3).map((connection) => (
           <div
             key={connection.id}
-            className=" flex items-center justify-between py-1 3xl:py-4"
+            className=" flex items-center justify-between py-2 3xl:py-4"
           >
             <div className="flex items-center px-2 ">
               <img

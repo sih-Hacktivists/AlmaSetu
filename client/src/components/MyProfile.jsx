@@ -33,33 +33,31 @@ export const MyProfile = ({ user }) => {
         </div>
 
         <div className="flex flex-col h-3/4 justify-between w-full items-center ">
-         
-            <div className="flex items-center justify-center w-full">
-              <SocialAndLink
-                iconColor="black"
-                url={(user && user.email) || "das206053@gmail.com"}
-                gitHuburl={
-                  (user && user.githubUrl) || "https://github.com/RAHULDAS6009"
-                }
-              />
-            </div>
+          <div className="flex items-center justify-center w-full">
+            <SocialAndLink
+              iconColor="black"
+              url={(user && user.email) || "das206053@gmail.com"}
+              gitHuburl={
+                (user && user.githubUrl) || "https://github.com/RAHULDAS6009"
+              }
+            />
+          </div>
 
-            <div className="font-light flex flex-col items-center w-full">
-              <div className="text-sm 3xl:text-4xl font-semibold text-center">
-                Profile Performance
-              </div>
-              <ul className="list-disc list-inside text-xs mt-4 3xl:text-2xl">
-                <li>47 connections</li>
-                <li>2 Events attended</li>
-              </ul>
+          <div className="font-light flex flex-col items-center w-full">
+            <div className="text-sm 3xl:text-4xl font-semibold text-center">
+              Profile Performance
             </div>
-            <div className=" px-2 text-2xl 3xl:text-4xl 3xl:py-4 rounded-full bg-[#111E4B] text-white  flex justify-center items-center  w-full h-12">
-              <div className="flex items-center justify-center gap-5">
-
-              <EnvelopeIcon width={25} height={25} color="#ffffff" />
-             messages
-              </div>
+            <ul className="list-disc list-inside text-xs mt-4 3xl:text-2xl">
+              <li>47 connections</li>
+              <li>2 Events attended</li>
+            </ul>
+          </div>
+          <div className=" px-2 text-2xl 3xl:text-4xl 3xl:py-4 rounded-full bg-[#111E4B] text-white  flex justify-center items-center  w-full h-12">
+            <div className="flex items-center justify-center gap-5 pb-1">
+              <EnvelopeIcon width={28} height={28} color="#ffffff" />
+              Messages
             </div>
+          </div>
         </div>
       </div>
     </div>
@@ -74,7 +72,7 @@ function SocialAndLink({ iconColor, url, gitHuburl }) {
       {" "}
       {url && (
         <div className="flex items-center text-[12px] py-1 gap-2 3xl:text-xl  ">
-          <EnvelopeIcon color={iconColor} width={15} height={15}  />
+          <EnvelopeIcon color={iconColor} width={15} height={15} />
           <div>{url}</div>
         </div>
       )}
