@@ -555,6 +555,51 @@ const resetPassword = asyncHandler(async (req, res) => {
         .json({ message: "Password reset successfully" });
 });
 
+// edit details
+const editProfileDetails = asyncHandler(async (req, res) => {
+    const {
+        bio,
+        skills,
+        interests,
+        achievements,
+        socialLinks,
+        workExperience,
+    } = req.body;
+
+    console.log(req.user._id);
+    console.log(bio);
+
+    if (
+        !bio ||
+        !skills ||
+        !interests ||
+        !achievements ||
+        !socialLinks ||
+        !workExperience
+    ) {
+        return res.status(400).json({ message: "Please fill all the fields" });
+    }
+
+    const user = await User.findById(req.user._id);
+
+    if (!user) {
+        return res.status(404).json({ message: "User not found" });
+    }
+
+    user.bio = bio;
+    user.skills = skills;
+    user.interests = interests;
+    user.achievements = achievements;
+    user.socialLinks = socialLinks;
+    user.workExperience = workExperience;
+
+    await user.save({ validateBeforeSave: false });
+
+    return res
+        .status(200)
+        .json(new ApiResponse(200, {}, "Profle Details updated successfully"));
+});
+
 export {
     allUsers,
     register,
@@ -571,4 +616,5 @@ export {
     resetPassword,
     checkWhetherEmailOrPhoneExists,
     checkWhetherEnrollmentExists,
+    editProfileDetails,
 };
