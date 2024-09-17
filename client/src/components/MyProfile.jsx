@@ -53,7 +53,7 @@ export const MyProfile = ({ user }) => {
                 <li>2 Events attended</li>
               </ul>
             </div>
-            <div className=" px-2 text-2xl 2xl:text-4xl 2xl:py-4 rounded-full bg-[#111E4B] text-white  flex justify-center items-center  w-full h-12">
+            <div className=" px-2 text-2xl 3xl:text-4xl 3xl:py-4 rounded-full bg-[#111E4B] text-white  flex justify-center items-center  w-full h-12">
               <div className="flex items-center justify-center gap-5">
 
               <EnvelopeIcon width={25} height={25} color="#ffffff" />

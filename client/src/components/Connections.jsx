@@ -48,7 +48,7 @@ export const Connections = () => {
         {suggestedConnections.slice(0,4).map((connection) => (
           <div
             key={connection.id}
-            className=" flex items-center justify-between py-1 2xl:py-4"
+            className=" flex items-center justify-between py-1 3xl:py-4"
           >
             <div className="flex items-center px-2 ">
               <img

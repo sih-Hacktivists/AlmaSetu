@@ -23,7 +23,7 @@ export default function SideBar({ user }) {
           <img
             src={bars}
             alt="Expand Sidebar"
-            className={`w-10 h-10 absolute top-4 ${
+            className={`w-10 h-10 absolute top-4 pt-2 ${
               user ? "left-6" : "left-2"
             }  z-50 cursor-pointer rounded-2xl ${
               user ? "hover:bg-[#a8cfe9]" : "hover:bg-slate-200"
