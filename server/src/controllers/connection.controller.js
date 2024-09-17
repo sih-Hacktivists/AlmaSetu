@@ -16,7 +16,7 @@ const createConnection = asyncHandler(async (req, res) => {
 
     const getConnection = await User.findById(connectionId);
 
-    if (getConnection.role !== "alumni") {
+    if (req.user.role === "student" && getConnection.role === "student") {
         return res
             .status(400)
             .json({ message: "You can only connect with alumni" });
