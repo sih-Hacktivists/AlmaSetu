@@ -37,7 +37,7 @@ export const Connections = () => {
 
     <div className="bg-[#BBDCF1] rounded-2xl border-slate-800  border-[1px]  h-full">
       {/* Header */}
-      <div className=  "flex justify-center items-center h-1/5 bg-[#ECF7FE] rounded-t-2xl border-slate-800 border-b-[1px]  text-center text-lg 2xl:text-3xl  px-2 font-bold ">
+      <div className=  "flex justify-center items-center h-1/5 bg-[#ECF7FE] rounded-t-2xl border-slate-800 border-b-[1px]  text-center text-lg 3xl:text-3xl  px-2 font-bold ">
         Suggested Connections
       </div>
 

@@ -27,7 +27,7 @@ export const Communities = ({ admin }) => {
   return (
     <div className={`bg-[#BBDCF1] rounded-2xl h-full`}>
       {/* Header */}
-      <div className= "flex justify-center items-center bg-[#ECF7FE] h-[10%]  text-lg 2xl:text-2xl rounded-t-2xl border-slate-800 border-[1px] text-center  font-bold ">
+      <div className= "flex justify-center items-center bg-[#ECF7FE] h-[10%]  text-lg 3xl:text-2xl rounded-t-2xl border-slate-800 border-[1px] text-center  font-bold ">
         Communities
       </div>
 

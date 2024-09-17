@@ -45,10 +45,10 @@ export const MyProfile = ({ user }) => {
             </div>
 
             <div className="font-light flex flex-col items-center w-full">
-              <div className="text-sm 2xl:text-4xl font-semibold text-center">
+              <div className="text-sm 3xl:text-4xl font-semibold text-center">
                 Profile Performance
               </div>
-              <ul className="list-disc list-inside text-xs mt-4 2xl:text-2xl">
+              <ul className="list-disc list-inside text-xs mt-4 3xl:text-2xl">
                 <li>47 connections</li>
                 <li>2 Events attended</li>
               </ul>
@@ -73,13 +73,13 @@ function SocialAndLink({ iconColor, url, gitHuburl }) {
     <div className="flex flex-col  ">
       {" "}
       {url && (
-        <div className="flex items-center text-[12px] py-1 gap-2 2xl:text-xl  ">
+        <div className="flex items-center text-[12px] py-1 gap-2 3xl:text-xl  ">
           <EnvelopeIcon color={iconColor} width={15} height={15}  />
           <div>{url}</div>
         </div>
       )}
       {gitHuburl && (
-        <div className="flex items-center text-[12px] py-1 gap-2 2xl:text-xl">
+        <div className="flex items-center text-[12px] py-1 gap-2 3xl:text-xl">
           <GithubIcon width={15} height={15} />
           <div>
             {gitHuburl.slice(0, 22)}
