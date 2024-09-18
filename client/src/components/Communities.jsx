@@ -31,7 +31,7 @@ export const Communities = ({ admin }) => {
         Communities
       </div>
 
-      {/* Community List */}
+      {/* Community List */}  
       <div
         className={`h-[90%] pb-2 bg-[#BBDCF1] relative overflow-y-auto   flex flex-col justify-between  border-slate-800 border-b-[1px] border-x-[1px] rounded-b-2xl`}
       >
