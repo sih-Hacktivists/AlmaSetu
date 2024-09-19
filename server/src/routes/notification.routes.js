@@ -1,5 +1,6 @@
 import {
     getNotifications,
+    readNotification,
     deleteNotifiaction,
 } from "../controllers/notification.controller.js";
 import { verifyJWT } from "../middlewares/auth.middleware.js";
@@ -8,7 +9,8 @@ const router = Router();
 
 router.use(verifyJWT);
 
-router.get("/", getNotifications);
-router.delete("/delete/:notificationId", deleteNotifiaction);
+router.route("/").get(getNotifications);
+router.route("/read/:notificationId").put(readNotification);
+router.route("/delete/:notificationId").delete(deleteNotifiaction);
 
 export default router;

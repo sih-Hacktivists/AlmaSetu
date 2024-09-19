@@ -2,7 +2,7 @@ import {
     createConnection,
     acceptConnection,
     rejectConnection,
-    isConnection,
+    connectionStatus,
     getConnections,
     getPendingRequests,
     getPendingApprovals,
@@ -16,7 +16,7 @@ router.use(verifyJWT);
 router.route("/create/:connectionId").post(createConnection);
 router.route("/accept/:connectionId").put(acceptConnection);
 router.route("/reject/:connectionId").delete(rejectConnection);
-router.route("/is-connection/:connectionId").get(isConnection);
+router.route("/is-connection/:connectionId").get(connectionStatus);
 router.route("/").get(getConnections);
 router.route("/pending-requests").get(getPendingRequests);
 router.route("/pending-approvals").get(getPendingApprovals);

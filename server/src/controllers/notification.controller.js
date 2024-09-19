@@ -20,6 +20,26 @@ const getNotifications = asyncHandler(async (req, res) => {
         );
 });
 
+const readNotification = asyncHandler(async (req, res) => {
+    const { notificationId } = req.params;
+
+    const notification = await Notification.findById(notificationId);
+
+    if (!notification) {
+        return res.status(400).json({ message: "Notification not found" });
+    }
+
+    notification.read = true;
+
+    await notification.save({ validateBeforeSave: false });
+
+    return res
+        .status(200)
+        .json(
+            new ApiResponse(200, notification, "Notification read successfully")
+        );
+});
+
 const deleteNotifiaction = asyncHandler(async (req, res) => {
     const { notificationId } = req.params;
 
@@ -36,4 +56,4 @@ const deleteNotifiaction = asyncHandler(async (req, res) => {
         .json(new ApiResponse(200, {}, "Notification deleted successfully"));
 });
 
-export { getNotifications, deleteNotifiaction };
+export { getNotifications, readNotification, deleteNotifiaction };
