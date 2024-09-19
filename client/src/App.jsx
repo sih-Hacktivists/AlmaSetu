@@ -20,6 +20,7 @@ import PanelDiscussion from "./pages/PanelDiscussion";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { API } from "./utils/api";
+import ChatPage from "./pages/ChatPAge";
 
 function AdminLayout() {
   const [loggedInAdmin, setLoggedInAdmin] = useState(null);
@@ -102,6 +103,7 @@ function UserLayout() {
                 element={<Profile loggedInUser={loggedInUser} />}
               />
               <Route path="/panel" element={<PanelDiscussion loggedInUser={loggedInUser} />} />
+              <Route path="/chats" element={<ChatPage loggedInUser={loggedInUser} />} />
             </Routes>
           </div>
         </div>

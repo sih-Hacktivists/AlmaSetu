@@ -1,7 +1,9 @@
 /* eslint-disable react/prop-types */
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import SearchIcon from "../assets/searchIcon.svg";
 import NotificationIcon from "../assets/notification.svg";
+import axios from "axios";
+import { API } from "../utils/api";
 
 export function SearchBar({
   showProfile,
@@ -12,6 +14,19 @@ export function SearchBar({
 }) {
   const [input, setInput] = useState("");
   const [notification, setNotification] = useState(false);
+  const [notifications, setNotifications] = useState([]);
+
+  useEffect(() => {
+    (async () => {
+      try {
+        const notificatonResponse = await axios.get(`${API}/notifications`);
+        console.log(notificatonResponse);
+        setNotifications(notificatonResponse.data.data);
+      } catch (error) {
+        console.log(error);
+      }
+    })();
+  }, []);
 
   function onClick() {
     setInput("");
@@ -82,27 +97,19 @@ export function SearchBar({
                 />
               </div>
 
-              {/* Notification Dropdown */}
               {notification && (
                 <div className="absolute right-0 mt-2 w-56 bg-white rounded-lg shadow-lg z-10 cursor-pointer">
                   <div className="px-4 py-2 text-sm text-gray-800">
-                    You have 3 new notifications
+                    You have 1 new notifications
                   </div>
                   <ul className="divide-y divide-gray-100">
-                    <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer">
-                      New comment on your post
-                    </li>
-                    <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer">
-                      New like on your comment
-                    </li>
-                    <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer">
-                      New event available
-                    </li>
+                    {notifications &&
+                      notifications.map((eachNotification) => (
+                        <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer">
+                          {eachNotification.message}
+                        </li>
+                      ))}
                   </ul>
-                  
-                  {/* <div  className="px-4 py-2 text-center text-blue-500 hover:bg-gray-100 cursor-pointer">
-                    See all notifications
-                  </div> */}
                 </div>
               )}
             </div>
@@ -143,16 +150,18 @@ const UserProfileDropdown = ({ name, nameClass, email, dropDown }) => {
           src="https://flowbite.com/docs/images/people/profile-picture-3.jpg"
           alt="User Avatar"
         />
-        {dropDown &&<div className={nameClass}>
-          {name &&
-            name
-              .split(" ")
-              .filter(
-                (word) => !["of", "and", "&"].includes(word.toLowerCase())
-              )
-              .map((word) => word[0])
-              .join("")}
-        </div>}
+        {dropDown && (
+          <div className={nameClass}>
+            {name &&
+              name
+                .split(" ")
+                .filter(
+                  (word) => !["of", "and", "&"].includes(word.toLowerCase())
+                )
+                .map((word) => word[0])
+                .join("")}
+          </div>
+        )}
       </button>
 
       {dropDown && isOpen && (
