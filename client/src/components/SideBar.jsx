@@ -26,7 +26,7 @@ export default function SideBar({ user }) {
             className={`w-10 h-10 absolute top-4 pt-2 ${
               user ? "left-6" : "left-2"
             }  z-50 cursor-pointer rounded-2xl ${
-              user ? "hover:bg-[#a8cfe9]" : "hover:bg-slate-200"
+              user ? "" : "hover:bg-slate-200"
             } transition-transform duration-300 ease-in-out  `}
             width={30}
             height={30}

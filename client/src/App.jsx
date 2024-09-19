@@ -21,6 +21,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { API } from "./utils/api";
 import ChatPage from "./pages/ChatPAge";
+import ConnectionsPage from "./pages/ConnectionsPage"
 
 function AdminLayout() {
   const [loggedInAdmin, setLoggedInAdmin] = useState(null);
@@ -102,8 +103,18 @@ function UserLayout() {
                 path="/profile"
                 element={<Profile loggedInUser={loggedInUser} />}
               />
-              <Route path="/panel" element={<PanelDiscussion loggedInUser={loggedInUser} />} />
-              <Route path="/chats" element={<ChatPage loggedInUser={loggedInUser} />} />
+              <Route
+                path="/panel"
+                element={<PanelDiscussion loggedInUser={loggedInUser} />}
+              />
+              <Route
+                path="/chats"
+                element={<ChatPage loggedInUser={loggedInUser} />}
+              />
+              <Route
+                path="/connections"
+                element={<ConnectionsPage loggedInUser={loggedInUser} />}
+              />
             </Routes>
           </div>
         </div>
