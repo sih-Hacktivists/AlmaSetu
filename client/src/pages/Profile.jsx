@@ -2,7 +2,7 @@ import { SearchBar } from "../components/SearchBar";
 import { LiaLinkedin } from "react-icons/lia";
 import { MdEdit } from "react-icons/md";
 import { FaGithub } from "react-icons/fa";
-
+import { FaPlus } from "react-icons/fa";
 
 const Profile = ({ loggedInUser }) => {
   const dummyUser = {
@@ -56,8 +56,8 @@ const Profile = ({ loggedInUser }) => {
       </div>
 
       <div className="w-[90vw] h-[90vh] border-2 border-black rounded-xl p-4">
-        <div className="w-[100%] h-[5%] flex justify-end m-1 p-4 items-center">
-          <button className="w-32 h-8 gap-2 bg-white border-black border-2 rounded-2xl flex justify-center items-center">Edit Profile <MdEdit className="w-5 h-5" /></button>
+        <div className="w-[100%] h-[5%] flex justify-end m-1">
+          <button className="w-32 gap-2 bg-white border-black border-2 rounded-2xl flex justify-center items-center">Edit Profile <MdEdit className="w-5 h-5" /></button>
         </div>
 
         <div className="w-[100%] h-[95%] flex  gap-2 justify-around items-center">
@@ -71,7 +71,7 @@ const Profile = ({ loggedInUser }) => {
               <p className="text-2xl font-bold">{dummyUser.name}</p>
               <p>{dummyUser.role}</p>
               <p className="font-semibold">{dummyUser.college}</p>
-              <button className="w-32 h-8 bg-[#111E4B] text-white rounded-xl">Connect +</button>
+              <button className="w-32 h-8 bg-[#111E4B] flex justify-center items-center hover:bg-gray-400 text-white rounded-xl gap-3">Connect <FaPlus className=""/> </button>
               <p className="w-40 h-8 border-black border-2 bg-white rounded-2xl text-center">147 Connections</p>
             </div>
 
