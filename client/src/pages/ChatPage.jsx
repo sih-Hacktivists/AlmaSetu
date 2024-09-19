@@ -8,7 +8,7 @@ const ChatPage = () => {
         <div className="w-1/4 rounded-2xl border-[1px] border-black  h-[95%] px-2 mx-4">
         <Contact/>
         </div>
-        <div className="w-3/4 rounded-2xl border-[1px] border-black bg-red-300 h-[95%] mx-4">
+        <div className="w-3/4 rounded-2xl border-[1px] border-black h-[95%] mx-4">
         <ChatArea/>
         </div>
         </div>
