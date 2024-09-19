@@ -443,7 +443,8 @@ const updateProfilePic = asyncHandler(async (req, res) => {
 const getUserProfile = asyncHandler(async (req, res) => {
     const { userId } = req.params;
 
-    const user = await User.findById(userId).populate("events communities");
+    const user = await User.findById(userId);
+    // .populate("events communities");
 
     if (!user) {
         return res.status(404).json({ message: "User not found" });

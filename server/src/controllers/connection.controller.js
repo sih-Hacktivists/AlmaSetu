@@ -134,14 +134,13 @@ const isConnection = asyncHandler(async (req, res) => {
     const connection = await Connection.findOne({
         connectFrom: userId,
         connectTo: connectionId,
-        isAccepted: true,
     });
 
     if (!connection) {
-        return res.status(400).json({ message: "Not connected" });
+        return res.status(200).json(new ApiResponse(200, connection, "Not sent"));
     }
-
-    return res.status(200).json(new ApiResponse(200, connection, "Connected"));
+        
+    return res.status(200).json(new ApiResponse(200, connection, "Sent"));
 });
 
 const getConnections = asyncHandler(async (req, res) => {

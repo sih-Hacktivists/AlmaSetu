@@ -2,8 +2,12 @@ import { SearchBar } from "../components/SearchBar";
 import { MdEdit } from "react-icons/md";
 import { FaGithub } from "react-icons/fa";
 import { FaPlus } from "react-icons/fa";
+import { useEffect, useState, useLayoutEffect } from "react";
+import axios from "axios";
+import { API } from "../utils/api";
+import { useParams } from "react-router-dom";
 
-const Profile = ({ loggedInUser }) => {
+const UserProfile = ({ loggedInUser }) => {
   const dummyUser = {
     name: "Saahiti Tiwari",
     role: "Alumni",
@@ -48,6 +52,34 @@ const Profile = ({ loggedInUser }) => {
     college: "UEM,JAIPUR",
   };
 
+  const [userProfile, setUserProfile] = useState(null);
+  const [connection, setConnection] = useState(null);
+  const {userId} = useParams();
+
+  useEffect(() => {
+    (async () => {
+      try {
+        const response = await axios.get(`${API}/users/u/${userId}`);
+        console.log(response.data.data);
+        setUserProfile(response.data.data);
+      } catch (error) {
+        console.log(error);
+      }
+    })();
+  }, [])
+
+  useEffect(() => {
+    (async () => {
+      try {
+        const response = await axios.get(`${API}/connections/is-connection/${userId}`);
+        console.log(response.data);
+        setConnection(response.data);
+      } catch (error) {
+        console.log(error);
+      }
+    })();
+  }, [])
+
   return (
     <div className="flex flex-col justify-center items-center">
       <div className="w-[90vw]">
@@ -65,11 +97,31 @@ const Profile = ({ loggedInUser }) => {
           <div className="h-[100%] w-[20%] flex flex-col justify-between items-center p-4  border-black border-2 rounded-xl">
             <div className=" flex flex-col justify-center items-center gap-3">
 
-              <img src={loggedInUser && loggedInUser.profilePic}
+              <img src={userProfile && userProfile.profilePic}
                 className="w-32 h-32 rounded-full" alt="" />
-              <p className="text-2xl font-bold">{loggedInUser && loggedInUser.name}</p>
-              <p>{loggedInUser && loggedInUser.role[0].toUpperCase() + loggedInUser.role.slice(1)}</p>
-              <p className="font-semibold">{loggedInUser && loggedInUser.college}</p>
+              <p className="text-2xl font-bold">{userProfile && userProfile.name}</p>
+              <p>{userProfile && userProfile.role[0].toUpperCase() + userProfile.role.slice(1)}</p>
+              <p className="font-semibold">{userProfile && userProfile.college}</p>
+              {connection && 
+                connection.message == "Not sent" &&
+                (
+                  <button className="w-32 h-8 bg-[#111E4B] flex justify-center items-center hover:bg-gray-400 text-white rounded-xl gap-3">Connect <FaPlus className=""/> </button>
+                )
+              }
+              {connection && 
+                connection.message == "Sent" &&
+                connection.data.isAccepted &&
+                (
+                  <button className="w-32 h-8 flex justify-center items-center bg-gray-400 text-white rounded-xl gap-3" disabled>Connected</button>
+                )
+              }
+              {connection && 
+                connection.message == "Sent" &&
+                connection.data.isAccepted == false &&
+                (
+                  <button className="w-32 h-8 flex justify-center items-center bg-gray-400 text-white rounded-xl gap-3" disabled>Request sent</button>
+                )
+              }
               <p className="w-40 h-8 border-black border-2 bg-white rounded-2xl text-center">147 Connections</p>
             </div>
 
@@ -87,13 +139,13 @@ const Profile = ({ loggedInUser }) => {
             {/* Bio */}
             <div className="w-[100%] h-[30%] shadow-black shadow-sm rounded-2xl">
               <p className="text-xl h-[30%] flex justify-center items-center text-white bg-[#111E4B] text-center  rounded-t-2xl">Bio:</p>
-              <p className="p-2 h-[70%] flex justify-center items-center border-l-2 border-r-2 border-b-2 border-black rounded-b-2xl">{loggedInUser && loggedInUser.bio}</p>
+              <p className="p-2 h-[70%] flex justify-center items-center border-l-2 border-r-2 border-b-2 border-black rounded-b-2xl">{userProfile && userProfile.bio}</p>
             </div>
 
             <div className="w[90%] h-[30%] flex mt-4 justify-between items-center">
               <div className="w-[48%] h-[100%] border-l-2 shadow-black shadow-sm border-r-2 border-b-2 border-black rounded-2xl">
                 <p className="text-xl h-[30%] flex justify-center items-center text-white bg-[#111E4B] text-center  rounded-t-2xl">Experience</p>
-                <div className="p-4 h-[70%]  overflow-y-auto overflow-x-auto scrollbar-thumb-black mb-2 scrollbar-track-[#ECF7FE] scrollbar-thin scrollbar-corner-transparentjustify-center items-center ">
+                <div className="p-4 h-[70%]  overflow-y-auto overflow-x-auto scrollbar-thumb-black mb-2 scrollbar-track-[#ECF7FE] scrollbar-thin scrollbar-corner-transparent">
                   {dummyUser.workExperience.map((item, index) => (
                     <p key={index} className="flex justify-center items-center h-[100%] gap-3"><span className="font-semibold">{index + 1}.</span>{item}</p>
                   ))}
@@ -101,7 +153,7 @@ const Profile = ({ loggedInUser }) => {
               </div>
               <div className="w-[48%] h-[100%] border-l-2 shadow-black shadow-sm border-r-2 border-b-2 border-black rounded-2xl">
                 <p className="text-xl h-[30%] flex justify-center items-center text-white bg-[#111E4B] text-center  rounded-t-2xl">Achievements</p>
-                <div className="p-4 h-[70%]  overflow-y-auto overflow-x-auto scrollbar-thumb-black mb-2 scrollbar-track-[#ECF7FE] scrollbar-thin scrollbar-corner-transparentjustify-center items-center ">
+                <div className="p-4 h-[70%]  overflow-y-auto overflow-x-auto scrollbar-thumb-black mb-2 scrollbar-track-[#ECF7FE] scrollbar-thin scrollbar-corner-transparent">
                   {dummyUser.achievements.map((item, index) => (
                     <p key={index} className="flex justify-center items-center h-[100%] gap-3"><span className="font-semibold">{index + 1}.</span>{item}</p>
                   ))}
@@ -114,7 +166,7 @@ const Profile = ({ loggedInUser }) => {
                 <p className="text-xl h-[30%] flex justify-center items-center text-white bg-[#111E4B] text-center  rounded-t-2xl">Events</p>
                 <div className=" h-[70%] flex justify-center items-center">
                   <div className="w-[90%] h-[90%] overflow-y-auto overflow-x-auto scrollbar-thumb-black mb-2 scrollbar-track-[#ECF7FE] scrollbar-thin scrollbar-corner-transparent ">
-                    {loggedInUser && loggedInUser.skills.map((item, index) => (
+                    {userProfile && userProfile.skills.map((item, index) => (
                       <p key={index} className="flex justify-start items-center  gap-3"><span className="font-semibold">{index + 1}.</span>{item}</p>
                     ))}
                   </div>
@@ -138,4 +190,4 @@ const Profile = ({ loggedInUser }) => {
   );
 };
 
-export default Profile;
+export default UserProfile;

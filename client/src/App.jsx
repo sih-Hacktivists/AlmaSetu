@@ -20,7 +20,8 @@ import PanelDiscussion from "./pages/PanelDiscussion";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { API } from "./utils/api";
-import ChatPage from "./pages/ChatPAge";
+import ChatPage from "./pages/ChatPage";
+import UserProfile from "./pages/UserProfile";
 
 function AdminLayout() {
   const [loggedInAdmin, setLoggedInAdmin] = useState(null);
@@ -89,6 +90,10 @@ function UserLayout() {
               <Route
                 path="/:userId/verify-email/:token"
                 element={<VerificationPage />}
+              />
+              <Route
+                path="/u/:userId"
+                element={<UserProfile />}
               />
               <Route
                 path="/events"
