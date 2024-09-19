@@ -123,7 +123,7 @@ function ViewAll({ handleScroll, viewVisible }) {
   return (
     <div className="  text-slate-400 text-[14px]">
       <img
-        className="w-[30px] h-[30px] rounded-full bg-slate-300 hover:bg-slate-200 cursor-pointer"
+        className="w-[30px] h-[200px] rounded-full bg-slate-300 hover:bg-slate-200 cursor-pointer"
         src={viewVisible ?  LessIcon: GreaterIcon}
         alt="Scroll Button"
         onClick={handleScroll}
