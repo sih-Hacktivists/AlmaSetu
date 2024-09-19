@@ -121,3 +121,5 @@ export const userSideLinks = [
     title: "profile",
   },
 ];
+
+export const connectionsNavPage=[{title:"Connections",number:256},{title:"Pending",number:0},{title:"Pending Request",number:256}]
