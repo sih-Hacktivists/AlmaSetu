@@ -37,8 +37,6 @@ router.route("/register").post(
 router.route("/:userId/verify-email/:token").get(verifyEmail);
 router.route("/login").post(login);
 
-router.route("/u/:userId").get(getUserProfile);
-
 router.route("/check-email-or-phone").post(checkWhetherEmailOrPhoneExists);
 router.route("/check-enrollment").post(checkWhetherEnrollmentExists);
 
@@ -46,6 +44,7 @@ router.route("/check-enrollment").post(checkWhetherEnrollmentExists);
 router.route("/logout").post(verifyJWT, logout);
 router.route("/refresh-token").post(verifyJWT, refreshAccessToken);
 router.route("/change-password").post(verifyJWT, changeCurrentPassword);
+router.route("/u/:userId").get(verifyJWT, getUserProfile);
 router.route("/current").get(verifyJWT, getCurrentUser);
 router
     .route("/update-profile-pic")

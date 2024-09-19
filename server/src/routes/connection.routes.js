@@ -2,7 +2,7 @@ import {
     createConnection,
     acceptConnection,
     rejectConnection,
-    isConnection,
+    connectionStatus,
     getConnections,
     getPendingRequests,
     getPendingApprovals,
@@ -13,12 +13,12 @@ const router = Router();
 
 router.use(verifyJWT);
 
-router.post("/create/:connectionId", createConnection);
-router.put("/accept/:connectionId", acceptConnection);
-router.delete("/reject/:connectionId", rejectConnection);
-router.get("/is-connection/:connectionId", isConnection);
-router.get("/", getConnections);
-router.get("/pending-requests", getPendingRequests);
-router.get("/pending-approvals", getPendingApprovals);
+router.route("/create/:connectionId").post(createConnection);
+router.route("/accept/:connectionId").put(acceptConnection);
+router.route("/reject/:connectionId").delete(rejectConnection);
+router.route("/is-connection/:connectionId").get(connectionStatus);
+router.route("/").get(getConnections);
+router.route("/pending-requests").get(getPendingRequests);
+router.route("/pending-approvals").get(getPendingApprovals);
 
 export default router;

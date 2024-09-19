@@ -30,7 +30,7 @@ export const YourEvents = () => {
                 <div className="hidden md:block">
                 {length >= 2 ? <EventCard event={events[(ind + 1) % length]} /> : ""}
                 </div>
-                <div className="hidden 2xl:block">
+                <div className="hidden xl:block">
                 {length >= 3 ? <EventCard event={events[(ind + 2) % length]} /> : ""}
                 </div>
             </div>
@@ -47,7 +47,7 @@ export const YourEvents = () => {
 
 function EventCard({ event }) {
     return (
-        <div className="relative w-[600px] h-40 md:w-[450px] 2xl:w-96  2xl:h-40 bg-url[(event.image)] rounded-2xl  drop-shadow-xl  shadow-slate-400 shadow-md border-black border-2"
+        <div className="relative w-[600px] h-[200px] xl:h-40 xl:w-96 2xl:w-96  2xl:h-40 bg-url[(event.image)] rounded-2xl  drop-shadow-xl  shadow-slate-400 shadow-md border-black border-2"
         style={{ backgroundImage: `url(${event.image})`, backgroundSize: 'cover', backgroundPosition: 'center' }}>
             <div className="absolute text-center text-orange-500    top-0 right-6 rounded-b-2xl  w-[60px] h-[60px] bg-[#111E4B]">
                 <div className="font-bold text-xl">
