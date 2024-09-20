@@ -94,7 +94,7 @@ const TabsSection = () => {
 
 const Table = ({ tab , status }) => {
   return (
-    <div className=" px-4 lg:px-10 border-2 border-black rounded-2xl h-full  relative  overflow-y-auto overflow-x-hidden">
+    <div className=" px-4 lg:px-10 border-2 border-black rounded-2xl h-full  relative  overflow-y-auto overflow-x-auto">
       <FilterAndSearch />
       <div className="mt-20  max-h-[calc(100vh-150px)] lg:max-h-screen scrollbar-custom pr-2">
         {tab && <p className="text-blue-500 text-center">{tab}</p>}
