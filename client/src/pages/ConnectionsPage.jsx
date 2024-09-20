@@ -52,7 +52,7 @@ const ConnectionsPage = () => {
                     return (
                       <div
                         key={index}
-                        className="flex-none w-[18%] h-full bg-white rounded-lg border border-black py-2"
+                        className="flex-none w-[18%] h-full bg-white rounded-2xl border border-black py-2"
                       >
                         <div className="flex flex-col items-center gap-3 max-2xl:gap-0 justify-center h-full">
                           <img
