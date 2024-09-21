@@ -18,15 +18,18 @@ import Profile from "./pages/Profile";
 import AdminRegister from "./pages/AdminRegister";
 import PanelDiscussion from "./pages/PanelDiscussion";
 import LandingPage from "./pages/LandingPage"
-import { useEffect, useState } from "react";
+import { useEffect, useState, useLayoutEffect } from "react";
 import axios from "axios";
 import { API } from "./utils/api";
+import ChatPage from "./pages/ChatPAge";
+import ConnectionsPage from "./pages/ConnectionsPage"
+import UserProfile from "./pages/UserProfile";
 
 function AdminLayout() {
   const [loggedInAdmin, setLoggedInAdmin] = useState(null);
   const navigate = useNavigate();
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     (async () => {
       try {
         const response = await axios.get(`${API}/admin/current`);
@@ -58,7 +61,7 @@ function UserLayout() {
   const [loggedInUser, setLoggedInUser] = useState(null);
   const navigate = useNavigate();
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     (async () => {
       try {
         const response = await axios.get(`${API}/users/current`);
@@ -90,6 +93,7 @@ function UserLayout() {
                 path="/:userId/verify-email/:token"
                 element={<VerificationPage />}
               />
+              <Route path="/u/:userId" element={<UserProfile />} />
               <Route
                 path="/events"
                 element={<Events loggedInUser={loggedInUser} />}
@@ -101,6 +105,26 @@ function UserLayout() {
               <Route
                 path="/profile"
                 element={<Profile loggedInUser={loggedInUser} />}
+              />
+              <Route
+                path="/panel"
+                element={<PanelDiscussion loggedInUser={loggedInUser} />}
+              />
+              <Route
+                path="/chats"
+                element={<ChatPage loggedInUser={loggedInUser} />}
+              />
+              <Route
+                path="/connections"
+                element={<ConnectionsPage loggedInUser={loggedInUser} />}
+              />
+              <Route
+                path="/panel"
+                element={<PanelDiscussion loggedInUser={loggedInUser} />}
+              />
+              <Route
+                path="/chats"
+                element={<ChatPage loggedInUser={loggedInUser} />}
               />
             </Routes>
           </div>

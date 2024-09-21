@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
 import { useRef, useState } from "react";
-import GreaterIcon from "../assets/Chevright.svg";
-import LessIcon from "../assets/ChevLeft.svg";
+import GreaterIcon from "../assets/chevright.svg";
+import LessIcon from "../assets/chevleft.svg";
 
 let dates2 = [
   {

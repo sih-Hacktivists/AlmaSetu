@@ -66,9 +66,9 @@ export const Connections = () => {
 
         {/* See More Button */}
         <div className="flex justify-center  pb-2 "> {/* Adjusted margin for better spacing */}
-          <button className="text-[#00000080] font-normal text-sm rounded-lg hover:underline">
+          <Link to={"/users/connections"} className="text-[#00000080] font-normal text-sm rounded-lg hover:underline">
             See more
-          </button>
+          </Link>
         </div>
       </div>
     </div>

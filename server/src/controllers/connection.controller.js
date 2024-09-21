@@ -37,7 +37,7 @@ const createConnection = asyncHandler(async (req, res) => {
         .json(
             new ApiResponse(
                 200,
-                connection,
+                { connection, message: "Sent" },
                 "Connection request created successfully"
             )
         );
@@ -127,21 +127,32 @@ const rejectConnection = asyncHandler(async (req, res) => {
         );
 });
 
-const isConnection = asyncHandler(async (req, res) => {
+const connectionStatus = asyncHandler(async (req, res) => {
     const { connectionId } = req.params;
     const userId = req.user._id;
 
     const connection = await Connection.findOne({
-        connectFrom: userId,
-        connectTo: connectionId,
-        isAccepted: true,
+        $or: [
+            { connectFrom: connectionId, connectTo: userId },
+            { connectFrom: userId, connectTo: connectionId },
+        ],
     });
 
     if (!connection) {
-        return res.status(400).json({ message: "Not connected" });
+        return res
+            .status(200)
+            .json(
+                new ApiResponse(
+                    200,
+                    { connection, message: "Not Sent" },
+                    "Not Sent"
+                )
+            );
     }
 
-    return res.status(200).json(new ApiResponse(200, connection, "Connected"));
+    return res
+        .status(200)
+        .json(new ApiResponse(200, { connection, message: "Sent" }, "Sent"));
 });
 
 const getConnections = asyncHandler(async (req, res) => {
@@ -205,7 +216,7 @@ export {
     createConnection,
     acceptConnection,
     rejectConnection,
-    isConnection,
+    connectionStatus,
     getConnections,
     getPendingRequests,
     getPendingApprovals,

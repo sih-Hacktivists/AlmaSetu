@@ -34,8 +34,11 @@ export default function Events() {
                 <div className="bg-[#0F1035] rounded-t-md text-white flex items-center justify-center text-xl h-14">
                     Recommended Events For You
                 </div>
-                <div className="flex flex-col gap-20 row-span-3 p-2 scrollbar-custom overflow-x-auto">
+                <div className=" w-full flex justify-center items-center h-full">
+                    <div className='h-[90%] w-full px-2'>
                     <TopEvents />
+                    </div>
+                        
                 </div>
             </div>
 
