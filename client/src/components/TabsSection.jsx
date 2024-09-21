@@ -87,19 +87,17 @@ const Table = ({
       <FilterAndSearch />
       <div className="mt-20 max-h-[calc(100vh-150px)] lg:max-h-screen scrollbar-custom pr-2">
         {users?.map((user) => (
-          <Link to={`../../users/u/${user.user._id}`} key={user.connectionId}>
-            <TableRow
-              key={user.connectionId}
-              connectionId={user.connectionId}
-              userId={user.user._id}
-              name={user.user.name}
-              profilePic={user.user.profilePic}
-              title={status}
-              setUserConnections={setUserConnections}
-              setPendingApprovals={setPendingApprovals}
-              setIsChanged={setIsChanged}
-            />
-          </Link>
+          <TableRow
+            key={user.connectionId}
+            connectionId={user.connectionId}
+            userId={user.user._id}
+            name={user.user.name}
+            profilePic={user.user.profilePic}
+            title={status}
+            setUserConnections={setUserConnections}
+            setPendingApprovals={setPendingApprovals}
+            setIsChanged={setIsChanged}
+          />
         ))}
       </div>
     </div>
@@ -178,12 +176,17 @@ const TableRow = ({
 
   return (
     <div className="w-full border-2 border-slate-900 rounded-3xl flex justify-between items-center px-2 py-2 my-2">
-      <div className="flex justify-items-start items-center gap-2">
-        <img className="w-10 h-10 rounded-full" src={profilePic} alt="ppic" />
-        <div className="flex items-baseline gap-2 text-md font-normal">
-          {name}
+      <Link
+        to={`../../users/u/${userId}`}
+        className="flex items-center gap-2 w-full"
+      >
+        <div className="flex justify-items-start items-center gap-2">
+          <img className="w-10 h-10 rounded-full" src={profilePic} alt="ppic" />
+          <div className="flex items-baseline gap-2 text-md font-normal">
+            {name}
+          </div>
         </div>
-      </div>
+      </Link>
       {title === "pending" ? ( // Update condition here
         <div className="flex gap-5 items-center">
           <div
