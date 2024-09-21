@@ -43,16 +43,16 @@ const ConnectionsPage = () => {
           <div className="h-1/3 w-full border rounded-2xl border-slate-700 px-4">
             <div className="flex flex-col justify-between h-full w-full">
               <p className="px-2 py-2 text-xl font-bold">Recommended Connections</p>
-              <div className="relative h-[80%] flex items-center py-2">
+              <div className="relative h-3/4 flex items-center py-2">
                 <div
                   ref={scrollConatinerRef}
-                  className="w-full flex items-center gap-5 overflow-x-hidden"
+                  className=" k w-full h-full flex items-center gap-5 overflow-x-hidden"
                 >
                   {users.slice(0, 10).map((user, index) => {
                     return (
                       <div
                         key={index}
-                        className="flex-none w-[18%] h-full bg-white rounded-2xl border border-black py-2"
+                        className=" flex-none w-[18%] h-full bg-white rounded-2xl border border-black py-3"
                       >
                         <div className="flex flex-col items-center gap-3 max-2xl:gap-0 justify-center h-full">
                           <img
