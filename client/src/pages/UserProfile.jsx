@@ -2,7 +2,7 @@ import { SearchBar } from "../components/SearchBar";
 import { MdEdit } from "react-icons/md";
 import { FaGithub } from "react-icons/fa";
 import { FaPlus } from "react-icons/fa";
-import { useState, useLayoutEffect } from "react";
+import { useState, useLayoutEffect, useEffect } from "react";
 import axios from "axios";
 import { API } from "../utils/api";
 import { useNavigate, useParams } from "react-router-dom";
@@ -146,14 +146,19 @@ const UserProfile = () => {
               <p className="font-semibold">
                 {userProfile && userProfile.college}
               </p>
-              {connection && connection.message == "Not Sent" && (
-                <button
-                  className="w-32 h-8 bg-[#111E4B] flex justify-center items-center hover:bg-gray-400 text-white rounded-xl gap-3"
-                  onClick={handleConnect}
-                >
-                  Connect <FaPlus className="" />{" "}
-                </button>
-              )}
+              {connection &&
+                connection.message == "Not Sent" &&
+                !(
+                  currentUser.role == "student" &&
+                  userProfile?.role == "student"
+                ) && (
+                  <button
+                    className="w-32 h-8 bg-[#111E4B] flex justify-center items-center hover:bg-gray-400 text-white rounded-xl gap-3"
+                    onClick={handleConnect}
+                  >
+                    Connect <FaPlus className="" />{" "}
+                  </button>
+                )}
               {connection &&
                 connection.message == "Sent" &&
                 connection.connection.isAccepted && (
