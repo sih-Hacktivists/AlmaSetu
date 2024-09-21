@@ -161,6 +161,20 @@ const getConnections = asyncHandler(async (req, res) => {
     const connections = await Connection.find({
         isAccepted: true,
         $or: [{ connectFrom: userId }, { connectTo: userId }],
+    }).populate("connectFrom connectTo", "name email role profilePic");
+
+    const userConnections = connections.map((connection) => {
+        if (connection.connectFrom._id.equals(userId)) {
+            return {
+                connectionId: connection._id,
+                user: connection.connectTo,
+            };
+        } else {
+            return {
+                connectionId: connection._id,
+                user: connection.connectFrom,
+            };
+        }
     });
 
     return res
@@ -168,7 +182,7 @@ const getConnections = asyncHandler(async (req, res) => {
         .json(
             new ApiResponse(
                 200,
-                connections,
+                userConnections,
                 "Connections fetched successfully"
             )
         );
@@ -180,6 +194,13 @@ const getPendingRequests = asyncHandler(async (req, res) => {
     const connections = await Connection.find({
         isAccepted: false,
         connectFrom: userId,
+    }).populate("connectTo", "name email role profilePic");
+
+    const userPendingRequests = connections.map((connection) => {
+        return {
+            connectionId: connection._id,
+            user: connection.connectTo,
+        };
     });
 
     return res
@@ -187,7 +208,7 @@ const getPendingRequests = asyncHandler(async (req, res) => {
         .json(
             new ApiResponse(
                 200,
-                connections,
+                userPendingRequests,
                 "Pending Requests connections fetched successfully"
             )
         );
@@ -199,6 +220,13 @@ const getPendingApprovals = asyncHandler(async (req, res) => {
     const connections = await Connection.find({
         isAccepted: false,
         connectTo: userId,
+    }).populate("connectFrom", "name email role profilePic");
+
+    const userPendingApprovals = connections.map((connection) => {
+        return {
+            connectionId: connection._id,
+            user: connection.connectFrom,
+        };
     });
 
     return res
@@ -206,7 +234,7 @@ const getPendingApprovals = asyncHandler(async (req, res) => {
         .json(
             new ApiResponse(
                 200,
-                connections,
+                userPendingApprovals,
                 "Pending Approvals connections fetched successfully"
             )
         );

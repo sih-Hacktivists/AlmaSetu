@@ -5,9 +5,9 @@ import { FaPlus } from "react-icons/fa";
 import { useState, useLayoutEffect } from "react";
 import axios from "axios";
 import { API } from "../utils/api";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
-const UserProfile = ({ loggedInUser }) => {
+const UserProfile = () => {
   const dummyUser = {
     name: "Saahiti Tiwari",
     role: "Alumni",
@@ -54,13 +54,27 @@ const UserProfile = ({ loggedInUser }) => {
 
   const [userProfile, setUserProfile] = useState(null);
   const [connection, setConnection] = useState(null);
+  const [currentUser, setCurrentUser] = useState(null);
   const { userId } = useParams();
+  const navigate = useNavigate();
+
+  useLayoutEffect(() => {
+    const getCurrentUser = async () => {
+      try {
+        const response = await axios.get(`${API}/users/current`);
+        setCurrentUser(response.data.data);
+      } catch (error) {
+        console.log;
+      }
+    };
+
+    getCurrentUser();
+  }, [userId]);
 
   useLayoutEffect(() => {
     const fetchUserProfile = async () => {
       try {
         const response = await axios.get(`${API}/users/u/${userId}`);
-        console.log(response.data.data);
         setUserProfile(response.data.data);
       } catch (error) {
         console.log(error);
@@ -85,6 +99,11 @@ const UserProfile = ({ loggedInUser }) => {
 
     checkConnection();
   }, [userId]);
+
+  if (userProfile?._id == currentUser?._id) {
+    navigate("/users/profile");
+    return;
+  }
 
   const handleConnect = async () => {
     try {
