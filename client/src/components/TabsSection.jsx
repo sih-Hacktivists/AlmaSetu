@@ -2,81 +2,59 @@ import { useState } from "react";
 import { connectionsNavPage } from "../assets/Constant";
 import SearchIcon from "../assets/searchIcon.svg";
 import SortIcon from "../assets/sortIcon.svg";
+import axios from "axios";
+import { API } from "../utils/api";
+import { Link } from "react-router-dom";
 
-const initialUsers = [
-  {
-    _id: "001",
-    name: "John Doe",
-    status: "pending",
-    profilePic: "https://randomuser.me/api/portraits/men/1.jpg",
-    title: "Final Year Project",
-    document: "https://example.com/docs/final_year_project.pdf",
-  },
-  {
-    _id: "002",
-    name: "Jane Smith",
-    status: "pending request",
-    profilePic: "https://randomuser.me/api/portraits/women/2.jpg",
-    title: "Thesis Paper",
-    document: "https://example.com/docs/thesis_paper.pdf",
-  },
-  {
-    _id: "003",
-    name: "Mark Johnson",
-    status: "connections",
-    profilePic: "https://randomuser.me/api/portraits/men/3.jpg",
-    title: "Research Proposal",
-    document: "https://example.com/docs/research_proposal.pdf",
-  },
-  {
-    _id: "004",
-    name: "Emily Davis",
-    status: "pending",
-    profilePic: "https://randomuser.me/api/portraits/women/4.jpg",
-    title: "Capstone Project",
-    document: "https://example.com/docs/capstone_project.pdf",
-  },
-  {
-    _id: "005",
-    name: "Michael Brown",
-    status: "pending request",
-    profilePic: "https://randomuser.me/api/portraits/men/5.jpg",
-    title: "Internship Report",
-    document: "https://example.com/docs/internship_report.pdf",
-  },
-];
-
-const TabsSection = () => {
+const TabsSection = ({
+  userConnections,
+  setUserConnections,
+  pendingApprovals,
+  setPendingApprovals,
+  pendingRequests,
+  setIsChanged,
+}) => {
   const [tab, setTab] = useState("Connections");
-  const [users, setUsers] = useState(initialUsers);
-
-  const updateUserStatus = (userId, newStatus) => {
-    setUsers((prevUsers) =>
-      prevUsers.map((user) =>
-        user._id === userId ? { ...user, status: newStatus } : user
-      )
-    );
-  };
 
   const renderTable = () => {
     switch (tab) {
       case "Connections":
-        return <Table users={users} status={tab.toLowerCase()} onApprove={updateUserStatus} />;
+        return (
+          <Table
+            users={userConnections}
+            status={tab.toLowerCase()}
+            setIsChanged={setIsChanged}
+          />
+        );
       case "Pending":
-        return <Table users={users} status={tab.toLowerCase()} onApprove={updateUserStatus} />;
+        return (
+          <Table
+            users={pendingApprovals}
+            status={tab.toLowerCase()}
+            setIsChanged={setIsChanged}
+            setUserConnections={setUserConnections}
+            setPendingApprovals={setPendingApprovals}
+          />
+        );
       default:
-        return <Table users={users} status={tab.toLowerCase()} onApprove={updateUserStatus} />;
+        return (
+          <Table
+            users={pendingRequests}
+            status={tab.toLowerCase()}
+            setIsChanged={setIsChanged}
+          />
+        );
     }
   };
-
-  const connectionsCount = users.filter(user => user.status === "connections").length;
-  const pendingCount = users.filter(user => user.status === "pending").length + users.filter(user => user.status === "pending request").length;
 
   return (
     <div className="flex flex-col gap-5 h-full justify-between">
       <div className="flex h-[10%] max-w-screen-sm gap-5 items-center">
-        {connectionsNavPage.map((nav, index) => {
-          const count = nav.title === "Connections" ? connectionsCount : pendingCount;
+        {connectionsNavPage?.map((nav, index) => {
+          let count = nav.title === "Connections" ? userConnections?.length : 0;
+          count = nav.title === "Pending" ? pendingApprovals?.length : count;
+          count =
+            nav.title === "Pending Requests" ? pendingRequests?.length : count;
           return (
             <div
               key={index}
@@ -87,7 +65,7 @@ const TabsSection = () => {
                 tab === nav.title ? "bg-[#111E4B] text-white" : "bg-[#FFFFFF]"
               } border border-slate-600 hover:bg-[#111E4B] hover:text-white`}
             >
-              {count > 0 && count} {nav.title}
+              {nav.title} ({count})
             </div>
           );
         })}
@@ -97,22 +75,29 @@ const TabsSection = () => {
   );
 };
 
-const Table = ({ users, status, onApprove }) => {
+const Table = ({
+  users,
+  status,
+  setUserConnections,
+  setPendingApprovals,
+  setIsChanged,
+}) => {
   return (
     <div className="px-4 lg:px-10 border-2 border-black rounded-2xl h-full relative overflow-x-hidden overflow-y-auto">
       <FilterAndSearch />
       <div className="mt-20 max-h-[calc(100vh-150px)] lg:max-h-screen scrollbar-custom pr-2">
-        {users.map((user, index) => (
-          user.status === status && (
-            <TableRow
-              key={user._id}
-              name={user.name}
-              profilePic={user.profilePic}
-              title={user.status}
-              onApprove={() => onApprove(user._id, "connections")}
-              onReject={() => console.log("Reject clicked")}
-            />
-          )
+        {users?.map((user) => (
+          <TableRow
+            key={user.connectionId}
+            connectionId={user.connectionId}
+            userId={user.user._id}
+            name={user.user.name}
+            profilePic={user.user.profilePic}
+            title={status}
+            setUserConnections={setUserConnections}
+            setPendingApprovals={setPendingApprovals}
+            setIsChanged={setIsChanged}
+          />
         ))}
       </div>
     </div>
@@ -146,24 +131,77 @@ function FilterAndSearch() {
   );
 }
 
-const TableRow = ({ name, profilePic, title, onApprove, onReject }) => {
+const TableRow = ({
+  connectionId,
+  userId,
+  name,
+  profilePic,
+  title,
+  setUserConnections,
+  setPendingApprovals,
+  setIsChanged,
+}) => {
+  const onApprove = async (connectionId) => {
+    try {
+      const response = await axios.put(
+        `${API}/connections/accept/${connectionId}`
+      );
+      if (response.status === 200) {
+        setPendingApprovals((prevUsers) =>
+          prevUsers.filter((user) => user._id !== userId)
+        );
+        setUserConnections((prevUsers) => [...prevUsers, response.data.data]);
+        setIsChanged((prev) => !prev);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const onReject = async (connectionId) => {
+    try {
+      const response = await axios.delete(
+        `${API}/connections/reject/${connectionId}`
+      );
+      if (response.status === 200) {
+        setPendingApprovals((prevUsers) =>
+          prevUsers.filter((user) => user._id !== userId)
+        );
+        setIsChanged((prev) => !prev);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <div className="w-full border-2 border-slate-900 rounded-3xl flex justify-between items-center px-2 py-2 my-2">
-      <div className="flex justify-items-start items-center gap-2">
-        <img className="w-10 h-10 rounded-full" src={profilePic} alt="ppic" />
-        <div className="flex items-baseline gap-2 text-md font-normal">{name}</div>
-      </div>
-      {title === "pending" || title === "pending request" ? ( // Update condition here
+      <Link
+        to={`../../users/u/${userId}`}
+        className="flex items-center gap-2 w-full"
+      >
+        <div className="flex justify-items-start items-center gap-2">
+          <img className="w-10 h-10 rounded-full" src={profilePic} alt="ppic" />
+          <div className="flex items-baseline gap-2 text-md font-normal">
+            {name}
+          </div>
+        </div>
+      </Link>
+      {title === "pending" ? ( // Update condition here
         <div className="flex gap-5 items-center">
           <div
             className="hover:border-orange-400 rounded-2xl border-2 bg-green-600 text-white px-4 py-2 font-medium cursor-pointer"
-            onClick={onApprove} // Approve the user
+            onClick={() => {
+              onApprove(connectionId);
+            }} // Approve the user
           >
             Accept
           </div>
           <div
             className="rounded-2xl border-2 border-red-700 text-red-500 hover:bg-red-400 hover:text-white px-5 py-2 font-medium cursor-pointer"
-            onClick={onReject} // Reject the user
+            onClick={() => {
+              onReject(connectionId);
+            }} // Reject the user
           >
             Reject
           </div>
@@ -172,6 +210,5 @@ const TableRow = ({ name, profilePic, title, onApprove, onReject }) => {
     </div>
   );
 };
-
 
 export default TabsSection;
