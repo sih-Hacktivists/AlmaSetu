@@ -17,6 +17,7 @@ import SuperAdmin from "./pages/SuperAdmin";
 import Profile from "./pages/Profile";
 import AdminRegister from "./pages/AdminRegister";
 import PanelDiscussion from "./pages/PanelDiscussion";
+import LandingPage from "./pages/LandingPage"
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { API } from "./utils/api";
@@ -101,7 +102,6 @@ function UserLayout() {
                 path="/profile"
                 element={<Profile loggedInUser={loggedInUser} />}
               />
-              <Route path="/panel" element={<PanelDiscussion loggedInUser={loggedInUser} />} />
             </Routes>
           </div>
         </div>
@@ -120,6 +120,7 @@ function App() {
       <Route path="/admin/*" element={<AdminLayout />} />
       <Route path="/admin/login" element={<AdminLogin />} />
       <Route path="/admin/register" element={<AdminRegister />} />
+      <Route path="/" element={<LandingPage/>} />
       <Route path="/*" element={<NotFound />} />
       <Route path="/superadmin/dashboard" element={<SuperAdmin />} />
     </Routes>
