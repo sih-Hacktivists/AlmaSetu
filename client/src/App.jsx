@@ -20,8 +20,8 @@ import PanelDiscussion from "./pages/PanelDiscussion";
 import { useEffect, useState, useLayoutEffect } from "react";
 import axios from "axios";
 import { API } from "./utils/api";
-import ChatPage from "./pages/ChatPAge";
-import ConnectionsPage from "./pages/ConnectionsPage"
+import ChatPage from "./pages/ChatPage";
+import ConnectionsPage from "./pages/ConnectionsPage";
 import UserProfile from "./pages/UserProfile";
 
 function AdminLayout() {
