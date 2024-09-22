@@ -88,7 +88,7 @@ const ConnectionsPage = ({ loggedInUser }) => {
     <div className="fixed h-screen w-full">
       <div className="h-full w-full flex justify-center items-center">
         <div className="flex flex-col gap-5 h-[90%] w-[85%]">
-          <div className="h-2/3 w-full rounded-2xl">
+          <div className="h-[60%] w-full rounded-2xl">
             <TabsSection
               userConnections={userConnections}
               setUserConnections={setUserConnections}
@@ -98,7 +98,7 @@ const ConnectionsPage = ({ loggedInUser }) => {
               setIsChanged={setIsChanged}
             />
           </div>
-          <div className="h-1/3 w-full border rounded-2xl border-slate-700 px-4">
+          <div className="h-[40%] w-full border rounded-2xl border-slate-700 px-4">
             <div className="flex flex-col justify-between h-full w-full">
               <p className="px-2 py-2 text-xl font-bold">
                 Recommended Connections
@@ -106,24 +106,23 @@ const ConnectionsPage = ({ loggedInUser }) => {
               <div className="relative h-3/4 flex items-center py-2">
                 <div
                   ref={scrollConatinerRef}
-                  className=" k w-full h-full flex items-center gap-5 overflow-x-hidden"
+                  className=" w-full h-full flex  items-center gap-5 overflow-x-hidden"
                 >
                   {users.slice(0, 10).map((user, index) => {
                     return (
                       <div
                         key={index}
-                        className=" flex-none w-[18%] h-full bg-white rounded-2xl border border-black py-3"
+                        className="bg-white flex flex-col items-center justify-center gap-1 flex-none  w-[18%] h-full  rounded-2xl border border-black py-3"
                       >
-                        <div className="flex flex-col items-center gap-3 max-2xl:gap-0 justify-center h-full">
                           <img
-                            className="object-cover rounded-full size-16 max-2xl:size-9"
+                            className="object-cover rounded-full size-10 "
                             src={user.profilePic}
                             alt=""
                           />
-                          <p className="font-semibold text-2xl max-2xl:text-base">
+                          <p className="font-semibold text-base">
                             {user.name}
                           </p>
-                          <p className="text-sm max-2xl:text-[8px]">
+                          <p className="text-[10px]">
                             {user.role}
                           </p>
                           <p className="text-[14px]">
@@ -134,12 +133,11 @@ const ConnectionsPage = ({ loggedInUser }) => {
                           </p>
                           <div
                             onClick={() => handleConnectClick(index)} // Call the handler with the current index
-                            className="font-bold text-center flex items-center px-4 py-1 text-white rounded-full bg-[#111E4B] cursor-pointer"
+                            className="text-sm font-bold text-center flex items-center px-4 py-1 text-white rounded-full bg-[#111E4B] cursor-pointer"
                           >
                             {connectedUsers[index] ? "✔️ " : "+ "} Connect
                           </div>
                         </div>
-                      </div>
                     );
                   })}
                 </div>
