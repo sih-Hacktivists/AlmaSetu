@@ -117,7 +117,7 @@ const UserProfile = () => {
   return (
     <div className="flex flex-col justify-center items-center">
       <div className="w-[90vw]">
-        <SearchBar showProfile={true} showSearch={true} />
+        <SearchBar showProfile={false} showSearch={true} />
       </div>
 
       <div className="w-[90vw] h-[90vh] border-2 flex items-center border-black rounded-xl p-4">
