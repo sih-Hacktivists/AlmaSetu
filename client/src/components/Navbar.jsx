@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { logo, lock, hamburgerMenu, close } from "../assets";
+import { Link } from "react-router-dom";
 
 const Navbar = () => {
   const [toggle, setToggle] = useState(false);
@@ -28,42 +29,16 @@ const Navbar = () => {
         </div>
 
         <div className="hidden md:flex">
-          <button className="flex justify-between items-center  bg-transparent  px-9 gap-2">
-            <img src={lock} />
-            Login
-          </button>
-          <button className="px-6 py-3 rounded-md bg-[#20B486] text-white font-bold">
-            Sign Up For Free
-          </button>
+          <Link to="/login">
+            <button className="px-6 py-3 rounded-md bg-[#20B486] text-white font-bold">
+              Log In
+            </button>
+          </Link>
         </div>
 
         <div className="md:hidden" onClick={handleClick}>
           <img src={toggle ? close : hamburgerMenu} />
         </div>
-      </div>
-
-      <div
-        className={
-          toggle
-            ? "absolute z-10 p-4  bg-white w-full px-8 md:hidden border-b"
-            : "hidden"
-        }
-      >
-        <ul>
-          <li className="p-4 hover:bg-gray-100 ">Home</li>
-          <li className="p-4 hover:bg-gray-100">About</li>
-          <li className="p-4 hover:bg-gray-100">Support</li>
-          <li className="p-4 hover:bg-gray-100">FAQ</li>
-          <div className="flex flex-col my-4 gap-4">
-            <button className="border border-[20B486] flex justify-center items-center  bg-transparent  px-6 gap-2 py-4">
-              <img src={lock} />
-              Login
-            </button>
-            <button className="px-8 py-4 rounded-md bg-[#0ecc90] text-white font-bold transition duration-300 hover:bg-[#002a1c]">
-              Sign Up For Free
-            </button>
-          </div>
-        </ul>
       </div>
     </div>
   );
