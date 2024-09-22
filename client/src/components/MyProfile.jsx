@@ -44,7 +44,7 @@ export const MyProfile = ({ user }) => {
           </div>
 
           <div className="font-light flex flex-col items-center w-full">
-            <div className="text-4xl max-2xl:text-sm  font-semibold text-center">
+            <div className="text-2xl max-2xl:text-sm  font-semibold text-center">
               Profile Performance
             </div>
             <ul className="list-disc list-inside text-xs mt-4 3xl:text-2xl">

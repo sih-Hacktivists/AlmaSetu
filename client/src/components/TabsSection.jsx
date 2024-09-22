@@ -65,7 +65,7 @@ const TabsSection = ({
                 tab === nav.title ? "bg-[#111E4B] text-white" : "bg-[#FFFFFF]"
               } border border-slate-600 hover:bg-[#111E4B] hover:text-white`}
             >
-              {nav.title} ({count})
+              {nav.title} {count > 0 ? `(${count})` : null}
             </div>
           );
         })}
