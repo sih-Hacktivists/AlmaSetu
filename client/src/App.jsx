@@ -17,13 +17,14 @@ import SuperAdmin from "./pages/SuperAdmin";
 import Profile from "./pages/Profile";
 import AdminRegister from "./pages/AdminRegister";
 import PanelDiscussion from "./pages/PanelDiscussion";
-import LandingPage from "./pages/LandingPage"
-import { useEffect, useState, useLayoutEffect } from "react";
+import LandingPage from "./pages/LandingPage";
+import { useState, useLayoutEffect } from "react";
 import axios from "axios";
 import { API } from "./utils/api";
 import ChatPage from "./pages/ChatPage";
 import ConnectionsPage from "./pages/ConnectionsPage";
 import UserProfile from "./pages/UserProfile";
+import MentorShip from "./pages/MentorShip";
 
 function AdminLayout() {
   const [loggedInAdmin, setLoggedInAdmin] = useState(null);
@@ -126,6 +127,10 @@ function UserLayout() {
                 path="/chats"
                 element={<ChatPage loggedInUser={loggedInUser} />}
               />
+              <Route
+                path="/mentorship"
+                element={<MentorShip loggedInUser={loggedInUser} />}
+              />
             </Routes>
           </div>
         </div>
@@ -144,7 +149,7 @@ function App() {
       <Route path="/admin/*" element={<AdminLayout />} />
       <Route path="/admin/login" element={<AdminLogin />} />
       <Route path="/admin/register" element={<AdminRegister />} />
-      <Route path="/" element={<LandingPage/>} />
+      <Route path="/" element={<LandingPage />} />
       <Route path="/*" element={<NotFound />} />
       <Route path="/superadmin/dashboard" element={<SuperAdmin />} />
     </Routes>
