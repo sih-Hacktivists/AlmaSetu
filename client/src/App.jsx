@@ -150,6 +150,7 @@ function App() {
       <Route path="/admin/login" element={<AdminLogin />} />
       <Route path="/admin/register" element={<AdminRegister />} />
       <Route path="/" element={<LandingPage />} />
+      <Route path="/" element={<LandingPage />} />
       <Route path="/*" element={<NotFound />} />
       <Route path="/superadmin/dashboard" element={<SuperAdmin />} />
     </Routes>

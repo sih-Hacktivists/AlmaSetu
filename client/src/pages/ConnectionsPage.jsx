@@ -99,7 +99,7 @@ const ConnectionsPage = ({ loggedInUser }) => {
             />
           </div>
           <div className="h-[40%] w-full border rounded-2xl border-slate-700 px-4">
-            <div className="flex flex-col justify-between h-full w-full">
+            <div className="flex flex-col justify-center h-full w-full">
               <p className="px-2 py-2 text-xl font-bold">
                 Recommended Connections
               </p>
@@ -114,35 +114,31 @@ const ConnectionsPage = ({ loggedInUser }) => {
                         key={index}
                         className="bg-white flex flex-col items-center justify-center gap-1 flex-none  w-[18%] h-full  rounded-2xl border border-black py-3"
                       >
-                          <img
-                            className="object-cover rounded-full size-10 "
-                            src={user.profilePic}
-                            alt=""
-                          />
-                          <p className="font-semibold text-base">
-                            {user.name}
-                          </p>
-                          <p className="text-[10px]">
-                            {user.role}
-                          </p>
-                          <p className="text-[14px]">
-                            {"University of engineering of management".slice(
-                              0,
-                              10
-                            )}
-                          </p>
-                          <div
-                            onClick={() => handleConnectClick(index)} // Call the handler with the current index
-                            className="text-sm font-bold text-center flex items-center px-4 py-1 text-white rounded-full bg-[#111E4B] cursor-pointer"
-                          >
-                            {connectedUsers[index] ? "✔️ " : "+ "} Connect
-                          </div>
+                        <img
+                          className="object-cover rounded-full size-10 "
+                          src={user.profilePic}
+                          alt=""
+                        />
+                        <p className="font-semibold text-base">{user.name}</p>
+                        <p className="text-[10px]">{user.role}</p>
+                        <p className="text-[14px]">
+                          {"University of engineering of management".slice(
+                            0,
+                            10
+                          )}
+                        </p>
+                        <div
+                          onClick={() => handleConnectClick(index)} // Call the handler with the current index
+                          className="text-sm font-bold text-center flex items-center px-4 py-1 text-white rounded-full bg-[#111E4B] cursor-pointer"
+                        >
+                          {connectedUsers[index] ? "✔️ " : "+ "} Connect
                         </div>
+                      </div>
                     );
                   })}
                 </div>
                 <img
-                  className="absolute right-0 z-50 w-[35px] h-[35px] rounded-full bg-white/30 backdrop-blur-md border border-slate-500 shadow-lg"
+                  className="absolute right-0 z-50 w-[35px] h-[35px] rounded-full bg-white/30 backdrop-blur-md border cursor-pointer border-slate-500 shadow-lg"
                   onClick={scrollInX}
                   src={showMore ? SmallerIcon : GreaterIcon}
                   alt=""

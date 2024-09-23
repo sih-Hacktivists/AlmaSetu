@@ -117,17 +117,11 @@ const UserProfile = () => {
   return (
     <div className="flex flex-col justify-center items-center">
       <div className="w-[90vw]">
-        <SearchBar showProfile={true} showSearch={true} />
+        <SearchBar showProfile={false} showSearch={true} />
       </div>
 
-      <div className="w-[90vw] h-[90vh] border-2 border-black rounded-xl p-4">
-        <div className="w-[100%] h-[5%] flex justify-end m-1">
-          <button className="w-32 gap-2 bg-white border-black border-2 rounded-2xl flex justify-center items-center">
-            Edit Profile <MdEdit className="w-5 h-5" />
-          </button>
-        </div>
-
-        <div className="w-[100%] h-[95%] flex  gap-2 justify-around items-center">
+      <div className="w-[90vw] h-[90vh] border-2 flex items-center border-black rounded-xl p-4">
+        <div className="w-full h-[95%] flex justify-around items-center">
           {/* Profile Details */}
           <div className="h-[100%] w-[20%] flex flex-col justify-between items-center p-4  border-black border-2 rounded-xl">
             <div className=" flex flex-col justify-center items-center gap-3">
@@ -196,18 +190,18 @@ const UserProfile = () => {
             </div>
           </div>
 
-          <div className="w-[75%] h-[100%]">
+          <div className="w-[75%] h-full flex flex-col justify-between">
             {/* Bio */}
-            <div className="w-[100%] h-[30%] shadow-black shadow-sm rounded-2xl">
+            <div className="w-full h-[30%] shadow-black shadow-sm rounded-2xl">
               <p className="text-xl h-[30%] flex justify-center items-center text-white bg-[#111E4B] text-center  rounded-t-2xl">
-                Bio:
+                Bio
               </p>
               <p className="p-2 h-[70%] flex justify-center items-center border-l-2 border-r-2 border-b-2 border-black rounded-b-2xl">
                 {userProfile && userProfile.bio}
               </p>
             </div>
 
-            <div className="w[90%] h-[30%] flex mt-4 justify-between items-center">
+            <div className="w-full h-[30%] flex justify-between items-center">
               <div className="w-[48%] h-[100%] border-l-2 shadow-black shadow-sm border-r-2 border-b-2 border-black rounded-2xl">
                 <p className="text-xl h-[30%] flex justify-center items-center text-white bg-[#111E4B] text-center  rounded-t-2xl">
                   Experience
@@ -242,10 +236,10 @@ const UserProfile = () => {
               </div>
             </div>
 
-            <div className="w[90%] h-[30%] flex mt-4 justify-between items-center">
+            <div className="w-full h-[30%] flex justify-between items-center">
               <div className="w-[48%] h-[100%] border-l-2 shadow-black shadow-sm border-r-2 border-b-2 border-black rounded-2xl">
                 <p className="text-xl h-[30%] flex justify-center items-center text-white bg-[#111E4B] text-center  rounded-t-2xl">
-                  Events
+                  Skills and Interests
                 </p>
                 <div className=" h-[70%] flex justify-center items-center">
                   <div className="w-[90%] h-[90%] overflow-y-auto overflow-x-auto scrollbar-thumb-black mb-2 scrollbar-track-[#ECF7FE] scrollbar-thin scrollbar-corner-transparent ">
