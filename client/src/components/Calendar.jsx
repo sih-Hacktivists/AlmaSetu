@@ -125,14 +125,14 @@ const CalendarWithTime = () => {
               <div className="flex gap-5 justify-center items-center w-full text-2xl   font-extrabold mb-4">
                 <div
                   onClick={handlePrevMonth}
-                  className="cursor-pointer rounded-full bg-white border border-slate-300 hover:bg-slate-400 flex justify-center items-center"
+                  className="cursor-pointer rounded-full   hover:bg-slate-400 flex justify-center items-center"
                 >
                   <img src={chevLeft} width={20} height={20} alt="" />
                 </div>
                 <div>{months[currentMonth]}</div>
                 <div
                   onClick={handleNextMonth}
-                  className="cursor-pointer rounded-full bg-white  border border-slate-300 hover:bg-slate-400  flex justify-center items-center"
+                  className="cursor-pointer rounded-full   hover:bg-slate-400  flex justify-center items-center"
                 >
                   <img src={chevRight} width={20} height={20} alt="" />
                 </div>
