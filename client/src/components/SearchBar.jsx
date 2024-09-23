@@ -61,8 +61,8 @@ export function SearchBar({
                   onChange={(e) => setInput(e.target.value)}
                   className={
                     !superAdmin
-                      ? "block w-full p-4 text-sm text-gray-500 border-black border-2 outline-none rounded-2xl bg-white h-10"
-                      : "text-center w-full p-1 text-sm text-black border-black border-2 outline-none rounded-2xl bg-white h-7"
+                      ? "block w-full p-4 text-sm text-gray-500 border-slate-500 border-2 outline-none rounded-2xl bg-white h-10"
+                      : "text-center w-full p-1 text-sm text-black border-slate-500 border-2 outline-none rounded-2xl bg-white h-7"
                   }
                   placeholder={
                     !superAdmin
