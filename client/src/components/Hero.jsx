@@ -6,8 +6,8 @@ import { Link } from "react-router-dom";
 
 const Hero = () => {
   return (
-    <div className="w-full bg-white py-24 px-28">
-      <div className="md:max-w-[1480px] m-auto grid md:grid-cols-2 max-w-[600px]  px-4 md:px-0">
+    <div className="w-full bg-light py-24 px-28">
+      <div className="md:max-w-[1480px] m-auto grid md:grid-cols-2 max-h-[600px]  px-4 md:px-0">
         <div className="flex flex-col justify-between gap-4">
           <h1 className="md:leading-[72px] py-2 md:text-6xl text-5xl font-semibold">
             The Next Generation
