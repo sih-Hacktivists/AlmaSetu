@@ -7,5 +7,10 @@ export default {
   theme: {
     extend: {},
   },
+  variants: {
+    extend: {
+      stroke: ['hover'], // Ensure this is present
+    },
+  },
   plugins: [ require('tailwind-scrollbar'),],
 }

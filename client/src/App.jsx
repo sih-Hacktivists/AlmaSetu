@@ -94,7 +94,6 @@ function UserLayout() {
                 path="/:userId/verify-email/:token"
                 element={<VerificationPage />}
               />
-              <Route path="/u/:userId" element={<UserProfile />} />
               <Route
                 path="/events"
                 element={<Events loggedInUser={loggedInUser} />}
@@ -103,6 +102,7 @@ function UserLayout() {
                 path="/events/:eventid"
                 element={<EventDetails loggedInUser={loggedInUser} />}
               />
+              <Route path="/u/:userId" element={<UserProfile />} />
               <Route
                 path="/profile"
                 element={<Profile loggedInUser={loggedInUser} />}

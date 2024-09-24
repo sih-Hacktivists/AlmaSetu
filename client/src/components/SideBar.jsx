@@ -3,6 +3,7 @@ import cross from "../assets/Cross.svg";
 import bars from "../assets/bar.svg";
 import { useState } from "react";
 import { sideLinks, userSideLinks } from "../assets/Constant.js";
+import logout from "../assets/logout.svg";
 
 export default function SideBar({ user }) {
   const [isCollapsed, setIsCollapsed] = useState(true);
@@ -10,12 +11,12 @@ export default function SideBar({ user }) {
   return (
     <div>
       {/* Overlay for sidebar */}
-      {!isCollapsed && (
+      {/* {!isCollapsed && (
         <div
-          className="fixed inset-0 bg-black bg-opacity-50 z-40 transition-opacity duration-300 ease-in-out "
-          onClick={() => setIsCollapsed(true)}
+          className="fixed inset-0 bg-black bg-opacity-50 z-40 transition-opacity duration-300 ease-in-out"
+          onClick={() => setIsCollapsed(false)}
         />
-      )}
+      )} */}
       {/* Sidebar */}
       <div>
         {/* Toggle button for collapsed sidebar */}
@@ -23,11 +24,9 @@ export default function SideBar({ user }) {
           <img
             src={bars}
             alt="Expand Sidebar"
-            className={`w-10 h-10 absolute top-4 pt-2 ${
-              user ? "left-6" : "left-2"
-            }  z-50 cursor-pointer rounded-2xl ${
+            className={`w-10 h-10 absolute top-4 pt-2 ${user ? "left-6" : "left-2"} z-50 cursor-pointer rounded-2xl ${
               user ? "" : "hover:bg-slate-200"
-            } transition-transform duration-300 ease-in-out  `}
+            } transition-transform duration-300 ease-in-out`}
             width={30}
             height={30}
             onClick={() => setIsCollapsed(false)}
@@ -40,21 +39,23 @@ export default function SideBar({ user }) {
             } w-64 overflow-hidden rounded-r-2xl`}
           >
             {/* Collapse button */}
+          
+            <div className="relative w-full flex flex-col h-full justify-center">
             <img
               className="absolute top-4 right-4 cursor-pointer"
-              onClick={() => setIsCollapsed(true)}
+              onClick={() => setIsCollapsed(true)} // Set to collapse on click
               src={cross}
               alt="Collapse Sidebar"
               width={30}
               height={30}
             />
-            <div className="flex flex-col h-full justify-center items-center">
               <div className="flex flex-col w-11/12 gap-10 items-start px-4">
                 {user
                   ? userSideLinks.map((nav, index) => (
                       <NavigateButton
                         user={true}
                         key={index}
+                        icon={nav.icon}
                         isCollapsed={isCollapsed}
                         title={nav.title[0].toUpperCase() + nav.title.slice(1)}
                       />
@@ -67,6 +68,13 @@ export default function SideBar({ user }) {
                       />
                     ))}
               </div>
+              <img
+                className="absolute right-5 bottom-3"
+                src={logout}
+                width={25}
+                height={25}
+                alt="Logout"
+              />
             </div>
           </div>
         )}
@@ -75,15 +83,14 @@ export default function SideBar({ user }) {
   );
 }
 
-function NavigateButton({ title, isCollapsed, user }) {
+function NavigateButton({ title, icon, isCollapsed, user }) {
   return (
-    <div className="border-2 border-black hover:border-white text-center w-full hover:bg-[#111E4B] bg-[#ECF7FE] rounded-3xl p-2 text-black hover:text-white">
+    <div className="flex pl-2 items-center gap-5 border-2 border-black hover:border-white text-center w-full hover:bg-[#111E4B] bg-[#ECF7FE] rounded-3xl p-2 text-black hover:text-white">
+      <img className="icon" src={icon} alt="" width={20} height={20} />
       {!isCollapsed && (
         <Link
-          className="flex-1 text-left text-2xl font-medium"
-          to={`/${user ? "users" : "admin"}/${
-            title[0].toLowerCase() + title.slice(1)
-          }`}
+          className="flex-1 text-left text-xl font-medium"
+          to={`/${user ? "users" : "admin"}/${title[0].toLowerCase() + title.slice(1)}`}
         >
           {title}
         </Link>
