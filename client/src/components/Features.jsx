@@ -1,5 +1,13 @@
 import React from 'react';
 import { LiaChalkboardTeacherSolid } from "react-icons/lia";
+import { BsChatSquareDotsFill } from "react-icons/bs";
+import { BsFire } from "react-icons/bs";
+import { BsPeopleFill } from "react-icons/bs";
+import { BsFillPersonCheckFill } from "react-icons/bs";
+import { BsMegaphoneFill } from "react-icons/bs";
+
+
+
 
 
  const FeaturesData = [
@@ -8,6 +16,36 @@ import { LiaChalkboardTeacherSolid } from "react-icons/lia";
      title: "Personal Mentorship",
      link: "#",
      icon: <LiaChalkboardTeacherSolid />,
+   },
+   {
+     id: 1,
+     title: "One to One Chat",
+     link: "#",
+     icon: <BsChatSquareDotsFill />,
+   },
+   {
+     id: 1,
+     title: "Alma_Space",
+     link: "#",
+     icon: <BsFire />,
+   },
+   {
+     id: 1,
+     title: "Plethora of Alumnus",
+     link: "#",
+     icon: <BsPeopleFill />,
+   },
+   {
+     id: 1,
+     title: "Verified Users",
+     link: "#",
+     icon: <BsFillPersonCheckFill />,
+   },
+   {
+     id: 1,
+     title: "Tech Events",
+     link: "#",
+     icon: <BsMegaphoneFill />,
    },
  ];
 
