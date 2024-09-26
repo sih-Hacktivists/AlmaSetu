@@ -25,7 +25,7 @@ const Yukta = () => {
   const config = {
     composerPlaceholder: "Type a message...",
     botName: "YUKTA",
-    botAvatar: "https://picsum.photos/200/300", // Example avatar image
+    botAvatar: "https://cdn-icons-png.flaticon.com/512/4712/4712109.png", // Example avatar image
     botDescription: "",
     email: {
       title: "randomEmail@boptress.com",
@@ -50,7 +50,7 @@ const Yukta = () => {
   };
 
   return (
-    <div className="relative">
+    <div style={{ width: "100vw", height: "100vh", position: "relative" }}>
         <style>{style}</style>
         <WebchatProvider theme={theme} configuration={config} client={client}>
           {/* Customized floating action button */}
