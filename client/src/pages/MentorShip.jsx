@@ -2,12 +2,12 @@ import Calendar from "../components/Calendar";
 import { SearchBar } from "../components/SearchBar";
 const MentorShip = () => {
   return (
-    <div className="h-screen w-full  items-center  flex flex-col justify-around">
+    <div className="h-screen w-full  items-center  flex flex-col gap-10">
       <SearchBar showProfile={false} showSearch={true} />
       <div className="flex w-3/4 h-4/5  rounded-2xl border border-slate-600">
         <div className="w-1/3 full">
           <div className="flex flex-col py-5 h-full">
-            <p className="bg-yellow-300 rounded-2xl  text-pretty w-1/2 text-center py-2 px-4 ml-4">
+            <p className="bg-yellow-300 rounded-2xl text-sm font-bold   text-pretty w-1/2 text-center py-2 ml-2">
               Asking for Mentorship
             </p>
             <div className="  h-full flex justify-center gap-2 flex-col items-center">
