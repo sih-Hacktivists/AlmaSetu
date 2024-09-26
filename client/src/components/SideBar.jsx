@@ -1,22 +1,28 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import cross from "../assets/Cross.svg";
 import bars from "../assets/bar.svg";
 import { useState } from "react";
 import { sideLinks, userSideLinks } from "../assets/Constant.js";
 import logout from "../assets/logout.svg";
+import axios from "axios";
+import { API } from "../utils/api.js";
 
 export default function SideBar({ user }) {
   const [isCollapsed, setIsCollapsed] = useState(true);
+  const navigate = useNavigate();
+
+  const handleLogout = async () => {
+    try {
+      await axios.post(`${API}/users/logout`);
+      navigate("/login");
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
     <div>
       {/* Overlay for sidebar */}
-      {/* {!isCollapsed && (
-        <div
-          className="fixed inset-0 bg-black bg-opacity-50 z-40 transition-opacity duration-300 ease-in-out"
-          onClick={() => setIsCollapsed(false)}
-        />
-      )} */}
       {/* Sidebar */}
       <div>
         {/* Toggle button for collapsed sidebar */}
@@ -24,7 +30,9 @@ export default function SideBar({ user }) {
           <img
             src={bars}
             alt="Expand Sidebar"
-            className={`w-10 h-10 absolute top-4 pt-2 ${user ? "left-6" : "left-2"} z-50 cursor-pointer rounded-2xl ${
+            className={`w-10 h-10 absolute top-4 pt-2 ${
+              user ? "left-6" : "left-2"
+            } z-50 cursor-pointer rounded-2xl ${
               user ? "" : "hover:bg-slate-200"
             } transition-transform duration-300 ease-in-out`}
             width={30}
@@ -39,16 +47,16 @@ export default function SideBar({ user }) {
             } w-64 overflow-hidden rounded-r-2xl`}
           >
             {/* Collapse button */}
-          
+
             <div className="relative w-full flex flex-col h-full justify-center">
-            <img
-              className="absolute top-4 right-4 cursor-pointer"
-              onClick={() => setIsCollapsed(true)} // Set to collapse on click
-              src={cross}
-              alt="Collapse Sidebar"
-              width={30}
-              height={30}
-            />
+              <img
+                className="absolute top-4 right-4 cursor-pointer"
+                onClick={() => setIsCollapsed(true)} // Set to collapse on click
+                src={cross}
+                alt="Collapse Sidebar"
+                width={30}
+                height={30}
+              />
               <div className="flex flex-col w-11/12 gap-10 items-start px-4">
                 {user
                   ? userSideLinks.map((nav, index) => (
@@ -69,7 +77,9 @@ export default function SideBar({ user }) {
                     ))}
               </div>
               <img
-                className="absolute right-5 bottom-3"
+                className="absolute cursor-pointer right-5 bottom-3"
+                title="Logout"
+                onClick={handleLogout}
                 src={logout}
                 width={25}
                 height={25}
@@ -90,7 +100,9 @@ function NavigateButton({ title, icon, isCollapsed, user }) {
       {!isCollapsed && (
         <Link
           className="flex-1 text-left text-xl font-medium"
-          to={`/${user ? "users" : "admin"}/${title[0].toLowerCase() + title.slice(1)}`}
+          to={`/${user ? "users" : "admin"}/${
+            title[0].toLowerCase() + title.slice(1)
+          }`}
         >
           {title}
         </Link>
