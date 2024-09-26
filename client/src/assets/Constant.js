@@ -2,6 +2,7 @@ import home from "../assets/home.svg"
 import chats from "../assets/chats.svg"
 import events from "../assets/events.svg"
 import profile from "../assets/profile.svg"
+import connections from "../assets/connection.svg"
 
 export const AdminApprovalsTab = ["Students", "Alumni", "Pending Approval"];
 
@@ -123,6 +124,12 @@ export const userSideLinks = [
     icon:events
 
   },
+  {
+    title: "connections",
+    icon:connections
+
+  },
+
   {
     title: "community",
     icon:"https://img.icons8.com/?size=50&id=11220&format=png"

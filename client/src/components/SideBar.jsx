@@ -95,7 +95,7 @@ export default function SideBar({ user }) {
 
 function NavigateButton({ title, icon, isCollapsed, user }) {
   return (
-    <div className="flex pl-2 items-center gap-5 border-2 border-black hover:border-white text-center w-full hover:bg-[#111E4B] bg-[#ECF7FE] rounded-3xl p-2 text-black hover:text-white">
+    <div className="flex pl-2 items-center gap-2 border-2 border-black hover:border-white text-center w-full hover:bg-[#111E4B] bg-[#ECF7FE] rounded-3xl p-2 text-black hover:text-white">
       <img className="icon" src={icon} alt="" width={20} height={20} />
       {!isCollapsed && (
         <Link

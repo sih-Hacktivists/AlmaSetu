@@ -1,5 +1,7 @@
 import React from "react";
 import { PostCard } from "./PostCard.jsx";
+import steve from "../assets/steve.jpg"
+import buisness from "../assets/buisnessgrowth.jpg"
 
 export const Posts = () => {
   const samplePost = {
@@ -9,8 +11,8 @@ export const Posts = () => {
     content:
       " Robotics is the intersection of science, engineering and technology that produces machines, called robots, that replicate or substitute for human actions. Robots perform basic and repetitive tasks with greater efficiency and accuracy than humans, making them ideal for industries like manufacturing.",
     photos: [
-      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRGWUz9ahrsNQz1gySB_Ie7MI4ozs1S1PiHsw&s",
-      "https://png.pngtree.com/thumb_back/fh260/background/20230408/pngtree-robot-white-cute-robot-blue-light-background-image_2199825.jpg",
+      steve,
+      buisness,
       "https://cdn.pixabay.com/photo/2023/03/05/21/11/ai-generated-7832244_640.jpg",
       "https://images.pexels.com/photos/9029795/pexels-photo-9029795.jpeg?auto=compress&cs=tinysrgb&w=600",
     ],
@@ -32,7 +34,7 @@ export const Posts = () => {
     <div className="rounded-lg  flex flex-col gap-5 bg-[#ECF7FE]  ">
       <PostCard post={samplePost} />
       <PostCard post={samplePost1} />
-      {/* <PostCard post={samplePost}/>  */}
+      <PostCard post={samplePost}/> 
     </div>
   );
 };
