@@ -36,7 +36,7 @@ const Home = ({ loggedInUser }) => {
           <div className="h-1/2">
             <Communities />
           </div>
-          <div className="text-sm py-4 px-5 h-20 flex justify-start items-center rounded-full bg-[#BBDCF1]">
+          <div className="text-sm py-4 px-5 h-20  rounded-full bg-white">
             <div className="flex justify-start text-lg">
               Talk to <div className="font-bold">{' '}YUKTA</div>
             </div>
