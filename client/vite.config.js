@@ -6,9 +6,11 @@ export default defineConfig({
   server: {
     historyApiFallback: true, // Ensure fallback is set
     proxy: {
-      "/api/v1": "https://almasetu.onrender.com",
-      changeOrigin: true,
-      secure: false,
+      "/api/v1": {
+        target: "https://almasetu.onrender.com", 
+        changeOrigin: true, 
+        secure: false,
+      },
     },
   },
   plugins: [react()],
