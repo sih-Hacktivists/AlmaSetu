@@ -4,6 +4,7 @@ import SearchIcon from "../assets/searchIcon.svg";
 import NotificationIcon from "../assets/notification.svg";
 import axios from "axios";
 import { API } from "../utils/api";
+import { Link } from "react-router-dom";
 
 export function SearchBar({
   showProfile,
@@ -37,13 +38,15 @@ export function SearchBar({
       <div className="w-full">
         <div className="flex justify-between items-center gap-10 px-2 pt-1 max-w-screen-lg mx-auto">
           {superAdmin ? null : (
-            <img
-              src="https://cdn-icons-png.flaticon.com/128/999/999663.png"
-              width={45}
-              height={45}
-              className="pt-2 ml-10"
-              alt=""
-            />
+            <Link to="/users/home">
+              <img
+                src="https://cdn-icons-png.flaticon.com/128/999/999663.png"
+                width={45}
+                height={45}
+                className="pt-2 ml-10"
+                alt=""
+              />
+            </Link>
           )}
 
           <div
