@@ -138,7 +138,25 @@ const AdminLogin = () => {
               </div>
 
               {message && <p className="text-red-500 text-center">{message}</p>}
+              <div>
 
+              <Link
+                  to="/login"
+                  className="text-blue-500 hover:underline"
+                  >
+                  Login as user
+                </Link>
+                  </div>
+              <button
+                onClick={() => {
+                  setRole("Admin")
+                  setEmail("one@gmail.com");
+                  setPassword("123456");
+                }}
+                className="bg-slate-500 rounded-lg py-2 px-2 text-white w-full"
+              >
+                Get guest credentials
+              </button>
               <button
                 type="submit"
                 className="w-full px-5 py-2.5 text-white bg-blue-500 rounded-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-400 text-sm font-medium"
@@ -146,12 +164,19 @@ const AdminLogin = () => {
                 Sign In
               </button>
 
-              <div className="text-sm font-medium text-gray-900">
+              <div className="flex w-full justify-between text-sm font-medium text-gray-900">
                 <Link
                   to="/forgot-password"
                   className="text-blue-500 hover:underline"
                 >
                   Forgot your password?
+                </Link>
+
+                <Link
+                  to="/admin/register"
+                  className="text-blue-500 hover:underline"
+                >
+                  Register as admin?
                 </Link>
               </div>
             </form>

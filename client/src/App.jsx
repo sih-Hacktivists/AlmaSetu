@@ -127,6 +127,10 @@ function UserLayout() {
                 path="/chats"
                 element={<ChatPage loggedInUser={loggedInUser} />}
               />
+                  {/* <Route
+                path="/connections"
+                element={<ConnectionsPage loggedInUser={loggedInUser} />}
+              /> */}
               <Route
                 path="/mentorship/:mentorshipId"
                 element={<MentorShip loggedInUser={loggedInUser} />}
