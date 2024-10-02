@@ -46,11 +46,9 @@ app.use("/api/v1/connections/", connectionRouter);
 app.use("/api/v1/notifications/", notificationRouter);
 app.use("/api/v1/admin/", adminRouter);
 
-setInterval(() => {
-    app.get("/", (req, res) => {
-        res.send("Server is running");
-    });
-}, 300000);
+app.get("/", (req, res) => {
+    res.send("<h1>Server is Running</h1>");
+});
 
 // Initialize Socket.IO with the HTTP server
 const io = new SocketIOServer(server, {
